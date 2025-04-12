@@ -1,0 +1,68 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Django Tailwind</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+  </head>
+  <body>
+    <!-- Header -->
+    <header
+      class="page-header sticky transition-all origin-top duration-300 ease-in-out h-[80px] bg-white shadow-lg flex flex-wrap md:flex-nowrap items-center z-40"
+    >
+      <div class="px-4 md:px-24 2xl:px-24 w-full">
+        <a href="home.html" class="inline-block" title="">
+          <img
+            src="{% static 'images/reporthink_logo.png' %}"
+            alt="Reporthink Logo"
+            class="h-[46px] w-[200px]"
+          />
+        </a>
+      </div>
+    </header>
+	<!-- This is where we grab our codes -->
+    {% block content %} {% endblock %}
+	<!-- This is where we grab our codes -->
+    <footer class="bg-white text-black py-8 md:mx-10">
+      <div
+        class="container mx-auto grid gap-8 md:grid-cols-3 text-center md:text-left"
+      >
+        <!-- Logo Section -->
+        <div>
+          <img
+            src="{% static 'images/reporthink_logo.png' %}"
+            alt="Reporthink Logo"
+            class="h-[46px] w-[200px] mx-auto md:mx-0"
+          />
+        </div>
+
+        <!-- Middle Info Section -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:underline">About Us</a></li>
+            <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+            <li><a href="#" class="hover:underline">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Right Info Section -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+          <p>123 Reporthink Ave</p>
+          <p>City, State, ZIP</p>
+          <p>
+            Email:
+            <a href="mailto:support@reporthink.com" class="hover:underline"
+              >support@reporthink.com</a
+            >
+          </p>
+          <p>Phone: +1 (123) 456-7890</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
