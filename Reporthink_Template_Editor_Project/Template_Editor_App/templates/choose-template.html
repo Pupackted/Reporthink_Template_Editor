@@ -1,0 +1,390 @@
+{% extends 'base.html' %} {% block content %}
+
+<body>
+  <div class="bg-top bg-no-repeat bg-cover min-h-[50vh]">
+    <style>
+      .banner-top {
+        background-repeat: no-repeat;
+
+        background-size: cover;
+
+        background-position: top center;
+
+        background-attachment: local;
+      }
+    </style>
+
+    <!-- main section -->
+    <div class="flex md:flex-row flex-col">
+      <div class="flex flex-col px-6 my-6 md:pl-24 md:pr-6 w-[100%] md:w-[30%]">
+        <!-- top part -->
+        <div class="w-full flex flex-col">
+          <!-- search -->
+          <div
+            class="w-[100%] h-10 bg-[#EDE7F0] rounded-[28px] flex items-center"
+          >
+            <!-- hamburg icon -->
+            <button>
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_1341_601)">
+                  <path
+                    d="M15 30V28H33V30H15ZM15 25V23H33V25H15ZM15 20V18H33V20H15Z"
+                    fill="#49454F"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1341_601">
+                    <rect
+                      x="4"
+                      y="4"
+                      width="40"
+                      height="40"
+                      rx="20"
+                      fill="white"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            <!-- hamburg icon -->
+
+            <!-- text area -->
+            <textarea
+              class="w-full focus:outline-none border-none focus:border-none bg-transparent resize-none"
+              placeholder="Search Template"
+              rows="1"
+            ></textarea>
+            <!-- text area end -->
+            <!-- search button -->
+            <button>
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_1341_608)">
+                  <path
+                    d="M31.6 33L25.3 26.7C24.8 27.1 24.225 27.4167 23.575 27.65C22.925 27.8833 22.2333 28 21.5 28C19.6833 28 18.1458 27.3708 16.8875 26.1125C15.6292 24.8542 15 23.3167 15 21.5C15 19.6833 15.6292 18.1458 16.8875 16.8875C18.1458 15.6292 19.6833 15 21.5 15C23.3167 15 24.8542 15.6292 26.1125 16.8875C27.3708 18.1458 28 19.6833 28 21.5C28 22.2333 27.8833 22.925 27.65 23.575C27.4167 24.225 27.1 24.8 26.7 25.3L33 31.6L31.6 33ZM21.5 26C22.75 26 23.8125 25.5625 24.6875 24.6875C25.5625 23.8125 26 22.75 26 21.5C26 20.25 25.5625 19.1875 24.6875 18.3125C23.8125 17.4375 22.75 17 21.5 17C20.25 17 19.1875 17.4375 18.3125 18.3125C17.4375 19.1875 17 20.25 17 21.5C17 22.75 17.4375 23.8125 18.3125 24.6875C19.1875 25.5625 20.25 26 21.5 26Z"
+                    fill="#49454F"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1341_608">
+                    <rect
+                      x="4"
+                      y="4"
+                      width="40"
+                      height="40"
+                      rx="20"
+                      fill="white"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            <!-- search button end -->
+          </div>
+          <!-- search end -->
+          <!-- Selector -->
+          <div class="md:hidden relative w-[50%] mt-5">
+            <!-- Dropdown Button -->
+            <div
+              id="mobileDropdownButton"
+              class="w-full border-2 border-[#808080] rounded-[20px] text-black text-[14px] font-bold px-4 py-2 bg-white cursor-pointer"
+            >
+              All Templates
+            </div>
+            <!-- Dropdown Menu -->
+            <div
+              id="mobileDropdownMenu"
+              class="hidden absolute w-full bg-white mt-2 z-10"
+            >
+              <div class="dropdown-item px-4 py-2 cursor-pointer">
+                All Templates
+              </div>
+              <div
+                class="dropdown-item px-4 py-2 cursor-pointer"
+                data="sustainability-report"
+              >
+                SR Templates
+              </div>
+              <div
+                class="dropdown-item px-4 py-2 cursor-pointer"
+                data="annual-report"
+              >
+                AR / QR Templates
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="hidden md:flex flex-col md:flex-row space-y-2 md:space-y-0 mb-5 md:mb-0 md:mt-5 space-x-3"
+          >
+            <button
+              id="button1"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              style="background-color: rgb(139, 240, 129)"
+            >
+              All Templates
+            </button>
+            <button
+              id="button2"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              data="sustainability-report"
+            >
+              SR Templates
+            </button>
+            <button
+              id="button3"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              data="annual-report"
+            >
+              AR / QR Templates
+            </button>
+          </div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              // Desktop buttons
+              const buttons = document.querySelectorAll(".filter-btn");
+              const clearHighlight = () => {
+                buttons.forEach((button) => {
+                  button.style.backgroundColor = "white";
+                  button.style.color = "black";
+                });
+              };
+
+              buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                  clearHighlight();
+                  button.style.backgroundColor = "rgb(139, 240, 129)";
+                  button.style.color = "black";
+                });
+              });
+
+              const defaultButton = document.getElementById("button1");
+              if (defaultButton) {
+                defaultButton.style.backgroundColor = "rgb(139, 240, 129)";
+                defaultButton.style.color = "black";
+              }
+
+              // Mobile dropdown
+              const dropdownButton = document.getElementById(
+                "mobileDropdownButton"
+              );
+              const dropdownMenu =
+                document.getElementById("mobileDropdownMenu");
+              const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+              dropdownButton.addEventListener("click", () => {
+                dropdownMenu.classList.toggle("hidden");
+              });
+
+              dropdownItems.forEach((item) => {
+                item.addEventListener("click", () => {
+                  dropdownItems.forEach((i) => {
+                    i.style.backgroundColor = "white";
+                    i.style.color = "black";
+                  });
+
+                  item.style.backgroundColor = "rgb(139, 240, 129)";
+                  item.style.color = "black";
+
+                  dropdownButton.textContent = item.textContent;
+
+                  dropdownMenu.classList.add("hidden");
+                });
+              });
+
+              document.addEventListener("click", (e) => {
+                if (
+                  !dropdownMenu.contains(e.target) &&
+                  e.target !== dropdownButton
+                ) {
+                  dropdownMenu.classList.add("hidden");
+                }
+              });
+            });
+          </script>
+
+          <!-- selector end -->
+        </div>
+        <!-- top part end -->
+        <!-- grid -->
+        <div class="grid grid-cols-2 gap-4 mt-5 overflow-auto">
+          <style>
+            .selected {
+              border-color: #dc4955;
+              border-width: 7px;
+              border-radius: 10px;
+            }
+          </style>
+
+          <!-- item 1 -->
+          <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
+            <button class="selection-btn">
+              <div class="font-bold w-full h-full">
+                <img
+                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover%207.png"
+                  alt="Template Image"
+                  class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2"
+                />
+              </div>
+            </button>
+
+            <div
+              class="flex w-full items-center mt-2 text-[16px] text-black text-center justify-center"
+            >
+              Green Yellow modern circle prisma
+            </div>
+          </div>
+          <!-- item 1 end -->
+
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const buttons = document.querySelectorAll(".selection-btn"); // All the buttons
+
+              if (buttons.length > 0) {
+                // Select the first button by default
+                buttons[0].querySelector("div").classList.add("selected");
+              }
+
+              buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                  // Remove 'selected' class from all items
+                  buttons.forEach((btn) => {
+                    btn.querySelector("div").classList.remove("selected");
+                  });
+
+                  // Add 'selected' class to the clicked button
+                  button.querySelector("div").classList.add("selected");
+                });
+              });
+            });
+          </script>
+        </div>
+        <!-- grid end -->
+      </div>
+      <div class="bg-[#2A2A2A] flex md:flex-row flex-col min-h-screen flex-1">
+        <!-- back to gallery mobile -->
+        <div class="md:hidden flex my-5 mx-5">
+          <a href="{% url 'index' %}" class="flex justify-center items-center">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.825 13L13.425 18.6L12 20L4 12L12 4L13.425 5.4L7.825 11H20V13H7.825Z"
+                fill="#FEF7FF"
+              />
+            </svg>
+            <div class="text-white ml-2">Back To Gallery</div>
+          </a>
+        </div>
+        <!--  -->
+        <!-- main image -->
+        <div
+          class="flex md:ml-8 md:my-5 mx-4 relative md:justify-start justify-center"
+        >
+          <div
+            class="md:h-[calc(100vh-100px)] h-[calc(100vh-360px)] flex relative"
+          >
+            <img
+              src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
+              alt="Template Image"
+              class="h-full w-auto object-contain rounded-[10px]"
+            />
+          </div>
+        </div>
+        <!--  -->
+        <div
+          class="mt-4 mb-6 md:my-8 flex flex-col w-auto flex-1 md:ml-5 md:mr-[10%] mx-5"
+        >
+          <!-- back to gallery  desktop -->
+          <div class="md:flex hidden">
+            <a
+              href="{% url 'index' %}"
+              class="flex justify-center items-center"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.825 13L13.425 18.6L12 20L4 12L12 4L13.425 5.4L7.825 11H20V13H7.825Z"
+                  fill="#FEF7FF"
+                />
+              </svg>
+              <div class="text-white ml-2">Back To Gallery</div>
+            </a>
+          </div>
+          <!--  -->
+          <div
+            class="text-white font-bold text-[28px] md:mt-4 md:text-start text-center"
+          >
+            Green Yellow modern circle prisma
+          </div>
+          <a
+            href="{% url 'edit_template' %}"
+            class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-75 ease-in-out"
+          >
+            Use template
+          </a>
+
+          <div class="mt-8 md:mt-14 text-white">Template Parts</div>
+          <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
+            <button>
+              <img
+                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
+                alt="Template Image"
+                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
+              />
+            </button>
+            <button>
+              <img
+                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/daftar%20isi%201.png"
+                alt="Template Image"
+                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
+              />
+            </button>
+            <button>
+              <img
+                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/divider%201.png"
+                alt="Template Image"
+                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
+              />
+            </button>
+            <button>
+              <img
+                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/isi%201C%20text%20image.png"
+                alt="Template Image"
+                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- main section end -->
+    <!-- main stuff -->
+
+    <!-- main stuff end-->
+  </div>
+</body>
+
+{% endblock %}

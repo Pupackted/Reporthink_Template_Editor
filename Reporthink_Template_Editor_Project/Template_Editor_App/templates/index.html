@@ -54,7 +54,7 @@
 
           <!-- text area -->
           <textarea
-            class="w-full focus:outline-none bg-transparent resize-none"
+            class="w-full focus:outline-none border-none bg-transparent resize-none"
             placeholder="Search Template"
             rows="1"
           ></textarea>
@@ -221,7 +221,7 @@
         <div
           class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] hover:opacity-80 transition-all duration-75 ease-in-out"
         >
-          <a href="/templates/choose-template.html">
+          <a href="{% url 'choose_template' %}">
             <div class="font-bold w-full h-full">
               <img
                 src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
@@ -241,50 +241,6 @@
           </div>
         </div>
         <!-- item 1 end -->
-        <!-- item 2 -->
-        <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
-          <a href="/templates/choose-template.html">
-            <div class="font-bold w-full h-full">
-              <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2031%20-%20Blue%20orange%20brown%20doodle%20geometri/thumbnail/cover.png"
-                alt="Template Image"
-                class="h-full w-full object-cover rounded-[30px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-            </div>
-          </a>
-
-          <div class="flex w-full items-center mt-2 text-[16px] text-black">
-            Template 02
-            <div
-              class="flex ml-auto border-2 rounded-[10px] border-[#006837] text-[#006837] justify-center items-center py-[3px] px-[10px] text-[14px] font-bold"
-            >
-              SR
-            </div>
-          </div>
-        </div>
-        <!-- item 2 end -->
-        <!-- item 3 -->
-        <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
-          <a href="/templates/choose-template.html">
-            <div class="font-bold w-full h-full">
-              <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/Cover.png"
-                alt="Template Image"
-                class="h-full w-full object-cover rounded-[30px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-            </div>
-          </a>
-
-          <div class="flex w-full items-center mt-2 text-[16px] text-black">
-            Template 03
-            <div
-              class="flex ml-auto border-2 rounded-[10px] border-[#006837] text-[#006837] justify-center items-center py-[3px] px-[10px] text-[14px] font-bold"
-            >
-              SR
-            </div>
-          </div>
-        </div>
-        <!-- item 3 end -->
       </div>
       <!-- grid end -->
 
@@ -399,22 +355,5 @@
     </div>
     <!-- main section end -->
   </div>
-  <!-- footer -->
-  <!-- get in touch -->
-  <div
-    class="sticky py-2 w-full z-[1] bottom-0 bg-formbox text-white text-center bg-black flex items-center justify-center"
-  >
-    <div class="hidden md:block lg:block">
-      Get more information about our product right into your email.
-    </div>
-    <a
-      class="inline-flex items-center space-x-2 bg-orange-600 rounded-md py-1 px-4 text-white ml-4"
-    >
-      <span>Get In-touch</span>
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-  <!-- touching end -->
-  
 </body>
 {% endblock %}

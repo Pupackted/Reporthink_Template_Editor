@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Django Tailwind</title>
+    <title>Balls</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -14,7 +14,7 @@
       class="page-header sticky transition-all origin-top duration-300 ease-in-out h-[80px] bg-white shadow-lg flex flex-wrap md:flex-nowrap items-center z-40"
     >
       <div class="px-4 md:px-24 2xl:px-24 w-full">
-        <a href="home.html" class="inline-block" title="">
+        <a href="{% url 'index' %}" class="inline-block" title="">
           <img
             src="{% static 'images/reporthink_logo.png' %}"
             alt="Reporthink Logo"
@@ -23,9 +23,24 @@
         </a>
       </div>
     </header>
-	<!-- This is where we grab our codes -->
+    <!-- This is where we grab our codes -->
     {% block content %} {% endblock %}
-	<!-- This is where we grab our codes -->
+    <!-- This is where we grab our codes -->
+    <!-- get in touch -->
+    <div
+      class="sticky py-2 w-full z-[1] bottom-0 bg-formbox text-white text-center bg-black flex items-center justify-center"
+    >
+      <div class="hidden md:block lg:block">
+        Get more information about our product right into your email.
+      </div>
+      <a
+        class="inline-flex items-center space-x-2 bg-orange-600 rounded-md py-1 px-4 text-white ml-4"
+      >
+        <span>Get In-touch</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <!-- touching end -->
     <footer class="bg-white text-black py-8 md:mx-10">
       <div
         class="container mx-auto grid gap-8 md:grid-cols-3 text-center md:text-left"
