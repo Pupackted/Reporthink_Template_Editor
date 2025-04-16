@@ -104,7 +104,7 @@
     <div class="flex justify-center mx-24 p-0 overflow-scroll no-scrollbar">
       <!-- this is where the template goes -->
 
-      {% include "template-to-be-edited.html" %}
+      <div id="editable-area">{{ html_content|safe }}</div>
     </div>
 
     <!-- main stuff end-->

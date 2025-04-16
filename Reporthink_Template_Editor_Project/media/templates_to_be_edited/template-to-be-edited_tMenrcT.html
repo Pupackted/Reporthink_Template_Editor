@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    :root {
+    }
+
+    @page {
+      margin: 0;
+      padding: 0px;
+    }
+
+    @media print {
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .background {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    @font-face {
+      font-family: "Aloja-Light";
+      src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: "Open Sans", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sub-headline {
+      font-family: "Open Sans", sans-serif;
+      font-weight: normal;
+      font-size: 17pt;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 25px;
+      z-index: 4;
+      text-align: end;
+    }
+
+    .headline {
+      font-family: "Montserrat", sans-serif;
+      /* font-family: "Open Sans", sans-serif; */
+      font-weight: bold;
+      font-size: 30pt;
+      color: #ffde32;
+      line-height: 1;
+      text-align: end;
+      z-index: 300;
+      /* margin-left: 80px; */
+    }
+
+    .headline-content {
+      font-family: "Open Sans", sans-serif;
+      font-weight: normal;
+      font-size: 11pt;
+      color: #000000; /* Color */
+      z-index: 200;
+      margin-bottom: 20px;
+      /* line-height: 1.4; */
+      line-height: 1.4;
+      text-align: justify;
+      break-inside: auto; /* Prevents breaking headlines between columns */
+    }
+
+    .content {
+      font-family: "Open Sans", sans-serif;
+      font-weight: normal;
+      font-size: 12.6pt;
+      color: #ffffff; /* Color */
+      z-index: 200;
+
+      line-height: 1.4;
+      text-align: end;
+      break-inside: auto; /* Prevents breaking headlines between columns */
+      margin-left: 160px;
+    }
+
+    .content p {
+      margin-bottom: 10pt;
+      margin-top: 0px;
+    }
+
+    .column-layout {
+      columns: 2; /* Number of columns */
+      column-gap: 40px; /* Space between the columns */
+      margin-top: 10px;
+      /* height: 220mm; */
+      height: 132mm;
+      background-color: rgba(0, 128, 0, 0);
+      column-fill: auto; /* Fill columns sequentially */
+    }
+
+    .main-column {
+      position: absolute;
+      top: 545px;
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background-color: rgba(255, 105, 180, 0);
+    }
+
+    /* ========================================== */
+    .company-logo {
+      width: 35pt;
+      height: 35pt;
+      background-color: #ffffff;
+      background-image: url(); /* enter company logo here */
+      border-radius: 100%;
+    }
+
+    .Company-name1 {
+      font-family: "Open Sans", sans-serif;
+      font-weight: normal;
+      font-size: 15.7pt;
+      color: #ffffff; /* Color */
+
+      /* margin-top: 50px;  */
+      /* width: 60%; */
+      /* text-align: justify;
+        line-height: 16pt; */
+    }
+
+    .Company-name2 {
+      font-family: "Open Sans", sans-serif;
+      font-weight: normal;
+      font-size: 14.1pt;
+      color: #ffffff; /* Color */
+      line-height: 1;
+      /* margin-top: 50px;  */
+      /* width: 60%; */
+      /* text-align: justify;
+        line-height: 16pt; */
+    }
+
+    .static-design1 {
+      position: absolute;
+      top: 75px;
+      right: 120px;
+      background-color: rgba(137, 43, 226, 0);
+
+      height: 150px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+    .static-design2 {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 22%;
+      right: 80px;
+      height: 385px;
+      background-color: rgba(255, 105, 180, 0);
+      z-index: 20;
+      width: 470px;
+    }
+    .static-design3 {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 87.5%;
+      left: 0%;
+      height: 120px;
+      background-color: rgba(255, 105, 180, 0);
+      z-index: 20;
+      width: 490px;
+    }
+
+    .year {
+      /* font-family: "Montserrat", sans-serif; */
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      font-size: 39pt;
+      color: #ffffff;
+      z-index: 200;
+      line-height: 1;
+      position: absolute;
+      left: 250px;
+      bottom: 142px;
+    }
+
+    .year-2nd-color {
+      color: #ffde32; /* Yellow color for 2024 */
+    }
+    .background {
+      width: 210mm;
+      height: 297mm;
+      background: linear-gradient(
+        to bottom,
+        #84be56,
+        #175c0c
+      ); /* Gradient from top to bottom */
+
+      -webkit-print-color-adjust: exact;
+      margin: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transform: scale(2);
+      transform-origin: top; 
+      /* Set scaling reference point */
+    }
+    /* Styling for the range slider */
+    #zoom-slider {
+      -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+      appearance: none; /* Remove default styling for other browsers */
+      width: 150px; /* Adjust width as needed */
+      height: 6px; /* Adjust height as needed */
+      background: rgba(128, 128, 128, 0.6); /* Gray track with low opacity */
+      outline: none; /* Remove outline */
+      border-radius: 10px; /* Rounded corners for the track */
+      cursor: pointer; /* Show a pointer cursor */
+      transition: background 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+    }
+
+    /* Hover state for the track */
+    #zoom-slider:hover {
+      background: gray; /* Full gray track on hover */
+      transform: scale(1.05); /* Slightly enlarge the slider track */
+    }
+
+    /* Thumb (slider handle) styling */
+    #zoom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+      appearance: none;
+      width: 16px; /* Handle width */
+      height: 16px; /* Handle height */
+      background: rgb(61, 61, 61); /* Black handle with low opacity */
+      border-radius: 50%; /* Make it circular */
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+    }
+
+    /* Hover state for the thumb */
+    #zoom-slider:hover::-webkit-slider-thumb {
+      background: black; /* Full black handle on hover */
+      transform: scale(1.2); /* Slightly enlarge the handle */
+    }
+
+    /* For non-WebKit browsers (optional) */
+    #zoom-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    #zoom-slider:hover::-moz-range-thumb {
+      background: black;
+      transform: scale(1.2);
+    }
+
+    /* Styling for the zoom-out button */
+    #zoom-out {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    /* Styling for the zoom-in button */
+    #zoom-in {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none; /* Hide the scrollbar for Chrome, Safari, and Edge */
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer */
+      scrollbar-width: none; /* Hide the scrollbar for Firefox */
+    }
+  </style>
+  <body>
+    <div class="cursor-pointer background" id="background-change">
+      <!-- ==================== main content====================== -->
+      <!-- company logo -->
+      <div class="static-design1">
+        <div class="company-logo"></div>
+        <div style="display: flex; flex-direction: column; margin-left: 20px">
+          <div class="Company-name1">Logo</div>
+          <div class="Company-name2">Company</div>
+        </div>
+      </div>
+      <!-- year -->
+      <div class="year">
+        <span>20</span><span class="year-2nd-color">24</span>
+      </div>
+      <!-- Headline -->
+      <div class="static-design2">
+        <div>
+          <div class="cursor-pointer sub-headline" id="sub-headline">
+            Sustainability Report
+          </div>
+          <div
+            style="margin-bottom: 35px"
+            class="cursor-pointer headline"
+            id="headline"
+          >
+            lorem ipsum dolor sit amet lorem ipsum dolor sit amet
+          </div>
+
+          <div id="content" class="cursor-pointer content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+            egestas tortor.
+          </div>
+
+          <script>
+            // Select the elements
+            const contentDiv = document.getElementById("content");
+            const headlineDiv = document.getElementById("headline");
+            const subHeadlineDiv = document.getElementById("sub-headline");
+
+            // Add click event listeners for each element
+            contentDiv.addEventListener("click", () => {
+              contentDiv.textContent =
+                "As Lesser Lord Kusanali, she strives to have a stronger presence in Sumeru now that she has been freed from her extensive confinement in the Sanctuary of Surasthana.";
+            });
+
+            headlineDiv.addEventListener("click", () => {
+              headlineDiv.textContent = "Nahida";
+            });
+
+            subHeadlineDiv.addEventListener("click", () => {
+              subHeadlineDiv.textContent = "Physic of Purity";
+            });
+          </script>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+
+      <img
+        style="
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+        "
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2043%20-%20Green%20Yellow%20modern%20circle%20prisma/cover%20design.png"
+      />
+
+      <svg
+        style="
+          position: absolute;
+          bottom: 0;
+          height: 100%;
+          width: 100%;
+          z-index: 10;
+        "
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="94"
+          y="659"
+          width="501"
+          height="183"
+        >
+          <path
+            d="M94.1157 659.804H594.556V841.25H94.1157V659.804Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2006_5215)" class="z-[100] cursor-help">
+          <path
+            d="M94.4866 866.919L814.609 659.867V866.919H94.4866Z"
+            fill="#0C3804"
+          />
+        </g>
+        <mask
+          id="mask1_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="749"
+          width="244"
+          height="93"
+        >
+          <path
+            d="M0.406006 749.777H243.046V841.25H0.406006V749.777Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask1_2006_5215)">
+          <path
+            d="M0.406006 866.919H242.671L0.406006 750.402V866.919Z"
+            fill="white"
+          />
+        </g>
+        <mask
+          id="mask2_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="294"
+          width="290"
+          height="509"
+        >
+          <path
+            d="M0.406006 294.924H289.996V802.762H0.406006V294.924Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2006_5215)">
+          <mask
+            id="mask3_2006_5215"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="-219"
+            y="294"
+            width="509"
+            height="510"
+          >
+            <path
+              d="M289.996 548.978C289.996 689.284 176.272 803.027 35.9869 803.027C-104.295 803.027 -218.019 689.284 -218.019 548.978C-218.019 408.668 -104.295 294.924 35.9869 294.924C176.272 294.924 289.996 408.668 289.996 548.978Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2006_5215)">
+            <rect
+              x="-413.252"
+              y="294.923"
+              width="898.176"
+              height="508.104"
+              fill="url(#pattern0_2006_5215)"
+              id="change_image"
+              class="z-[90] cursor-pointer"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask4_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="158"
+          y="642"
+          width="144"
+          height="144"
+        >
+          <path
+            d="M158.215 642.2H301.311V785.326H158.215V642.2Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2006_5215)">
+          <mask
+            id="mask5_2006_5215"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="158"
+            y="642"
+            width="144"
+            height="144"
+          >
+            <path
+              d="M229.763 642.2C190.246 642.2 158.215 674.241 158.215 713.765C158.215 753.284 190.246 785.326 229.763 785.326C269.28 785.326 301.311 753.284 301.311 713.765C301.311 674.241 269.28 642.2 229.763 642.2Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask5_2006_5215)">
+            <path
+              d="M158.215 642.2H301.311V785.326H158.215V642.2Z"
+              fill="#0C3804"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask6_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="158"
+          y="642"
+          width="144"
+          height="144"
+        >
+          <path
+            d="M158.215 642.2H301.268V785.283H158.215V642.2Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask6_2006_5215)">
+          <mask
+            id="mask7_2006_5215"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="158"
+            y="642"
+            width="144"
+            height="144"
+          >
+            <path
+              d="M229.759 642.2C190.246 642.2 158.215 674.238 158.215 713.761C158.215 753.28 190.246 785.318 229.759 785.318C269.272 785.318 301.304 753.28 301.304 713.761C301.304 674.238 269.272 642.2 229.759 642.2Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask7_2006_5215)">
+            <path
+              d="M229.759 642.2C190.246 642.2 158.215 674.238 158.215 713.761C158.215 753.281 190.246 785.318 229.759 785.318C269.272 785.318 301.304 753.281 301.304 713.761C301.304 674.238 269.272 642.2 229.759 642.2Z"
+              stroke="#FFDE32"
+              stroke-width="7.98577"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask8_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="536"
+          y="704"
+          width="59"
+          height="19"
+        >
+          <path
+            d="M536.907 704.592H594.556V722.571H536.907V704.592Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask8_2006_5215)">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M611.048 713.55L603.38 709.286L595.282 704.6V722.922L603.38 718.236L611.048 713.55ZM591.873 713.55L583.78 709.286L576.111 704.6V722.922L583.78 718.236L591.873 713.55ZM572.277 713.55L564.605 709.286L556.511 704.6V722.922L564.605 718.236L572.277 713.55ZM553.103 713.55L545.005 709.286L537.337 704.6V722.922L545.005 718.236L553.103 713.55Z"
+            fill="#0C3804"
+          />
+        </g>
+        <mask
+          id="mask9_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="459"
+          y="704"
+          width="75"
+          height="19"
+        >
+          <path
+            d="M459.791 704.592H533.909V722.571H459.791V704.592Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask9_2006_5215)">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M533.503 713.55L525.834 709.286L518.162 704.6V722.922L525.834 718.236L533.503 713.55ZM514.328 713.55L506.66 709.286L498.562 704.6V722.922L506.66 718.236L514.328 713.55ZM495.154 713.55L487.06 709.286L479.391 704.6V722.922L487.06 718.236L495.154 713.55ZM475.553 713.55L467.885 709.286L459.791 704.6V722.922L467.885 718.236L475.553 713.55Z"
+            fill="#B1D78A"
+          />
+        </g>
+        <mask
+          id="mask10_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="500"
+          y="646"
+          width="14"
+          height="14"
+        >
+          <path
+            d="M500.924 646.808H513.918V659.738H500.924V646.808Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask10_2006_5215)">
+          <path
+            d="M500.94 653.631L507.039 647.531L513.141 653.631L507.039 659.73L500.94 653.631Z"
+            fill="#0C3804"
+          />
+        </g>
+        <path
+          d="M500.944 619.304L507.043 613.205L513.145 619.304L507.043 625.408L500.944 619.304Z"
+          fill="#0C3804"
+        />
+        <path
+          d="M500.94 584.986L507.043 578.887L513.141 584.986L507.039 591.086L500.94 584.986Z"
+          fill="#0C3804"
+        />
+        <mask
+          id="mask11_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="500"
+          y="544"
+          width="14"
+          height="13"
+        >
+          <path
+            d="M500.924 544.374H513.918V556.835H500.924V544.374Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask11_2006_5215)">
+          <path
+            d="M500.944 550.661L507.043 544.561L513.145 550.661L507.043 556.764L500.944 550.661Z"
+            fill="#0C3804"
+          />
+        </g>
+        <mask
+          id="mask12_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="534"
+          y="646"
+          width="14"
+          height="14"
+        >
+          <path
+            d="M534.908 646.808H547.902V659.738H534.908V646.808Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask12_2006_5215)">
+          <path
+            d="M535.26 653.634L541.358 647.535L547.457 653.634L541.358 659.734L535.26 653.634Z"
+            fill="#0C3804"
+          />
+        </g>
+        <path
+          d="M535.264 619.308L541.362 613.208L547.461 619.308L541.362 625.412L535.264 619.308Z"
+          fill="#0C3804"
+        />
+        <path
+          d="M535.26 584.99L541.358 578.891L547.461 584.99L541.358 591.09L535.26 584.99Z"
+          fill="#0C3804"
+        />
+        <mask
+          id="mask13_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="534"
+          y="544"
+          width="14"
+          height="13"
+        >
+          <path
+            d="M534.908 544.374H547.902V556.835H534.908V544.374Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask13_2006_5215)">
+          <path
+            d="M535.263 550.665L541.362 544.565L547.465 550.665L541.362 556.768L535.263 550.665Z"
+            fill="#0C3804"
+          />
+        </g>
+        <mask
+          id="mask14_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="568"
+          y="646"
+          width="14"
+          height="14"
+        >
+          <path
+            d="M568.892 646.808H581.886V659.738H568.892V646.808Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask14_2006_5215)">
+          <path
+            d="M569.572 653.631L575.67 647.531L581.773 653.631L575.67 659.734L569.572 653.631Z"
+            fill="#0C3804"
+          />
+        </g>
+        <path
+          d="M569.576 619.304L575.674 613.205L581.777 619.308L575.674 625.408L569.576 619.304Z"
+          fill="#0C3804"
+        />
+        <path
+          d="M569.572 584.986L575.674 578.887L581.773 584.986L575.67 591.09L569.572 584.986Z"
+          fill="#0C3804"
+        />
+        <mask
+          id="mask15_2006_5215"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="568"
+          y="544"
+          width="14"
+          height="13"
+          class="z-[90] cursor-pointer"
+        >
+          <path
+            d="M568.892 544.374H581.886V556.835H568.892V544.374Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask15_2006_5215)">
+          <path
+            d="M569.576 550.661L575.678 544.561L581.777 550.665L575.674 556.764L569.576 550.661Z"
+            fill="#0C3804"
+          />
+        </g>
+        <defs>
+          <pattern
+            class="z-[90] cursor-pointer"
+            id="pattern0_2006_5215"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2006_5215"
+              class="z-[90] cursor-pointer"
+              transform="scale(0.000173913 0.000307692)"
+            />
+          </pattern>
+          <image
+            class="z-[90] cursor-pointer"
+            id="image0_2006_5215"
+            width="5750"
+            height="3250"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2043%20-%20Green%20Yellow%20modern%20circle%20prisma/cover%20image.png"
+          />
+        </defs>
+      </svg>
+      <script>
+        // Select the clickable area
+        const clickableArea = document.getElementById("change_image");
+
+        // Select the image to be changed
+        const svgImage = document.getElementById("image0_2006_5215");
+
+        // Add click event listener to the clickable area
+        clickableArea.addEventListener("click", () => {
+          // Change the image by updating the xlink:href attribute
+          svgImage.setAttribute(
+            "xlink:href",
+            "https://wallpapers.com/images/hd/nahidaand-mysterious-companion-fantasy-art-w3jm5f2ko6othsml.jpg"
+          );
+        });
+      </script>
+    </div>
+  </body>
+</html>

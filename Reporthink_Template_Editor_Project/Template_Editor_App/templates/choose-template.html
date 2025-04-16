@@ -385,6 +385,20 @@
 
     <!-- main stuff end-->
   </div>
+  <!-- TESTING -->
+  {% for template in templates %}
+  <div>
+    <h3>{{ template.name }}</h3>
+    <a href="{% url 'edit_template' template.id %}">
+      <img
+        src="{{ template.thumbnail.url }}"
+        alt="Thumbnail for {{ template.name }}"
+        width="200"
+      />
+    </a>
+  </div>
+  {% endfor %}
+  <!-- TESTING -->
 </body>
 
 {% endblock %}
