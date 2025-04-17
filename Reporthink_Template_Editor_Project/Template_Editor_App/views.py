@@ -54,3 +54,9 @@ def edit_template_view(request, template_id):
     }
 
     return render(request, 'edit-template.html', context)
+
+
+# not sure about this
+def choose_template(request):
+    templates = Template.objects.all()
+    return render(request, 'choose-template.html', {'templates': templates})

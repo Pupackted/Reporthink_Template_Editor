@@ -107,9 +107,7 @@
               id="mobileDropdownMenu"
               class="hidden absolute w-full bg-white mt-2 z-10"
             >
-              <div class="dropdown-item px-4 py-2 cursor-pointer">
-                All Templates
-              </div>
+              <div class="dropdown-item px-4 py-2 cursor-pointer">All</div>
               <div
                 class="dropdown-item px-4 py-2 cursor-pointer"
                 data="sustainability-report"
@@ -130,24 +128,24 @@
           >
             <button
               id="button1"
-              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px] min-w-20"
               style="background-color: rgb(139, 240, 129)"
             >
-              All Templates
+              All
             </button>
             <button
               id="button2"
-              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px] min-w-20"
               data="sustainability-report"
             >
-              SR Templates
+              SR
             </button>
             <button
               id="button3"
-              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+              class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[11px] font-bold px-2 py-0 md:py-0 transition-colors duration-100 md:h-[36px] min-w-20"
               data="annual-report"
             >
-              AR / QR Templates
+              AR / QR
             </button>
           </div>
 
@@ -228,14 +226,20 @@
             }
           </style>
 
-          <!-- item 1 -->
+          {% for template in templates %}
+          <!-- one item -->
           <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
-            <button class="selection-btn">
+            <button
+              class="selection-btn"
+              data-name="{{ template.name }}"
+              data-id="{{ template.id }}"
+              data-thumbnail="{{ template.thumbnail.url }}"
+            >
               <div class="font-bold w-full h-full">
                 <img
-                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover%207.png"
-                  alt="Template Image"
-                  class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2"
+                  src="{{ template.thumbnail.url }}"
+                  alt="Thumbnail for {{ template.name }}"
+                  class="w-full h-auto rounded shadow"
                 />
               </div>
             </button>
@@ -243,33 +247,10 @@
             <div
               class="flex w-full items-center mt-2 text-[16px] text-black text-center justify-center"
             >
-              Green Yellow modern circle prisma
+              {{ template.name }}
             </div>
           </div>
-          <!-- item 1 end -->
-
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              const buttons = document.querySelectorAll(".selection-btn"); // All the buttons
-
-              if (buttons.length > 0) {
-                // Select the first button by default
-                buttons[0].querySelector("div").classList.add("selected");
-              }
-
-              buttons.forEach((button) => {
-                button.addEventListener("click", () => {
-                  // Remove 'selected' class from all items
-                  buttons.forEach((btn) => {
-                    btn.querySelector("div").classList.remove("selected");
-                  });
-
-                  // Add 'selected' class to the clicked button
-                  button.querySelector("div").classList.add("selected");
-                });
-              });
-            });
-          </script>
+          {% endfor %}
         </div>
         <!-- grid end -->
       </div>
@@ -301,9 +282,10 @@
             class="md:h-[calc(100vh-100px)] h-[calc(100vh-360px)] flex relative"
           >
             <img
-              src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
+              id="selected-template-image"
+              src=""
               alt="Template Image"
-              class="h-full w-auto object-contain rounded-[10px]"
+              class="h-full w-auto object-contain rounded-[10px] hidden"
             />
           </div>
         </div>
@@ -333,19 +315,24 @@
             </a>
           </div>
           <!--  -->
-          <div
-            class="text-white font-bold text-[28px] md:mt-4 md:text-start text-center"
-          >
-            Green Yellow modern circle prisma
+          <div id="template-preview">
+            <!-- default empty -->
+            <div
+              class="text-white font-bold text-[28px] md:mt-4 md:text-start text-center"
+              id="selected-template-name"
+            >
+              Select a template
+            </div>
+
+            <a
+              id="use-template-btn"
+              href="#"
+              class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-75 ease-in-out hidden"
+            >
+              Use template
+            </a>
           </div>
-          {% for template in templates %}
-          <a
-            href="{% url 'edit_template' template.id %}"
-            class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-75 ease-in-out"
-          >
-            Use template
-          </a>
-          {% endfor %}
+
           <div class="mt-8 md:mt-14 text-white">Template Parts</div>
           <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
             <button>
@@ -400,6 +387,53 @@
   </div>
   {% endfor %}
   <!-- TESTING -->
+
+  <!-- scripts -->
+
+  <!-- this is to update from left side to right side -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const buttons = document.querySelectorAll(".selection-btn");
+      const nameField = document.getElementById("selected-template-name");
+      const useBtn = document.getElementById("use-template-btn");
+      const previewImg = document.getElementById("selected-template-image");
+
+      if (buttons.length > 0) {
+        const first = buttons[0];
+        first.querySelector("div").classList.add("selected");
+
+        nameField.textContent = first.dataset.name;
+        useBtn.href = `/edit/${first.dataset.id}/`;
+        useBtn.classList.remove("hidden");
+
+        previewImg.src = first.dataset.thumbnail;
+        previewImg.alt = `Thumbnail for ${first.dataset.name}`;
+        previewImg.classList.remove("hidden");
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          buttons.forEach((btn) => {
+            btn.querySelector("div").classList.remove("selected");
+          });
+
+          button.querySelector("div").classList.add("selected");
+
+          const name = button.dataset.name;
+          const id = button.dataset.id;
+          const thumbnail = button.dataset.thumbnail;
+
+          nameField.textContent = name;
+          useBtn.href = `/edit/${id}/`;
+          useBtn.classList.remove("hidden");
+
+          previewImg.src = thumbnail;
+          previewImg.alt = `Thumbnail for ${name}`;
+          previewImg.classList.remove("hidden");
+        });
+      });
+    });
+  </script>
 </body>
 
 {% endblock %}
