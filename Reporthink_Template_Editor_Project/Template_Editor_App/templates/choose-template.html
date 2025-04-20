@@ -226,7 +226,7 @@
             }
           </style>
 
-          {% for template in templates %}
+        
           <!-- one item -->
           <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
             <button
@@ -250,7 +250,7 @@
               {{ template.name }}
             </div>
           </div>
-          {% endfor %}
+        
         </div>
         <!-- grid end -->
       </div>
@@ -434,6 +434,17 @@
       });
     });
   </script>
+
+  <!-- testing -->
+  <h1>Template: {{ template.name }}</h1>
+  <pre>{{ template|safe }}</pre>
+
+  {% if template %}
+  <p>{{ template.name }}</p>
+  <a href="{% url 'edit_template' template.id %}">Edit</a>
+  {% else %}
+  <p>No template found.</p>
+  {% endif %}
 </body>
 
 {% endblock %}

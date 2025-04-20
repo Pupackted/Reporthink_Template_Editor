@@ -4,10 +4,11 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-  path('choose-template/', views.choose_template, name='choose_template'),
+  # path('choose-template/', views.choose_template, name='choose_template'),
+  # in urls.py
+  path('choose-template/<int:template_id>/', views.choose_template, name='choose_template'),
   path('edit-template/', views.edit_template, name='edit_template'),
-    
- path('edit/<int:template_id>/', views.edit_template_view, name='edit_template'),
+  path('edit/<int:template_id>/', views.edit_template_view, name='edit_template'),
 ]
 
 # path('choose/', views.choose_template, name='choose_template'),

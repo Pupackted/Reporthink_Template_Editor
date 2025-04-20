@@ -215,24 +215,28 @@
         <!-- selector end -->
       </div>
       <!-- top part end -->
-      <!-- grid -->
-      <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mt-5">
-        <!-- item 1 -->
+      <!-- grid start -->
+      <div
+        class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 max-h-[80vh] overflow-y-auto pr-2"
+      >
+        {% for template in templates %}
+        <!-- item -->
         <div
           class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] hover:opacity-80 transition-all duration-75 ease-in-out"
         >
-          <a href="{% url 'choose_template' %}">
+      <a href="{% url 'choose_template' template.id %}">
+
             <div class="font-bold w-full h-full">
               <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
-                alt="Template Image"
+                src="{{ template.thumbnail.url }}"
+                alt="Thumbnail for {{ template.name }}"
                 class="h-full w-full object-cover rounded-[30px] border-[#B7E546] border-2"
               />
             </div>
           </a>
 
           <div class="flex w-full items-center mt-2 text-[16px] text-black">
-            Green Yellow modern circle prisma
+            {{ template.name }}
             <div
               class="flex ml-auto border-2 rounded-[10px] border-[#006837] text-[#006837] justify-center items-center py-[3px] px-[10px] text-[14px] font-bold"
             >
@@ -240,7 +244,8 @@
             </div>
           </div>
         </div>
-        <!-- item 1 end -->
+        <!-- item end -->
+        {% endfor %}
       </div>
       <!-- grid end -->
 

@@ -1,16 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Template
 
+
 # Create your views here.
 from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, "index.html")
+    templates = Template.objects.all()  # Or however you load your templates
+    return render(request, 'index.html', {'templates': templates})
 
-def choose_template(request):
-    templates = Template.objects.all()
-    return render(request, 'choose-template.html', {'templates': templates})
+# def choose_template(request):
+#     templates = Template.objects.all()
+#     return render(request, 'choose-template.html', {'templates': templates})
+
+def choose_template(request, template_id):
+    template = get_object_or_404(Template, id=template_id)
+    return render(request, 'choose-template.html', {'template': template})
+
 
 def edit_template(request):
      return render(request, 'edit-template.html')
@@ -57,6 +64,6 @@ def edit_template_view(request, template_id):
 
 
 # not sure about this
-def choose_template(request):
-    templates = Template.objects.all()
-    return render(request, 'choose-template.html', {'templates': templates})
+# def choose_template(request):
+#     templates = Template.objects.all()
+#     return render(request, 'choose-template.html', {'templates': templates})

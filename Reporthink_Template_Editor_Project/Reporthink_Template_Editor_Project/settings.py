@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -71,7 +72,7 @@ ROOT_URLCONF = 'Reporthink_Template_Editor_Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'Template_Editor_App' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
