@@ -226,18 +226,22 @@
             }
           </style>
 
-        
+          {% for template in templates %}
           <!-- one item -->
           <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
             <button
-              class="selection-btn"
-              data-name="{{ template.name }}"
-              data-id="{{ template.id }}"
-              data-thumbnail="{{ template.thumbnail.url }}"
-            >
+            class="selection-btn"
+            data-name="{{ template.name }}"
+            data-id="{{ template.id }}"
+            data-thumbnail="{{ template.cover_part.thumbnail.url }}"
+            {% if selected_id and template.id|stringformat:"s" == selected_id %}
+              data-selected="true"
+            {% endif %}
+          >
+          
               <div class="font-bold w-full h-full">
                 <img
-                  src="{{ template.thumbnail.url }}"
+                  src="{{ template.cover_part.thumbnail.url }}"
                   alt="Thumbnail for {{ template.name }}"
                   class="w-full h-auto rounded shadow"
                 />
@@ -250,7 +254,7 @@
               {{ template.name }}
             </div>
           </div>
-        
+          {% endfor %}
         </div>
         <!-- grid end -->
       </div>
@@ -335,34 +339,18 @@
 
           <div class="mt-8 md:mt-14 text-white">Template Parts</div>
           <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
-            <button>
+            {% for part in template.parts.all %}
+            <a href="{% url 'edit_template_part' part.id %}" class="block">
               <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
-                alt="Template Image"
+                src="{{ part.thumbnail.url }}"
+                alt="{{ part.name }}"
                 class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
               />
-            </button>
-            <button>
-              <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/daftar%20isi%201.png"
-                alt="Template Image"
-                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-            </button>
-            <button>
-              <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/divider%201.png"
-                alt="Template Image"
-                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-            </button>
-            <button>
-              <img
-                src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/isi%201C%20text%20image.png"
-                alt="Template Image"
-                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-            </button>
+              <p class="mt-2 text-center font-semibold text-sm">
+                {{ part.name }}
+              </p>
+            </a>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -373,6 +361,7 @@
 
     <!-- main stuff end-->
   </div>
+
   <!-- TESTING -->
   {% for template in templates %}
   <div>
@@ -398,16 +387,22 @@
       const useBtn = document.getElementById("use-template-btn");
       const previewImg = document.getElementById("selected-template-image");
 
-      if (buttons.length > 0) {
-        const first = buttons[0];
-        first.querySelector("div").classList.add("selected");
+      let selected = document.querySelector(
+        '.selection-btn[data-selected="true"]'
+      );
+      if (!selected && buttons.length > 0) {
+        selected = buttons[0]; // fallback
+      }
 
-        nameField.textContent = first.dataset.name;
-        useBtn.href = `/edit/${first.dataset.id}/`;
+      if (selected) {
+        selected.querySelector("div").classList.add("selected");
+
+        nameField.textContent = selected.dataset.name;
+        useBtn.href = `/edit/${selected.dataset.id}/`;
         useBtn.classList.remove("hidden");
 
-        previewImg.src = first.dataset.thumbnail;
-        previewImg.alt = `Thumbnail for ${first.dataset.name}`;
+        previewImg.src = selected.dataset.thumbnail;
+        previewImg.alt = `Thumbnail for ${selected.dataset.name}`;
         previewImg.classList.remove("hidden");
       }
 
@@ -445,6 +440,21 @@
   {% else %}
   <p>No template found.</p>
   {% endif %}
+
+  <!--  -->
+
+  <h1>{{ template.name }}</h1>
+
+  {% for part in template.parts.all %}
+  <div>
+    <p>{{ part.name }}</p>
+    <img src="{{ part.thumbnail.url }}" width="200" />
+    <a href="{% url 'edit_template_part' part.id %}"></a>
+  </div>
+  {% endfor %}
+<p>balls balls balls balls</p>
+  <p>{{ template }}</p>
+<p>{{ template.parts.all }}</p>
 </body>
 
 {% endblock %}

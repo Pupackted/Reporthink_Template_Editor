@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Garet-Book";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2076%20-%20Light%20Blue%20White%20Modern%20Simple%20Minimalis/fonts/Garet-Book.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        background-image: url("");
+        background-color: var(--color-design-bg);
+        background-size: cover;
+        background-position: center;
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 22pt;
+        color: #ffffff;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Open Sans", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: 700;
+        font-size: 26pt;
+        color: #ffffff;
+        line-height: 1.16;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+      }
+
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 14pt;
+        color: #365b6d; /* Color */
+        z-index: 200;
+        position: absolute;
+        top: 80%;
+        left: 120px;
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        position: absolute;
+        top: 545px;
+        height: 520px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+      .company-logo {
+        width: 35pt;
+        height: 35pt;
+        background-color: #16202900;
+        background-image: url(https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2076%20-%20Light%20Blue%20White%20Modern%20Simple%20Minimalis/company%20logo.png); /* enter company logo here */
+
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 13.3pt;
+        color: #ffffff; /* Color */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 13.3pt;
+        color: #ffffff; /* Color */
+        line-height: 1;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 25px;
+        left: 80px;
+        background-color: rgba(137, 43, 226, 0);
+
+        height: 150px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 46.5%;
+        left: 115px;
+        height: 340px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 590px;
+      }
+
+      .year {
+        font-family: "Garet-Book", sans-serif;
+        font-weight: normal;
+        font-size: 18.2pt;
+        color: #ffffff;
+        z-index: 200;
+        line-height: 1;
+        position: absolute;
+        left: 160px;
+        bottom: 270px;
+      }
+      .year-2nd-color {
+        color: #62ddd6;
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- company logo -->
+      <div class="static-design1">
+        <div class="company-logo"></div>
+        <div style="display: flex; flex-direction: column; margin-left: 20px">
+          <div class="Company-name2">COMPANY</div>
+          <div class="Company-name1">LOGO</div>
+        </div>
+      </div>
+
+      <!-- year -->
+      <div class="year">
+        <span>20</span><span class="year-2nd-color">24</span> / 2025
+      </div>
+      <!-- Headline -->
+      <div class="static-design2">
+        <div>
+          <div class="sub-headline">Sustainability Report</div>
+          <div style="margin-bottom: 25px; width: 500px" class="headline">
+            LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET LOREM IPSUM
+            DOLOR SIT AMET
+          </div>
+        </div>
+      </div>
+      <div class="content" style="width: 550px">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+        vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+        egestas tortor.
+      </div>
+      <!-- ==================== designs ====================== -->
+
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2076%20-%20Light%20Blue%20White%20Modern%20Simple%20Minimalis/blue%20gradient.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2010_1086)">
+          <mask
+            id="mask0_2010_1086"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="595"
+            height="703"
+          >
+            <path d="M0.515625 0H594.446V702.873H0.515625V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask0_2010_1086)">
+            <rect
+              x="-838.337"
+              y="-17.769"
+              width="1781.92"
+              height="720.645"
+              fill="url(#pattern0_2010_1086)"
+            />
+          </g>
+
+          <g mask="url(#mask1_2010_1086)" opacity="0.57">
+            <mask
+              id="mask2_2010_1086"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="59"
+              y="363"
+              width="478"
+              height="272"
+            >
+              <path
+                d="M536.819 363.892H59.2202V634.812H536.819V363.892Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask2_2010_1086)">
+              <mask
+                id="mask3_2010_1086"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="59"
+                y="364"
+                width="477"
+                height="271"
+              >
+                <path
+                  d="M59.9384 364.291H535.336V634.14H59.9384V364.291Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask3_2010_1086)">
+                <path
+                  d="M59.9384 364.291H535.078V634.14H59.9384V364.291Z"
+                  fill="#365B6D"
+                />
+              </g>
+            </g>
+          </g>
+          <mask
+            id="mask4_2010_1086"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="59"
+            y="626"
+            width="477"
+            height="162"
+          >
+            <path
+              d="M59.9384 626.724H535.336V787.442H59.9384V626.724Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask4_2010_1086)">
+            <path
+              d="M59.9384 626.724H535.558V787.442H59.9384V626.724Z"
+              fill="#62DDD6"
+            />
+          </g>
+          <mask
+            id="mask5_2010_1086"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="107"
+            y="610"
+            width="140"
+            height="40"
+          >
+            <path
+              d="M107.922 610.217H246.746V649.143H107.922V610.217Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask5_2010_1086)">
+            <path
+              d="M107.922 610.217H246.817V649.143H107.922V610.217Z"
+              fill="black"
+            />
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2010_1086"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2010_1086"
+              transform="scale(0.000113817 0.00028169)"
+            />
+          </pattern>
+          <clipPath id="clip0_2010_1086">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2010_1086"
+            width="8786"
+            height="3550"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2076%20-%20Light%20Blue%20White%20Modern%20Simple%20Minimalis/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

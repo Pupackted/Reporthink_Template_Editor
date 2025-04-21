@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>daftar isi</title>
+    <style>
+      :root {
+        --color-design-bg: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        background-image: url("");
+        background-color: var(--color-design-bg);
+        background-size: cover;
+        background-position: center;
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 30pt;
+        color: #365b6d;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+        text-align: start;
+      }
+      .headline2 {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 40pt;
+        color: #e4a342;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+        text-align: start;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #fff5da; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: end;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-design1 {
+        position: absolute;
+        top: 450px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 60px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 200;
+      }
+      /* -------- for table of content--------- */
+
+      .toc-num {
+        font-family: "League Spartan", sans-serif;
+        font-weight: bold;
+        font-size: 50pt;
+        color: #289dd2; /* Color */
+        z-index: 200;
+        margin: 0;
+
+        width: 90px;
+        /* line-height: 1.4; */
+        line-height: 1;
+      }
+      .table-of-contents-row {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        margin-top: 0;
+        background-color: rgba(105, 165, 255, 0);
+      }
+      .table-of-contents-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 17pt;
+        color: #365b6d;
+        z-index: 200;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        line-height: 1.1;
+      }
+      .column-toc {
+        display: flex;
+        flex-direction: column;
+
+        background-color: rgba(255, 105, 180, 0);
+        margin-bottom: 5px;
+        width: calc(100% - 70px);
+        justify-content: start;
+        align-items: start;
+      }
+      .static-styling-toc {
+        display: flex;
+        background-color: rgba(255, 105, 180, 0);
+        flex-direction: column;
+        margin-left: 0px;
+        margin-right: 0px;
+
+        margin-top: 66%;
+        right: 0;
+        z-index: 200;
+        width: 40%;
+      }
+
+      ul {
+        padding-left: 0;
+        margin-left: 0px;
+        margin-top: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+        width: 100%;
+      }
+
+      li {
+        font-family: "Open Sans", sans-serif;
+        font-size: 12pt;
+        color: #365b6d;
+        display: flex;
+        justify-content: start;
+        align-items: center; /* Align items vertically within the row */
+        background-color: rgba(0, 0, 255, 0);
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 1.25;
+      }
+
+      li::before {
+        content: "• ";
+        font-size: 12pt;
+        color: #365b6d;
+        margin-right: 10px;
+      }
+
+      span {
+        display: flex;
+        flex-direction: row;
+        align-items: center; /* Ensures proper alignment of the div and number */
+        gap: 5px; /* Adjust gap between underscore line and the number */
+        flex: 1; /* Allows span to stretch and fill available space */
+      }
+
+      .underscore-line {
+        flex-grow: 1; /* Makes the line fill the remaining space */
+        height: 1px;
+        background-color: #365b6d;
+        margin-left: 30px;
+        margin-right: 5px;
+        margin-top: auto;
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ------------------------------------------------ */
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <div class="static-design1">
+        <div class="headline">Table Of Contents</div>
+
+        <!-- ---line--- -->
+      </div>
+      <!--------------- table of content --------------------- -->
+
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          gap: 30px;
+          width: 100%;
+          justify-content: center;
+        "
+      >
+        <!-- table of content main column -->
+        <div class="static-styling-toc">
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">01</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">
+                Ikhtisar Kinerja Keberlanjutan
+              </div>
+              <!-- Bullet points with page numbers -->
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">02</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">Sambutan<br />Direksi</div>
+              <!-- Bullet points with page numbers -->
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">03</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">Detil<br />Perusahaan</div>
+              <!-- Bullet points with page numbers -->
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+
+          <!-- toc row end -->
+        </div>
+        <!-- table of content main column -->
+        <div class="static-styling-toc">
+          <!-- toc row -->
+
+          <!-- toc row end -->
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">04</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">
+                Tentang Laporan Keberlanjutan
+              </div>
+
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">05</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">
+                Strategi<br />Sustainability
+              </div>
+              <!-- Bullet points with page numbers -->
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+          <!-- toc row -->
+          <div class="table-of-contents-row">
+            <div class="toc-num">06</div>
+            <div class="column-toc">
+              <div class="table-of-contents-content">
+                Kinerja<br />Keberlanjutan
+              </div>
+              <!-- Bullet points with page numbers -->
+              <ul>
+                <li>
+                  Lorem Ipsum
+                  <span>
+                    <div class="underscore-line"></div>
+                    2
+                  </span>
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    3</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    4</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    5</span
+                  >
+                </li>
+                <li>
+                  Lorem Ipsum
+                  <span
+                    ><div class="underscore-line"></div>
+                    6</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- toc row end -->
+        </div>
+      </div>
+      <!--------------- table of content end--------------------- -->
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2016_1131"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="767"
+          width="181"
+          height="74"
+        >
+          <path
+            d="M0.515686 767.971H180.997V840.891H0.515686V767.971Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2016_1131)">
+          <path
+            d="M0.515686 767.971H181.009V840.891H0.515686V767.971Z"
+            fill="#62DDD6"
+          />
+        </g>
+        <path
+          d="M69.6334 818.421H526.39"
+          stroke="#365B6D"
+          stroke-width="1.99822"
+        />
+        <mask
+          id="mask1_2016_1131"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="33"
+          y="76"
+          width="367"
+          height="235"
+        >
+          <path
+            d="M33.2148 76.1532H399.696V310.361H33.2148V76.1532Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask1_2016_1131)">
+          <path
+            d="M33.2148 76.1532H399.875V310.361H33.2148V76.1532Z"
+            fill="#62DDD6"
+          />
+        </g>
+        <mask
+          id="mask2_2016_1131"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="58"
+          y="26"
+          width="477"
+          height="257"
+        >
+          <path
+            d="M58.2328 26.9842H534.821V282.428H58.2328V26.9842Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2016_1131)">
+          <rect
+            x="58.2325"
+            y="20.6318"
+            width="476.925"
+            height="268.181"
+            fill="url(#pattern0_2016_1131)"
+          />
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2016_1131"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2016_1131"
+              transform="scale(0.000347222 0.000617284)"
+            />
+          </pattern>
+          <image
+            id="image0_2016_1131"
+            width="2880"
+            height="1620"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2076%20-%20Light%20Blue%20White%20Modern%20Simple%20Minimalis/daftar%20isi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

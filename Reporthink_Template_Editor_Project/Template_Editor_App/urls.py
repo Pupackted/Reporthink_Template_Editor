@@ -6,8 +6,13 @@ urlpatterns = [
     path("", views.index, name="index"),
   # path('choose-template/', views.choose_template, name='choose_template'),
   # in urls.py
-  path('choose-template/<int:template_id>/', views.choose_template, name='choose_template'),
-  path('edit-template/', views.edit_template, name='edit_template'),
+  # path('choose-template/<int:template_id>/', views.choose_template, name='choose_template'),
+  # path('edit-template/', views.edit_template, name='edit_template'),
+
+  path('choose-template/', views.choose_template, name='choose_template'),
+
+    path('edit-template-part/<int:part_id>/', views.edit_template_part, name='edit_template_part'),
+
   path('edit/<int:template_id>/', views.edit_template_view, name='edit_template'),
 ]
 
