@@ -1,8 +1,23 @@
 from django.db import models
 import os
 
+# class Template(models.Model):
+#     name = models.CharField(max_length=255)
+#     html_file = models.CharField(max_length=255, null=True, blank=True)
+#     cover_part = models.ForeignKey(
+#         'TemplatePart',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True,
+#         related_name='used_as_cover_for'
+#     )
+
+#     def __str__(self):
+#         return self.name
+
 class Template(models.Model):
     name = models.CharField(max_length=255)
+    html_file = models.CharField(max_length=255, null=True, blank=True)
     cover_part = models.ForeignKey(
         'TemplatePart',
         on_delete=models.SET_NULL,
@@ -11,8 +26,12 @@ class Template(models.Model):
         related_name='used_as_cover_for'
     )
 
+    def get_template_path(self):
+        return f"templates_folder/{self.html_file}"
+
     def __str__(self):
         return self.name
+
 
 class TemplatePart(models.Model):
     template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='parts')

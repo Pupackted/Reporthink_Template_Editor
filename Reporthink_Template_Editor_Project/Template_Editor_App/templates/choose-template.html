@@ -332,18 +332,19 @@
             </div>
 
             <a
-              id="use-template-btn"
-              href="#"
-              class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-400 ease-in-out hidden"
-            >
-              Use template
-            </a>
+            id="use-template-btn"
+            href="{% if selected_id %}/edit/{{ selected_id }}/{% else %}#{% endif %}"
+            class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-400 ease-in-out {% if not selected_id %}hidden{% endif %}"
+          >
+            Use template
+          </a>
+          
           </div>
 
           <div class="mt-8 md:mt-14 text-white">Template Parts</div>
           <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
             {% for part in template.parts.all %}
-            <a href="{% url 'edit_template_part' part.id %}" class="block group relative">
+            <a href="" class="block group relative">
               <div>
                 <img
                   src="{{ part.thumbnail.url }}"
@@ -400,6 +401,7 @@
         nameField.textContent = selected.dataset.name;
         useBtn.href = `/edit/${selected.dataset.id}/`;
         useBtn.classList.remove("hidden");
+        
 
         previewImg.src = selected.dataset.thumbnail;
         previewImg.alt = `Thumbnail for ${selected.dataset.name}`;
@@ -425,6 +427,7 @@
           nameField.textContent = name;
           useBtn.href = `/edit/${id}/`;
           useBtn.classList.remove("hidden");
+          
 
           previewImg.src = thumbnail;
           previewImg.alt = `Thumbnail for ${name}`;

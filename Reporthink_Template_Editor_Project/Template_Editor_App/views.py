@@ -78,20 +78,49 @@ def template_to_be_edited(request):
 #         'html_content': html_content
 #     })
 
+# def edit_template_view(request, template_id):
+#     template = get_object_or_404(Template, id=template_id)
+
+#     if not template.html_file:
+#         return HttpResponse("No HTML file specified for this template.", status=400)
+
+#     html_path = template.html_file
+
+#     try:
+#         with open(html_path, 'r', encoding='utf-8') as f:
+#             html_content = f.read()
+#     except FileNotFoundError:
+#         return HttpResponse("HTML file not found.", status=404)
+
+#     context = {
+#         'template': template,
+#         'html_content': html_content,
+#     }
+
+#     return render(request, f"templates_folder/{template.html_file}", context)
+
 def edit_template_view(request, template_id):
     template = get_object_or_404(Template, id=template_id)
 
-    # Read the contents of the uploaded HTML file
-    html_path = template.html_file.path
-    with open(html_path, 'r', encoding='utf-8') as f:
-        html_content = f.read()
+    if not template.html_file:
+        return HttpResponse("No HTML file specified for this template.", status=400)
+
+    try:
+        # You don't really need to open/read the file manually unless you *need* its content as a string
+        # You can skip this part unless you use html_content in your actual template
+        with open(template.html_file, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+    except FileNotFoundError:
+        return HttpResponse("HTML file not found.", status=404)
 
     context = {
         'template': template,
-        'html_content': html_content,
+        'html_content': html_content,  # Optional, only if your HTML uses it
     }
 
-    return render(request, 'edit-template.html', context)
+    return render(request, template.get_template_path(), context)
+
+
 
 
 def edit_template_part(request, part_id):
