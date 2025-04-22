@@ -30,5 +30,5 @@ Made with ❤️ by Adrian
 
 ---
 
-Let me know if you wanna add sections like “Features,” “To-Do,” or even “Screenshots” and I’ll help jazz those up too.
+Yeah, i know. There still a lot to do. But whatever, it is what it is.
 
