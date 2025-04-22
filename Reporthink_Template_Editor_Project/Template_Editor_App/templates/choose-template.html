@@ -221,14 +221,17 @@
           <style>
             .selected {
               border-color: #dc4955;
-              border-width: 7px;
-              border-radius: 10px;
+              border-width: 5px;
+              border-radius: 9px;
             }
           </style>
 
           {% for template in templates %}
           <!-- one item -->
-          <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529]">
+          <div class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] 
+          transition-transform duration-200 ease-in-out 
+          hover:scale-[98%]">
+
             <button
             class="selection-btn"
             data-name="{{ template.name }}"
@@ -243,7 +246,7 @@
                 <img
                   src="{{ template.cover_part.thumbnail.url }}"
                   alt="Thumbnail for {{ template.name }}"
-                  class="w-full h-auto rounded shadow"
+                  class="w-full h-auto rounded shadow "
                 />
               </div>
             </button>
@@ -331,7 +334,7 @@
             <a
               id="use-template-btn"
               href="#"
-              class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-75 ease-in-out hidden"
+              class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-400 ease-in-out hidden"
             >
               Use template
             </a>
@@ -340,18 +343,27 @@
           <div class="mt-8 md:mt-14 text-white">Template Parts</div>
           <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
             {% for part in template.parts.all %}
-            <a href="{% url 'edit_template_part' part.id %}" class="block">
-              <img
-                src="{{ part.thumbnail.url }}"
-                alt="{{ part.name }}"
-                class="h-full w-full object-cover rounded-[10px] border-[#B7E546] border-2 hover:opacity-80 transition-all duration-75 ease-in-out"
-              />
-              <p class="mt-2 text-center font-semibold text-sm">
-                {{ part.name }}
-              </p>
+            <a href="{% url 'edit_template_part' part.id %}" class="block group relative">
+              <div>
+                <img
+                  src="{{ part.thumbnail.url }}"
+                  alt="{{ part.name }}"
+                  class="h-full w-full object-cover rounded-[10px] "
+                />
+                <!-- Hover text -->
+                <div class="absolute inset-0 flex items-center justify-center rounded-[10px] 
+                bg-black/0 group-hover:bg-black/80 
+                transition-colors duration-200 ease-in-out">
+                 <p class="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 
+                transition-opacity duration-200 ease-in-out">
+        {{ part.name }}
+      </p>
+    </div>
+              </div>
             </a>
             {% endfor %}
           </div>
+          
         </div>
       </div>
     </div>
@@ -362,20 +374,8 @@
     <!-- main stuff end-->
   </div>
 
-  <!-- TESTING -->
-  {% for template in templates %}
-  <div>
-    <h3>{{ template.name }}</h3>
-    <a href="{% url 'edit_template' template.id %}">
-      <img
-        src="{{ template.thumbnail.url }}"
-        alt="Thumbnail for {{ template.name }}"
-        width="200"
-      />
-    </a>
-  </div>
-  {% endfor %}
-  <!-- TESTING -->
+
+
 
   <!-- scripts -->
 
@@ -408,14 +408,18 @@
 
       buttons.forEach((button) => {
         button.addEventListener("click", () => {
+          const id = button.dataset.id;
+          window.location.href = `?selected_id=${id}`;
           buttons.forEach((btn) => {
+            
             btn.querySelector("div").classList.remove("selected");
+            
           });
 
           button.querySelector("div").classList.add("selected");
 
           const name = button.dataset.name;
-          const id = button.dataset.id;
+         
           const thumbnail = button.dataset.thumbnail;
 
           nameField.textContent = name;
@@ -431,7 +435,8 @@
   </script>
 
   <!-- testing -->
-  <h1>Template: {{ template.name }}</h1>
+
+  {% comment %} <h1>Template: {{ template.name }}</h1>
   <pre>{{ template|safe }}</pre>
 
   {% if template %}
@@ -441,7 +446,6 @@
   <p>No template found.</p>
   {% endif %}
 
-  <!--  -->
 
   <h1>{{ template.name }}</h1>
 
@@ -455,6 +459,24 @@
 <p>balls balls balls balls</p>
   <p>{{ template }}</p>
 <p>{{ template.parts.all }}</p>
+
+
+  {% for template in templates %}
+  <div>
+    <h3>{{ template.name }}</h3>
+    <a href="{% url 'edit_template' template.id %}">
+      <img
+        src="{{ template.thumbnail.url }}"
+        alt="Thumbnail for {{ template.name }}"
+        width="200"
+      />
+    </a>
+  </div>
+  {% endfor %} {% endcomment %}
+
+
+  <!-- TESTING -->
+
 </body>
 
 {% endblock %}

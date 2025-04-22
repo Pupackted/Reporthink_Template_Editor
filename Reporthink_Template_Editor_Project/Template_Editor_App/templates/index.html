@@ -128,14 +128,14 @@
         >
           <button
             id="button1"
-            class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[14px] font-bold px-4 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+            class=" filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[14px] font-bold px-4 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
             style="background-color: rgb(139, 240, 129)"
           >
             All Templates
           </button>
           <button
             id="button2"
-            class="filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[14px] font-bold px-4 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
+            class=" filter-btn button bg-white border-2 border-[#808080] rounded-[20px] text-black text-[14px] font-bold px-4 py-0 md:py-0 transition-colors duration-100 md:h-[36px]"
             data="sustainability-report"
           >
             SR Templates
@@ -222,10 +222,9 @@
         {% for template in templates %} {% if template.cover_part %}
         <!-- item -->
         <div
-          class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] hover:opacity-80 transition-all duration-75 ease-in-out"
+          class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] transition-transform duration-200 ease-in-out hover:scale-[98%]"
         >
-        <a href="{% url 'choose_template' %}?selected_id={{ template.id }}">
-
+          <a href="{% url 'choose_template' %}?selected_id={{ template.id }}">
             <div class="font-bold w-full h-full">
               <img
                 src="{{ template.cover_part.thumbnail.url }}"
@@ -359,9 +358,16 @@
     </div>
     <!-- main section end -->
   </div>
-<!-- debugging -->
-  {% for template in templates %}
+
+
+  <!-- debugging -->
+
+
+  {% comment %} {% for template in templates %}
   <p>{{ template.name }} — cover_part: {{ template.cover_part }}</p>
   {% endfor %}
+ {% endcomment %}
+
+
 </body>
 {% endblock %}

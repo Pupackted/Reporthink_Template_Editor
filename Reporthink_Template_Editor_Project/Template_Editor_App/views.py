@@ -17,22 +17,37 @@ def index(request):
 #     parts = template.parts.all()
 #     return render(request, 'choose-template.html', {'template': template, 'parts': parts})
 
+# def choose_template(request):
+#     templates = Template.objects.all()
+#     selected_id = request.GET.get('selected_id')
+
+#     selected_template = None
+#     if selected_id:
+#         try:
+#             selected_template = Template.objects.get(id=selected_id)
+#         except Template.DoesNotExist:
+#             selected_template = None
+
+#     return render(request, 'choose-template.html', {
+#         'templates': templates,
+#         'selected_id': selected_id,
+#         'template': selected_template  # <-- this is the fix
+#     })
+
 def choose_template(request):
     templates = Template.objects.all()
     selected_id = request.GET.get('selected_id')
 
     selected_template = None
     if selected_id:
-        try:
-            selected_template = Template.objects.get(id=selected_id)
-        except Template.DoesNotExist:
-            selected_template = None
+        selected_template = Template.objects.filter(id=selected_id).first()
 
     return render(request, 'choose-template.html', {
         'templates': templates,
         'selected_id': selected_id,
-        'template': selected_template  # <-- this is the fix
+        'template': selected_template  # <== add this
     })
+
 
 
 def edit_template(request):
