@@ -24,9 +24,88 @@
     <!-- Zoom Controls -->
     <div class="flex items-center w-full h-28">
       <div class="flex-col ml-24">
-        <div class="font-bold text-gray-700 text-2xl text-center">
-          Green Yellow modern circle prisma
+        <!-- file name  -->
+
+        <div
+          x-data="{
+          editing: false,
+          name: '{{ template.name }}',
+          originalName: '{{ template.name }}',
+          updateName() {
+            this.editing = false;
+            this.$dispatch('update-name', { name: this.name });
+          }
+        }"
+          class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
+        >
+          <div
+            x-show="!editing"
+            class="font-bold text-gray-700 text-2xl"
+            @click="editing = true"
+          >
+            {{ template.name }}
+          </div>
+
+          <input
+            x-show="editing"
+            x-model="name"
+            @blur="
+            editing = false;
+            $dispatch('update-name', { name: name });
+          "
+            @keydown.enter="
+            editing = false;
+            $dispatch('update-name', { name: name });
+          "
+            hx-post="/update-template-name/{{ template.id }}/"
+            hx-trigger="update-name from:closest div"
+            hx-vals="js:{ name: name }"
+            hx-swap="none"
+            class="font-bold text-gray-700 text-2xl p-0 border-none focus:outline-none"
+            style="width: 100%"
+          />
         </div>
+
+        {% comment %}
+        <div
+          x-data="{
+          editing: false,
+          name: '{{ template.name }}',
+          originalName: '{{ template.name }}',
+          updateName() {
+            this.editing = false;
+            // send event DIRECTLY to the input
+            this.$refs.input.dispatchEvent(new CustomEvent('update-name', { detail: { name: this.name } }));
+          }
+        }"
+          class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
+        >
+          <div
+            x-show="!editing"
+            class="font-bold text-gray-700 text-2xl"
+            @click="editing = true"
+          >
+            {{ template.name }}
+          </div>
+
+          <input
+            x-ref="input"
+            x-show="editing"
+            x-model="name"
+            @blur="updateName()"
+            @keydown.enter="updateName()"
+            hx-post="/update-template-name/{{ template.id }}/"
+            hx-trigger="update-name"
+            hx-vals="js:{ name: $event.detail.name }"
+            hx-swap="none"
+            class="font-bold text-gray-700 text-2xl p-0 border-none focus:outline-none"
+            style="width: 100%"
+          />
+        </div>
+        {% endcomment %}
+
+        <!-- file name end  -->
+
         <div
           class="flex justify-center items-center py-1 border-[#006837] border-2 rounded-[10px] w-12 font-bold text-[#006837] text-[14px]"
         >
@@ -102,9 +181,11 @@
       </div>
     </div>
     <div class="flex justify-center mx-24 p-0 overflow-scroll no-scrollbar">
-      <!-- this is where the template goes -->
-
-      <div id="editable-area">{{ html_content|safe }}</div>
+      <div id="editable-area">
+        {% if html_content %} {{ html_content|safe }} {% else %}
+        <p>No cover page selected for this template.</p>
+        {% endif %}
+      </div>
     </div>
 
     <!-- main stuff end-->
@@ -138,7 +219,7 @@
         <div
           id="popup-window"
           style="margin: 0px"
-          class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden"
+          class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999999999999999999999999999999999999] hidden"
         >
           <div class="inline-block bg-white shadow-lg p-6 rounded-xl">
             <h2 class="mb-4 font-semibold text-lg">Select Template Parts</h2>

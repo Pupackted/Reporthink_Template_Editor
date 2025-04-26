@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg-color: #313640;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #ffffff;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        margin-left: 20px;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 30pt;
+        color: #ffffff;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+        text-align: start;
+        height: 230px;
+        margin-left: 20px;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+
+        line-height: 1.4;
+        margin-left: 20px;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      /* ========================================== */
+      .company-logo {
+        width: 60pt;
+        height: 60pt;
+        background-color: #d9d9d9;
+        background-image: url(); /* enter company logo here */
+        border-radius: 100%;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 19pt;
+        color: #d94423; /* Color */
+
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 17.1pt;
+        color: #d94423; /* Color */
+        line-height: 1;
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .static-design1 {
+        position: absolute;
+        top: 0px;
+        right: 325px;
+        background-color: rgba(125, 34, 211, 0);
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 51.1%;
+        left: 169px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 455px;
+        height: 540px;
+      }
+
+      .static-design3 {
+        position: absolute;
+        left: 160px;
+        top: 880px;
+        z-index: 200;
+        width: 350px;
+        background-color: rgba(155, 84, 119, 0);
+      }
+      .static-design4 {
+        height: 90px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 12478912471849817491748918941794189472198;
+        position: absolute;
+        top: 88.2%;
+        left: 100px;
+      }
+
+      .year {
+        font-family: "Montserrat", sans-serif;
+
+        font-weight: 800;
+        font-size: 35pt;
+        color: #ffffff;
+        z-index: 200;
+        line-height: 1;
+        margin-bottom: 15px;
+        margin-left: 20px;
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+      .line {
+        display: block;
+        background-color: #ffffff;
+        width: 50%;
+        height: 8px;
+        margin-left: 20px;
+        margin-bottom: 70px;
+        z-index: 1;
+        content: "";
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- company logo -->
+      <div class="static-design1">
+        <div class="company-logo"></div>
+        <div class="Company-name1">Logo</div>
+        <div class="Company-name2">Company</div>
+      </div>
+
+      <!-- Headline -->
+
+      <div class="static-design2">
+        <div class="sub-headline">Sustainability Report</div>
+        <div class="headline">
+          LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET
+        </div>
+
+        <div class="line"></div>
+        <div class="year">2024 / 2025</div>
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+          egestas tortor.
+        </div>
+      </div>
+
+      <!-- year -->
+
+      <!-- main text -->
+
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2001_2)">
+          <mask
+            id="mask0_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="126"
+            y="331"
+            width="343"
+            height="510"
+          >
+            <path
+              d="M126.636 331.261H468.638V840.75H126.636V331.261Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_2001_2)">
+            <path
+              d="M126.636 331.261H468.638V840.528H126.636V331.261Z"
+              fill="#D94423"
+            />
+          </g>
+          <mask
+            id="mask1_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="595"
+            height="421"
+          >
+            <path d="M0.515625 0H594.446V420.445H0.515625V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask1_2001_2)">
+            <mask
+              id="mask2_2001_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="-10"
+              y="0"
+              width="615"
+              height="421"
+            >
+              <path
+                d="M604.493 0V365.864L297.637 420.445L-9.21826 365.864V0H604.493Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask2_2001_2)">
+              <rect
+                x="-17.4268"
+                width="630.327"
+                height="420.446"
+                fill="url(#pattern0_2001_2)"
+              />
+            </g>
+          </g>
+
+          <g mask="url(#mask3_2001_2) " opacity="0.85">
+            <mask
+              id="mask4_2001_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="216"
+              y="0"
+              width="164"
+              height="124"
+            >
+              <path d="M379.951 0H216.088V123.963H379.951V0Z" fill="white" />
+            </mask>
+            <g mask="url(#mask4_2001_2)">
+              <mask
+                id="mask5_2001_2"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="216"
+                y="0"
+                width="164"
+                height="124"
+              >
+                <path d="M216.178 0H379.057V123.432H216.178V0Z" fill="white" />
+              </mask>
+              <g mask="url(#mask5_2001_2)">
+                <mask
+                  id="mask6_2001_2"
+                  style="mask-type: luminance"
+                  maskUnits="userSpaceOnUse"
+                  x="216"
+                  y="0"
+                  width="164"
+                  height="124"
+                >
+                  <path
+                    d="M379.057 95.9285V0H216.209V95.9285L297.633 123.432L379.057 95.9285Z"
+                    fill="white"
+                  />
+                </mask>
+                <g mask="url(#mask6_2001_2)">
+                  <path
+                    d="M379.057 0V123.432H216.178V0H379.057Z"
+                    fill="white"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+          <mask
+            id="mask7_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="497"
+            y="565"
+            width="77"
+            height="49"
+          >
+            <path
+              d="M497.212 565.145H573.581V613.818H497.212V565.145Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask7_2001_2)">
+            <path
+              d="M506.688 613.24C506.832 613.384 507.004 613.459 507.207 613.459C507.41 613.459 507.586 613.384 507.726 613.24L535.32 585.631L562.914 613.24C563.059 613.388 563.23 613.459 563.433 613.455C563.636 613.459 563.808 613.384 563.952 613.24L573.21 603.977C573.355 603.836 573.429 603.661 573.429 603.458C573.429 603.255 573.355 603.083 573.21 602.938L535.839 565.543C535.699 565.399 535.523 565.328 535.32 565.328C535.117 565.328 534.946 565.399 534.801 565.543L497.426 602.938C497.282 603.083 497.212 603.255 497.212 603.458C497.212 603.661 497.282 603.836 497.426 603.977L506.688 613.24ZM535.32 567.101L571.653 603.458L563.433 611.686L535.839 584.077C535.695 583.932 535.523 583.862 535.32 583.858C535.117 583.858 534.946 583.932 534.801 584.077L507.207 611.686L498.984 603.458L535.32 567.101Z"
+              fill="#F27C38"
+            />
+          </g>
+          <mask
+            id="mask8_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="497"
+            y="620"
+            width="77"
+            height="50"
+          >
+            <path
+              d="M497.212 620.816H573.581V669.801H497.212V620.816Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask8_2001_2)">
+            <path
+              d="M535.839 621.448C535.695 621.304 535.523 621.234 535.32 621.234C535.117 621.234 534.946 621.304 534.801 621.448L497.426 658.843C497.282 658.984 497.212 659.16 497.212 659.363C497.212 659.566 497.282 659.738 497.426 659.882L506.688 669.149C506.832 669.29 507.008 669.36 507.207 669.36C507.41 669.36 507.582 669.29 507.726 669.149L535.32 641.54L562.914 669.149C563.059 669.293 563.23 669.364 563.433 669.364C563.636 669.364 563.808 669.29 563.952 669.149L573.21 659.882C573.355 659.738 573.429 659.566 573.429 659.363C573.429 659.16 573.355 658.984 573.21 658.843L535.839 621.448ZM563.433 667.591L535.839 639.982C535.699 639.837 535.523 639.767 535.32 639.767C535.117 639.763 534.946 639.837 534.801 639.982L507.207 667.591L498.984 659.363L535.32 623.01L571.653 659.363L563.433 667.591Z"
+              fill="#F27C38"
+            />
+          </g>
+          <mask
+            id="mask9_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="497"
+            y="676"
+            width="77"
+            height="50"
+          >
+            <path
+              d="M497.212 676.799H573.581V725.785H497.212V676.799Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask9_2001_2)">
+            <path
+              d="M535.839 677.354C535.699 677.209 535.523 677.139 535.32 677.139C535.117 677.139 534.946 677.209 534.801 677.354L497.426 714.749C497.282 714.893 497.212 715.065 497.212 715.268C497.212 715.471 497.286 715.643 497.426 715.787L506.688 725.05C506.832 725.195 507.004 725.269 507.207 725.269C507.41 725.269 507.586 725.195 507.726 725.05L535.32 697.441L562.914 725.05C563.059 725.199 563.23 725.269 563.433 725.269C563.636 725.269 563.808 725.195 563.952 725.05L573.21 715.787C573.355 715.643 573.425 715.471 573.425 715.268C573.425 715.065 573.355 714.893 573.21 714.749L535.839 677.354ZM563.433 723.496L535.839 695.887C535.695 695.743 535.523 695.672 535.32 695.672C535.117 695.668 534.946 695.743 534.801 695.887L507.207 723.496L498.984 715.268L535.32 678.916L571.653 715.276L563.433 723.496Z"
+              fill="#F27C38"
+            />
+          </g>
+          <mask
+            id="mask10_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="497"
+            y="732"
+            width="77"
+            height="50"
+          >
+            <path
+              d="M497.212 732.782H573.581V781.639H497.212V732.782Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask10_2001_2)">
+            <path
+              d="M535.839 733.263C535.699 733.118 535.523 733.044 535.32 733.044C535.117 733.044 534.946 733.118 534.801 733.263L497.426 770.654C497.286 770.798 497.212 770.97 497.212 771.173C497.212 771.376 497.282 771.548 497.426 771.693L506.688 780.96C506.832 781.1 507.008 781.174 507.207 781.174C507.41 781.174 507.582 781.1 507.726 780.96L535.32 753.335L562.914 780.944C563.059 781.088 563.23 781.163 563.433 781.163C563.636 781.159 563.808 781.088 563.952 780.944L573.21 771.677C573.355 771.533 573.425 771.361 573.425 771.158C573.425 770.955 573.355 770.783 573.21 770.638L535.839 733.263ZM563.433 779.401L535.839 751.792C535.699 751.648 535.523 751.578 535.32 751.578C535.117 751.578 534.946 751.648 534.801 751.792L507.207 779.401L498.984 771.173L535.32 734.821L571.653 771.173L563.433 779.401Z"
+              fill="#F27C38"
+            />
+          </g>
+          <mask
+            id="mask11_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="21"
+            y="441"
+            width="78"
+            height="50"
+          >
+            <path
+              d="M21.6853 441.869H98.0547V490.448H21.6853V441.869Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask11_2001_2)">
+            <path
+              d="M88.5743 442.349C88.4299 442.205 88.2581 442.134 88.0552 442.134C87.8522 442.134 87.6805 442.205 87.5361 442.349L59.9421 469.958L32.3481 442.349C32.2076 442.205 32.0359 442.134 31.829 442.134C31.6261 442.134 31.4543 442.205 31.3138 442.349L22.0521 451.616C21.9077 451.757 21.8374 451.928 21.8374 452.131C21.8374 452.338 21.9077 452.51 22.0521 452.651L59.423 490.05C59.5674 490.194 59.7391 490.265 59.9421 490.265C60.1451 490.265 60.3207 490.194 60.4612 490.05L97.836 452.651C97.9804 452.51 98.0546 452.338 98.0546 452.131C98.0546 451.928 97.9804 451.757 97.836 451.616L88.5743 442.349ZM59.9421 488.492L23.6094 452.131L31.829 443.907L59.423 471.516C59.5674 471.657 59.743 471.731 59.9421 471.731C60.1451 471.731 60.3207 471.661 60.4612 471.516L88.0552 443.907L96.2827 452.131L59.9421 488.492Z"
+              fill="white"
+            />
+          </g>
+          <mask
+            id="mask12_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="21"
+            y="385"
+            width="78"
+            height="50"
+          >
+            <path
+              d="M21.6853 385.885H98.0547V434.871H21.6853V385.885Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask12_2001_2)">
+            <path
+              d="M59.423 434.145C59.5674 434.289 59.743 434.359 59.9421 434.359C60.1451 434.359 60.3168 434.289 60.4612 434.145L97.836 396.749C97.9804 396.605 98.0546 396.433 98.0546 396.23C98.0546 396.027 97.9804 395.855 97.836 395.711L88.5743 386.444C88.4299 386.299 88.2581 386.229 88.0552 386.229C87.8522 386.229 87.6805 386.299 87.5361 386.444L59.9421 414.053L32.3481 386.444C32.2076 386.299 32.032 386.229 31.829 386.229C31.63 386.229 31.4543 386.299 31.3138 386.444L22.0521 395.711C21.9077 395.855 21.8374 396.027 21.8374 396.23C21.8374 396.433 21.9077 396.605 22.0521 396.749L59.423 434.145ZM31.829 387.998L59.423 415.607C59.5674 415.752 59.7391 415.826 59.9421 415.826C60.149 415.826 60.3207 415.756 60.4612 415.607L88.0552 387.998L96.2827 396.23L59.9421 432.583L23.6094 396.23L31.829 387.998Z"
+              fill="white"
+            />
+          </g>
+          <mask
+            id="mask13_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="21"
+            y="329"
+            width="78"
+            height="50"
+          >
+            <path
+              d="M21.6853 329.902H98.0547V378.888H21.6853V329.902Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask13_2001_2)">
+            <path
+              d="M59.423 378.235C59.5674 378.38 59.7391 378.454 59.9421 378.454C60.1451 378.454 60.3207 378.38 60.4612 378.235L97.836 340.84C97.9804 340.7 98.0546 340.524 98.0546 340.321C98.0507 340.122 97.9804 339.946 97.836 339.802L88.5743 330.539C88.4299 330.394 88.2581 330.324 88.0552 330.324C87.8522 330.324 87.6805 330.394 87.5361 330.539L59.9421 358.148L32.3481 330.539C32.2076 330.394 32.0359 330.32 31.829 330.324C31.6261 330.324 31.4543 330.394 31.3138 330.539L22.0521 339.802C21.9116 339.946 21.8413 340.122 21.8374 340.321C21.8374 340.524 21.9116 340.7 22.0521 340.84L59.423 378.235ZM31.829 332.097L59.423 359.706C59.5674 359.846 59.743 359.921 59.9421 359.921C60.1451 359.921 60.3207 359.85 60.4612 359.706L88.0552 332.097L96.2827 340.321L59.9421 376.677L23.6094 340.317L31.829 332.097Z"
+              fill="white"
+            />
+          </g>
+          <mask
+            id="mask14_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="21"
+            y="273"
+            width="78"
+            height="50"
+          >
+            <path
+              d="M21.6853 273.954H98.0547V322.904H21.6853V273.954Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask14_2001_2)">
+            <path
+              d="M59.423 322.33C59.5674 322.475 59.7391 322.545 59.9421 322.545C60.1451 322.545 60.3207 322.475 60.4612 322.33L97.836 284.939C97.9804 284.794 98.0507 284.623 98.0546 284.42C98.0546 284.216 97.9804 284.045 97.836 283.9L88.5743 274.633C88.4299 274.489 88.2581 274.419 88.0552 274.419C87.8522 274.419 87.6805 274.489 87.5361 274.633L59.9421 302.254L32.3481 274.645C32.2076 274.504 32.032 274.43 31.829 274.43C31.63 274.434 31.4543 274.504 31.3138 274.645L22.0521 283.916C21.9116 284.056 21.8374 284.232 21.8374 284.435C21.8413 284.634 21.9116 284.81 22.0521 284.955L59.423 322.33ZM31.829 276.188L59.423 303.797C59.5674 303.941 59.7391 304.015 59.9421 304.011C60.149 304.015 60.3207 303.945 60.4612 303.797L88.0552 276.188L96.2827 284.42L59.9421 320.772L23.6094 284.42L31.829 276.188Z"
+              fill="white"
+            />
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2001_2"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2001_2"
+              transform="scale(0.00017138 0.000257069)"
+            />
+          </pattern>
+          <clipPath id="clip0_2001_2">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2001_2"
+            width="5835"
+            height="3890"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2075%20-%20Grey%20Orange%20White%20Arrows%20Simple%20Modern/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

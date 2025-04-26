@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>divider 01</title>
+    <style>
+      :root {
+        --color-design-bg-color: #d51f1f;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 45pt;
+        color: #000000;
+        line-height: 1.11;
+        text-align: start;
+
+        /* text-shadow: 4px 4px 1px rgba(0, 0, 0, 0.5);  */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .divider-num {
+        font-family: "Montserrat", sans-serif;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+
+        font-weight: 700;
+        font-size: 100pt;
+        color: #d51f1f;
+        line-height: 1;
+        text-align: center;
+        position: absolute;
+        top: 70px;
+        left: 200px;
+        z-index: 23132;
+        background-color: rgba(255, 105, 180, 0);
+        width: 205px;
+        height: 206px;
+      }
+
+      .static-styling1 {
+        display: flex;
+        position: absolute;
+        top: 790px;
+        left: 230px;
+
+        align-items: center; /* Center vertically */
+        width: 450px;
+        background-color: rgba(255, 0, 212, 0);
+        z-index: 20000;
+        height: 300px;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <div class="divider-num">
+        <!-- change divider number here -->
+        01
+      </div>
+      <div class="static-styling1">
+        <div class="headline">
+          <!-- change title here -->
+          Ikhtisar Kinerja Keberlanjutan
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2013_40568"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="151"
+          y="59"
+          width="385"
+          height="782"
+        >
+          <path
+            d="M151.107 59.455H535.335V840.75H151.107V59.455Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2013_40568)">
+          <path
+            d="M151.107 59.455H535.335V840.344H151.107V59.455Z"
+            fill="white"
+          />
+        </g>
+        <mask
+          id="mask1_2013_40568"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="198"
+          width="536"
+          height="394"
+        >
+          <path
+            d="M0.515625 198.101H535.285V591.707H0.515625V198.101Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask1_2013_40568)">
+          <rect
+            x="-27.1196"
+            y="198.101"
+            width="590.088"
+            height="393.608"
+            fill="url(#pattern0_2013_40568)"
+          />
+        </g>
+        <mask
+          id="mask2_2013_40568"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="150"
+          y="58"
+          width="386"
+          height="784"
+        >
+          <path
+            d="M150.144 58.9825H535.819V841.25H150.144V58.9825Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2013_40568)" opacity="0.7">
+          <g mask="url(#mask3_2013_40568)">
+            <mask
+              id="mask4_2013_40568"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="150"
+              y="58"
+              width="386"
+              height="784"
+            >
+              <path
+                d="M535.819 58.9825H150.144V841.75H535.819V58.9825Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask4_2013_40568)">
+              <mask
+                id="mask5_2013_40568"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="151"
+                y="59"
+                width="385"
+                height="782"
+              >
+                <path
+                  d="M151.107 59.455H535.335V840.75H151.107V59.455Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask5_2013_40568)">
+                <path
+                  d="M151.107 59.455H535.335V840.344H151.107V59.455Z"
+                  fill="white"
+                />
+              </g>
+            </g>
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2013_40568"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2013_40568"
+              transform="scale(0.000189573 0.000284333)"
+            />
+          </pattern>
+          <image
+            id="image0_2013_40568"
+            width="5275"
+            height="3517"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2078%20-%20Red%20White%20Black%20Square%20Modern%20Clean/divider%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

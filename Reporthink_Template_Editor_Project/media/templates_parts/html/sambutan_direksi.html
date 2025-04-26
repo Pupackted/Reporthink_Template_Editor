@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>sambutan direksi</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        font-size: 28pt;
+        color: #ffffff; /* Color */
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 15px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto;
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2;
+        column-gap: 40px;
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto;
+      }
+      .ceo-name {
+        font-family: "Open Sans", sans-serif;
+
+        font-weight: bold;
+        font-size: 17.3pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+        text-align: start;
+        margin-left: 80px;
+        line-height: 1.11;
+      }
+      .ceo-pos {
+        font-family: "Open Sans", sans-serif;
+
+        font-weight: normal;
+        font-size: 13.8pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+        text-align: start;
+        margin-left: 80px;
+        line-height: 1.11;
+      }
+
+      .main-column {
+        height: 650px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 350px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-styling2 {
+        position: absolute;
+        top: 85px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+      .line {
+        width: 240px;
+        height: 8px;
+        background-color: #87cc1d;
+        z-index: 3000;
+        margin-left: 80px;
+        margin-bottom: 30px;
+      }
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- main texts -->
+      <div class="static-styling2">
+        <div class="headline">SAMBUTAN<br />DIREKSI</div>
+        <div class="ceo-name">Taylor Alonso</div>
+        <div class="ceo-pos">Founder Of Company</div>
+      </div>
+
+      <div class="static-styling1">
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam, ornare eu bibendum ac, luctus id
+                arcu. Donec in gravida nunc.
+              </p>
+            </div>
+
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2016_63325)">
+          <mask
+            id="mask0_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="35"
+            width="271"
+            height="157"
+          >
+            <path
+              d="M0.515625 35.958H270.753V191.673H0.515625V35.958Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_2016_63325)">
+            <path
+              d="M0.515625 35.958H271.046V191.673H0.515625V35.958Z"
+              fill="#D51F1F"
+            />
+          </g>
+          <mask
+            id="mask1_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="214"
+            y="0"
+            width="381"
+            height="228"
+          >
+            <path d="M214.09 0H594.447V227.632H214.09V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask1_2016_63325)">
+            <rect
+              x="213.852"
+              y="-13.2227"
+              width="381.256"
+              height="254.309"
+              fill="url(#pattern0_2016_63325)"
+            />
+          </g>
+          <mask
+            id="mask2_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="34"
+            width="312"
+            height="158"
+          >
+            <path
+              d="M0.515625 34.9893H311.009V191.943H0.515625V34.9893Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask2_2016_63325)" opacity="0.8">
+            <g mask="url(#mask3_2016_63325)">
+              <mask
+                id="mask4_2016_63325"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="34"
+                width="312"
+                height="158"
+              >
+                <path
+                  d="M311.008 34.9893H0.269531V191.943H311.008V34.9893Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask4_2016_63325)">
+                <mask
+                  id="mask5_2016_63325"
+                  style="mask-type: luminance"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="35"
+                  width="310"
+                  height="157"
+                >
+                  <path
+                    d="M0.515625 35.958H309.686V191.673H0.515625V35.958Z"
+                    fill="white"
+                  />
+                </mask>
+                <g mask="url(#mask5_2016_63325)">
+                  <path
+                    d="M0.515625 35.958H309.955V191.673H0.515625V35.958Z"
+                    fill="#D51F1F"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+          <mask
+            id="mask6_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="549"
+            y="764"
+            width="35"
+            height="77"
+          >
+            <path
+              d="M549.835 764.555H583.959V840.891H549.835V764.555Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask6_2016_63325)">
+            <path
+              d="M549.835 764.555H583.959V840.845H549.835V764.555Z"
+              fill="#D51F1F"
+            />
+          </g>
+          <mask
+            id="mask7_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="504"
+            y="739"
+            width="35"
+            height="77"
+          >
+            <path
+              d="M504.682 739.472H538.805V815.808H504.682V739.472Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask7_2016_63325)">
+            <path
+              d="M504.682 739.472H538.805V815.762H504.682V739.472Z"
+              fill="#D51F1F"
+            />
+          </g>
+
+          <g mask="url(#mask8_2016_63325)" opacity="0.81">
+            <mask
+              id="mask9_2016_63325"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="503"
+              y="738"
+              width="37"
+              height="79"
+            >
+              <path
+                d="M539.816 738.78H503.847V816.757H539.816V738.78Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask9_2016_63325)">
+              <mask
+                id="mask10_2016_63325"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="504"
+                y="739"
+                width="35"
+                height="77"
+              >
+                <path
+                  d="M504.682 739.472H538.806V815.808H504.682V739.472Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask10_2016_63325)">
+                <path
+                  d="M504.682 739.472H538.806V815.762H504.682V739.472Z"
+                  fill="#D51F1F"
+                />
+              </g>
+            </g>
+          </g>
+          <mask
+            id="mask11_2016_63325"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="548"
+            y="763"
+            width="37"
+            height="79"
+          >
+            <path
+              d="M548.809 763.773H584.778V841.25H548.809V763.773Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask11_2016_63325)" opacity="0.8">
+            <g mask="url(#mask12_2016_63325)">
+              <mask
+                id="mask13_2016_63325"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="548"
+                y="763"
+                width="37"
+                height="79"
+              >
+                <path
+                  d="M584.778 763.773H548.809V841.75H584.778V763.773Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask13_2016_63325)">
+                <mask
+                  id="mask14_2016_63325"
+                  style="mask-type: luminance"
+                  maskUnits="userSpaceOnUse"
+                  x="549"
+                  y="764"
+                  width="35"
+                  height="77"
+                >
+                  <path
+                    d="M549.835 764.555H583.959V840.891H549.835V764.555Z"
+                    fill="white"
+                  />
+                </mask>
+                <g mask="url(#mask14_2016_63325)">
+                  <path
+                    d="M549.835 764.555H583.959V840.845H549.835V764.555Z"
+                    fill="#D51F1F"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2016_63325"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2016_63325"
+              transform="scale(0.000333333 0.0005)"
+            />
+          </pattern>
+          <clipPath id="clip0_2016_63325">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2016_63325"
+            width="3000"
+            height="2000"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2078%20-%20Red%20White%20Black%20Square%20Modern%20Clean/direksi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

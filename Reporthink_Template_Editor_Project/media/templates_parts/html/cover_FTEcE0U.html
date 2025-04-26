@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #ffffff;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 30pt;
+        color: #ffffff;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+        text-align: start;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+
+        line-height: 1.4;
+
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      /* ========================================== */
+      .company-logo {
+        width: 60pt;
+        height: 60pt;
+        background-color: #d9d9d9;
+        background-image: url(); /* enter company logo here */
+        border-radius: 100%;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 19pt;
+        color: #000000; /* Color */
+
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 17.1pt;
+        color: #000000; /* Color */
+        line-height: 1;
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .static-design1 {
+        position: absolute;
+        top: 80px;
+        right: 40px;
+        background-color: rgba(137, 43, 226, 0);
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 40%;
+        left: 110px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 450px;
+        height: 400px;
+      }
+
+      .static-design3 {
+        position: absolute;
+        left: 110px;
+        top: 880px;
+        z-index: 200;
+        width: 350px;
+        background-color: rgba(155, 84, 119, 0);
+      }
+      .static-design4 {
+        height: 90px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 12478912471849817491748918941794189472198;
+        position: absolute;
+        top: 88.2%;
+        left: 100px;
+      }
+
+      .year {
+        font-family: "Montserrat", sans-serif;
+        position: absolute;
+        left: 600px;
+        bottom: 145px;
+        font-weight: 800;
+        font-size: 40pt;
+        color: #000000;
+        z-index: 200;
+        line-height: 1;
+
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+      .line {
+        display: block;
+        background-color: #351b59;
+        width: 65%;
+        height: 8px;
+        margin-top: 25px;
+        margin-bottom: 22px;
+        z-index: 1;
+        content: "";
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- company logo -->
+      <div class="static-design1">
+        <div class="company-logo"></div>
+        <div class="Company-name1">Logo</div>
+        <div class="Company-name2">Company</div>
+      </div>
+
+      <!-- Headline -->
+
+      <div class="static-design2">
+        <div class="sub-headline">Sustainability Report</div>
+        <div class="headline">
+          LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET
+        </div>
+      </div>
+
+      <!-- year -->
+      <div class="year">2024<br />2025</div>
+      <div class="static-design3">
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+          egestas tortor.
+        </div>
+      </div>
+      <!-- main text -->
+
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2013_38234)">
+          <mask
+            id="mask0_2013_38234"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="59"
+            y="59"
+            width="330"
+            height="723"
+          >
+            <path
+              d="M59.9385 59.4551H388.58V781.436H59.9385V59.4551Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_2013_38234)">
+            <path
+              d="M59.9385 59.4551H388.58V781.315H59.9385V59.4551Z"
+              fill="#D51F1F"
+            />
+          </g>
+          <mask
+            id="mask1_2013_38234"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="59"
+            y="198"
+            width="536"
+            height="394"
+          >
+            <path
+              d="M59.9385 198.102H594.446V591.707H59.9385V198.102Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2013_38234)">
+            <rect
+              x="6.10938"
+              y="198.101"
+              width="591.625"
+              height="393.605"
+              fill="url(#pattern0_2013_38234)"
+            />
+          </g>
+
+          <g mask="url(#mask2_2013_38234)" opacity="0.8">
+            <mask
+              id="mask3_2013_38234"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="59"
+              y="58"
+              width="330"
+              height="725"
+            >
+              <path
+                d="M388.943 58.9824H59.2202V782.768H388.943V58.9824Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask3_2013_38234)">
+              <mask
+                id="mask4_2013_38234"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="59"
+                y="59"
+                width="330"
+                height="723"
+              >
+                <path
+                  d="M59.9385 59.4551H388.58V781.436H59.9385V59.4551Z"
+                  fill="white"
+                />
+              </mask>
+              <g mask="url(#mask4_2013_38234)">
+                <path
+                  d="M59.9385 59.4551H388.58V781.315H59.9385V59.4551Z"
+                  fill="#D51F1F"
+                />
+              </g>
+            </g>
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2013_38234"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2013_38234"
+              transform="scale(0.000183688 0.000276091)"
+            />
+          </pattern>
+          <clipPath id="clip0_2013_38234">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2013_38234"
+            width="5444"
+            height="3622"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/Template%2078%20-%20Red%20White%20Black%20Square%20Modern%20Clean/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

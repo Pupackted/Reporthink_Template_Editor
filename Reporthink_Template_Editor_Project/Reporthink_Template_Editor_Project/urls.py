@@ -24,6 +24,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("", include("Template_Editor_App.urls")),  # Include the main app's URLs
     path("Template_Editor_App/", include("Template_Editor_App.urls")),
+  
 ]
 
 
