@@ -827,6 +827,10 @@ select {
   z-index: 99999999999999999999999999999999;
 }
 
+.z-\[9999999999\] {
+  z-index: 9999999999;
+}
+
 .mx-24 {
   margin-left: 6rem;
   margin-right: 6rem;
@@ -855,6 +859,11 @@ select {
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mb-4 {
@@ -993,6 +1002,14 @@ select {
   height: 100%;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
+.h-44 {
+  height: 11rem;
+}
+
 .max-h-\[80vh\] {
   max-height: 80vh;
 }
@@ -1043,6 +1060,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[800px\] {
+  width: 800px;
 }
 
 .min-w-20 {

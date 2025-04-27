@@ -222,60 +222,22 @@
           class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999999999999999999999999999999999999] hidden"
         >
           <div class="inline-block bg-white shadow-lg p-6 rounded-xl">
-            <h2 class="mb-4 font-semibold text-lg">Select Template Parts</h2>
+            <h2 class="font-semibold text-lg">Select Template Parts</h2>
 
-            <div class="gap-4 grid grid-cols-4">
-              <!-- Option 1 -->
+            <!-- Option 1 -->
+            <div id="popup-options" class="gap-4 grid grid-cols-4 my-4">
+              {% for part in parts %}
               <button
-                class="flex flex-col items-center mb-4 option-btn"
-                data-text="Cover"
+                class="flex flex-col items-center option-btn"
+                data-text="{{ part.name }}"
               >
                 <img
-                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
-                  alt="Template Image"
-                  class="border-[#B7E546] border-2 rounded-[10px] w-auto h-40 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
+                  src="{{ part.thumbnail.url }}"
+                  alt="{{ part.name }}"
+                  class="border-2 border-gray-300 rounded-[10px] w-auto h-44 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
                 />
-                <span class="mt-2 font-medium text-black">Cover</span>
               </button>
-
-              <!-- Option 2 -->
-              <button
-                class="flex flex-col items-center mb-4 option-btn"
-                data-text="Daftar Isi"
-              >
-                <img
-                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/daftar%20isi%201.png"
-                  alt="Other Template"
-                  class="border-2 border-gray-300 rounded-[10px] w-auto h-40 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
-                />
-                <span class="mt-2 font-medium text-black">Daftar Isi</span>
-              </button>
-              <!-- Option 3 -->
-              <button
-                class="flex flex-col items-center mb-4 option-btn"
-                data-text="Divider"
-              >
-                <img
-                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/divider%201.png"
-                  alt="Other Template"
-                  class="border-2 border-gray-300 rounded-[10px] w-auto h-40 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
-                />
-                <span class="mt-2 font-medium text-black">Divider</span>
-              </button>
-              <!-- Option 4 -->
-              <button
-                class="flex flex-col items-center mb-4 option-btn"
-                data-text="1C text Image"
-              >
-                <img
-                  src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2080%20-%20Green%20and%20Yellow%20Modern%20Company%20Profile%20Booklet/thumbnails/isi%201C%20text%20image.png"
-                  alt="Other Template"
-                  class="border-2 border-gray-300 rounded-[10px] w-auto h-40 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
-                />
-                <span class="mt-2 font-medium text-black"
-                  >Isi 1C text Image</span
-                >
-              </button>
+              {% endfor %}
             </div>
 
             <!-- Close Modal -->
@@ -293,6 +255,7 @@
       </div>
     </div>
     <!-- page viewer end -->
+
     <!-- page number and zoom part -->
     <div class="flex w-full h-10">
       <div class="ml-24 font-bold text-gray-700 text-2xl text-center">
@@ -332,16 +295,56 @@
   </div>
   <!-- pop up (modal script) -->
   <script>
-    const openBtn = document.getElementById("open-popup");
-    const closeBtn = document.getElementById("close-popup");
-    const popup = document.getElementById("popup-window");
+    document.addEventListener("DOMContentLoaded", function () {
+      const openBtn = document.getElementById("open-popup");
+      const closeBtn = document.getElementById("close-popup");
+      const popup = document.getElementById("popup-window");
+      const previewBar = openBtn.parentElement; // the flex container where the thumbnails are
+      const editableArea = document.getElementById("editable-area");
 
-    openBtn.addEventListener("click", () => {
-      popup.classList.remove("hidden");
-    });
+      openBtn.addEventListener("click", () => {
+        popup.classList.remove("hidden");
+      });
 
-    closeBtn.addEventListener("click", () => {
-      popup.classList.add("hidden");
+      closeBtn.addEventListener("click", () => {
+        popup.classList.add("hidden");
+      });
+
+      // Function to create a new thumbnail button
+      function createThumbnail(selectedText, selectedImageSrc) {
+        const newThumbnail = document.createElement("button");
+        newThumbnail.className = "flex flex-col items-center option-btn";
+        newThumbnail.setAttribute("data-text", selectedText);
+        newThumbnail.innerHTML = `
+          <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
+        `;
+
+        // When clicking this thumbnail, change the editable area
+        newThumbnail.addEventListener("click", function () {
+          editableArea.innerHTML = `<h1 class="text-2xl font-bold">${selectedText}</h1>`;
+        });
+
+        return newThumbnail;
+      }
+
+      // Handle clicking on any template part inside the popup
+      document.querySelectorAll("#popup-window .option-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const selectedText = this.getAttribute("data-text");
+          const selectedImageSrc =
+            this.querySelector("img").getAttribute("src");
+
+          // 1. Add thumbnail to the preview bar (before the plus button)
+          const newThumbnail = createThumbnail(selectedText, selectedImageSrc);
+          previewBar.insertBefore(newThumbnail, openBtn);
+
+          // 2. Replace the main editable area content immediately
+          editableArea.innerHTML = `<h1 class="text-2xl font-bold">${selectedText}</h1>`;
+
+          // 3. Close the popup
+          popup.classList.add("hidden");
+        });
+      });
     });
   </script>
 

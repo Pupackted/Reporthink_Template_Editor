@@ -111,14 +111,16 @@ def edit_template_view(request, template_id):
     except FileNotFoundError:
         return HttpResponse("HTML file not found.", status=404)
 
+    parts = template.parts.all()  # Get all parts related to this template
+
     context = {
         'template': template,
         'cover_part': cover_part,
-        'html_content': html_content,  # <- Pass the content here
+        'html_content': html_content,
+        'parts': parts,  # Pass the parts
     }
 
     return render(request, 'edit-template.html', context)
-
 
 
 def edit_template_part(request, part_id):
