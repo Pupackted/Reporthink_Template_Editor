@@ -185,7 +185,129 @@
         {% if html_content %} {{ html_content|safe }} {% else %}
         <p>No cover page selected for this template.</p>
         {% endif %}
+
+        <!-- TOOLBAR -->
+        <div
+          id="text-toolbar"
+          class="hidden absolute bg-white/75 backdrop-blur-md border border-gray-300 rounded-xl p-3 shadow-lg z-[1000] flex gap-2 items-center justify-center"
+        >
+          <select
+            onchange="applyFont(this.value)"
+            class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
+          >
+            <option value="Open Sans">Open Sans</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Arial">Arial</option>
+          </select>
+
+          <select
+            onchange="applyFontSize(this.value)"
+            class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
+          >
+            <option value="3">Normal</option>
+            <option value="1">Small</option>
+            <option value="5">Large</option>
+            <option value="7">Huge</option>
+          </select>
+
+          <button
+            onclick="execCmd('bold')"
+            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            B
+          </button>
+          <button
+            onclick="execCmd('italic')"
+            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            I
+          </button>
+          <button
+            onclick="execCmd('underline')"
+            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            U
+          </button>
+          <button
+            onclick="execCmd('strikeThrough')"
+            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            S
+          </button>
+
+          <button
+            onclick="execCmd('justifyLeft')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            Left
+          </button>
+          <button
+            onclick="execCmd('justifyCenter')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            Center
+          </button>
+          <button
+            onclick="execCmd('justifyRight')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            Right
+          </button>
+
+          <button
+            onclick="execCmd('insertUnorderedList')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            • List
+          </button>
+          <button
+            onclick="execCmd('insertOrderedList')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            1. List
+          </button>
+
+          <input
+            type="color"
+            title="Text Color"
+            onchange="execCmd('foreColor', this.value)"
+            class="w-8 border-none p-0 rounded-md cursor-pointer"
+          />
+
+          <input
+            type="color"
+            title="Background Color"
+            onchange="execCmd('hiliteColor', this.value)"
+            class="w-8 border-none p-0 rounded-md cursor-pointer"
+          />
+
+          <button
+            onclick="execCmd('removeFormat')"
+            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+          >
+            Clear Styling
+          </button>
+        </div>
+        <!-- TOOLBAR END -->
+
+        <!-- Color Picker -->
+        <input
+          type="color"
+          id="colorPicker"
+          style="position: absolute; display: none; z-index: 1000"
+        />
+
+        <!-- Color Picker end -->
       </div>
+
+      <!-- Image upload-->
+      <input
+        type="file"
+        id="imageUploader"
+        accept="image/*"
+        style="display: none"
+      />
+      <!-- Image upload end-->
     </div>
 
     <!-- main stuff end-->
@@ -347,6 +469,7 @@
       });
     });
   </script>
+  <!-- pop up (modal script) end -->
 
   <!-- zoom slider script -->
   <script>
@@ -396,6 +519,142 @@
       setScale(e.target.value);
     });
   </script>
-  <!-- zoom slider script -->
+  <!-- zoom slider script end -->
+
+  <!-- text editor toolbar script -->
+
+  <script>
+    let currentEditable = null;
+    const toolbar = document.getElementById("text-toolbar");
+
+    document.addEventListener("mousedown", function (e) {
+      const clickedInsideToolbar = toolbar.contains(e.target);
+      const clickedEditable = e.target.closest("[contenteditable]");
+
+      if (!clickedInsideToolbar && !clickedEditable) {
+        // Hide toolbar when clicking outside both
+        toolbar.style.display = "none";
+        currentEditable = null;
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      const editable = e.target.closest("[contenteditable]");
+
+      if (editable) {
+        currentEditable = editable;
+
+        // Position the toolbar near the element
+        const rect = currentEditable.getBoundingClientRect();
+        toolbar.style.display = "block";
+        toolbar.style.top = `${window.scrollY + rect.top - 105}px`;
+        toolbar.style.left = `${window.scrollX + rect.left - 200}px`;
+
+        // Refocus to enable editing again
+        currentEditable.focus();
+      }
+    });
+
+    function execCmd(command, value = null) {
+      if (currentEditable) {
+        currentEditable.focus();
+        document.execCommand(command, false, value);
+      }
+    }
+
+    function applyFont(font) {
+      execCmd("fontName", font);
+    }
+    function applyFontSize(size) {
+      execCmd("fontSize", size);
+    }
+  </script>
+
+  <!-- text editor toolbar script end -->
+
+  <!-- Edit Image  -->
+  <!-- Company Logo  -->
+  <script>
+    function uploadLogo(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const label = input.parentElement;
+        label.style.backgroundImage = `url(${e.target.result})`;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  </script>
+  <!-- Company Logo end -->
+  <!-- Edit Image  end -->
+
+  <!-- ColorPicker -->
+  <script>
+    const colorPicker = document.getElementById("colorPicker");
+
+    document.querySelectorAll(".clickable-fill").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        const rect = element.getBoundingClientRect();
+
+        // Position the color picker near the clicked element
+        colorPicker.style.left = `${rect.left + window.scrollX + 10}px`;
+        colorPicker.style.top = `${rect.top + window.scrollY + 10}px`;
+
+        // Show the color picker
+        colorPicker.style.display = "block";
+
+        // Listen for color changes
+        colorPicker.oninput = (e) => {
+          element.setAttribute("fill", e.target.value);
+        };
+
+        // Optional: Hide picker after selecting a color
+        colorPicker.onchange = () => {
+          colorPicker.style.display = "none";
+        };
+      });
+    });
+
+    // Optional: Hide color picker if user clicks outside
+    document.addEventListener("click", (e) => {
+      if (
+        !e.target.classList.contains("clickable-fill") &&
+        e.target !== colorPicker
+      ) {
+        colorPicker.style.display = "none";
+      }
+    });
+  </script>
+
+  <!-- ColorPicker end -->
+
+  <!-- Image upload -->
+  <script>
+    const imageUploader = document.getElementById("imageUploader");
+    const svgImage = document.getElementById("image0_2001_2");
+    const bobLayer = document.querySelector('g[mask="url(#mask1_2001_2)"]');
+
+    bobLayer.addEventListener("click", () => {
+      imageUploader.click();
+    });
+
+    imageUploader.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        svgImage.setAttribute("xlink:href", e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+  <!-- Image upload end -->
 </body>
 {% endblock %}
