@@ -115,10 +115,7 @@
 
       <div class="flex ml-auto">
         <!-- download as pdf -->
-        <a
-          href="https://drive.google.com/file/d/1eDtIsgFL5Esl7qf2AN8I7bRoZ41iPJYv/view?usp=sharing"
-          download="Nahida_Report.pdf"
-        >
+        <button id="generatePdfButton">
           <div
             class="flex justify-center items-center space-x-2 bg-white hover:bg-green-500 px-4 py-2 border-[#808080] border-2 hover:border-green-500 rounded-[20px] h-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer"
           >
@@ -138,7 +135,8 @@
             </svg>
             <span>Download as PDF</span>
           </div>
-        </a>
+        </button>
+
         <!-- download as pdf end -->
       </div>
       <!-- save button -->
@@ -719,5 +717,44 @@
     });
   </script>
   <!-- BG color end -->
+  <!-- PDF downloader -->
+  <!-- JS Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const generatePdfButton = document.getElementById("generatePdfButton");
+
+      if (!generatePdfButton) return;
+
+      generatePdfButton.addEventListener("click", async () => {
+        const element = document.getElementById("templateContent");
+
+        if (!element) {
+          console.warn("No element with id 'templateContent'");
+          return;
+        }
+
+        // Use html2canvas from global (already loaded via CDN)
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL("image/png");
+
+        // jsPDF is available under window.jspdf
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("template.pdf");
+      });
+    });
+  </script>
+
+  <!-- PDF downloader -->
 </body>
 {% endblock %}
