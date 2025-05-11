@@ -168,9 +168,29 @@
       </a>
       <!-- save button end -->
     </div>
-    <div class="flex justify-center">
+
+    <div class="flex justify-center mb-1">
       <div class="flex justify-start items-center w-[210mm] text-xl gap-auto">
         <span class="mr-auto">Page 1 / 2 - Cover Page</span>
+        <!-- Change BG color-->
+
+        <label for="bgColorPicker" class="flex items-center gap-2">
+          <div
+            class="relative w-6 h-6 mr-4 rounded-full overflow-hidden shadow ring-1 ring-gray-300 hover:ring-blue-400 transition"
+          >
+            <input
+              type="color"
+              id="bgColorPicker"
+              class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div
+              class="pointer-events-none w-full h-full rounded-full"
+              id="colorDisplay"
+            ></div>
+          </div>
+        </label>
+
+        <!-- Change BG color end-->
         <button>
           <img
             class="w-5 h-5"
@@ -182,9 +202,11 @@
     </div>
     <div class="flex justify-center mx-24 p-0 overflow-scroll no-scrollbar">
       <div id="editable-area">
-        {% if html_content %} {{ html_content|safe }} {% else %}
-        <p>No cover page selected for this template.</p>
-        {% endif %}
+        <div id="templateContent">
+          {% if html_content %} {{ html_content|safe }} {% else %}
+          <p>No cover page selected for this template.</p>
+          {% endif %}
+        </div>
 
         <!-- TOOLBAR -->
         <div
@@ -656,5 +678,46 @@
     });
   </script>
   <!-- Image upload end -->
+
+  <!-- BG color  -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const colorPicker = document.getElementById("bgColorPicker");
+      const targetElement = document.querySelector(".background");
+      const colorDisplay = document.getElementById("colorDisplay");
+
+      if (!colorPicker || !targetElement || !colorDisplay) {
+        console.warn("Missing elements.");
+        return;
+      }
+
+      const currentBgColor = getComputedStyle(targetElement)
+        .getPropertyValue("--color-design-bg-color")
+        .trim();
+
+      function rgbToHex(rgb) {
+        const result = rgb.match(/\d+/g).map((num) => {
+          const hex = parseInt(num).toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        });
+        return `#${result.join("")}`;
+      }
+
+      let hexColor = currentBgColor;
+      if (currentBgColor.startsWith("rgb")) {
+        hexColor = rgbToHex(currentBgColor);
+      }
+
+      colorPicker.value = hexColor;
+      colorDisplay.style.backgroundColor = hexColor;
+
+      colorPicker.addEventListener("input", (e) => {
+        const newColor = e.target.value;
+        colorDisplay.style.backgroundColor = newColor;
+        targetElement.style.setProperty("--color-design-bg-color", newColor);
+      });
+    });
+  </script>
+  <!-- BG color end -->
 </body>
 {% endblock %}
