@@ -455,7 +455,6 @@
   <!-- JS Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const openBtn = document.getElementById("open-popup");
@@ -468,12 +467,11 @@
       let currentSelectedId = null;
       const loadedPages = [];
 
+      // Save only the inner HTML of the page
       function saveCurrentPageHtml() {
         const currentPageEl = editableArea.querySelector(".template-page");
         if (!currentPageEl || !currentSelectedId) return;
-
-        const html = currentPageEl.outerHTML;
-
+        const html = currentPageEl.innerHTML;
         const index = loadedPages.findIndex(
           (page) => page.id === currentSelectedId
         );
@@ -482,20 +480,24 @@
         }
       }
 
+      // Add a new page only if it doesn't already exist
       function addPageToLoadedPages(id, html) {
         const index = loadedPages.findIndex((page) => page.id === id);
-        if (index !== -1) {
-          // Update existing page HTML
-          loadedPages[index].html = html;
-        } else {
-          // Add new page
+        if (index === -1) {
           loadedPages.push({ id, html });
         }
+        // If it exists, do NOT add or overwrite here! Edits are only saved via saveCurrentPageHtml()
       }
 
       function generateUniqueId(base) {
-        const count = loadedPages.filter((p) => p.id.startsWith(base)).length;
-        return `${base}-${count + 1}`;
+        // Only count pages that start with the base and are not already in loadedPages
+        let count = 0;
+        let id;
+        do {
+          count++;
+          id = `${base}-${count}`;
+        } while (loadedPages.some((p) => p.id === id));
+        return id;
       }
 
       function selectThumbnail(thumbnailElement) {
@@ -512,26 +514,30 @@
           const htmlUrl = thumbnail.getAttribute("data-html-url");
 
           saveCurrentPageHtml();
-
           currentSelectedId = partId;
 
           const found = loadedPages.find((p) => p.id === partId);
 
           if (found) {
-            editableArea.innerHTML = found.html;
+            editableArea.innerHTML = `
+          <div class="template-page">
+            ${found.html}
+          </div>
+        `;
             initBackgroundColorPicker();
             initImageUploader();
             initPdfDownloader();
           } else {
+            // This should never happen, but for safety:
             fetch(htmlUrl)
               .then((res) => res.text())
               .then((html) => {
-                addPageToLoadedPages(partId, html);
+                // addPageToLoadedPages(partId, html);
                 editableArea.innerHTML = `
-                <div class="template-page">
-                  ${html}
-                </div>
-              `;
+              <div class="template-page">
+                ${html}
+              </div>
+            `;
                 initBackgroundColorPicker();
                 initImageUploader();
                 initPdfDownloader();
@@ -541,7 +547,6 @@
                 console.error("Error loading HTML file:", err);
               });
           }
-
           selectThumbnail(thumbnail);
         });
       }
@@ -552,8 +557,8 @@
         newThumbnail.setAttribute("data-text", selectedText);
         newThumbnail.setAttribute("data-html-url", htmlFileUrl);
         newThumbnail.innerHTML = `
-        <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
-      `;
+      <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
+    `;
         attachThumbnailClickListener(newThumbnail);
         return newThumbnail;
       }
@@ -595,15 +600,12 @@
             .then((res) => res.text())
             .then((html) => {
               addPageToLoadedPages(selectedText, html);
-
               editableArea.innerHTML = `
-              <div class="template-page">
-                ${html}
-              </div>
-            `;
-
+            <div class="template-page">
+              ${html}
+            </div>
+          `;
               currentSelectedId = selectedText;
-
               initBackgroundColorPicker();
               initImageUploader();
               initPdfDownloader();
@@ -631,10 +633,7 @@
 
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF();
-          console.log(
-            "Pages to export:",
-            loadedPages.map((p) => p.id)
-          );
+          saveCurrentPageHtml();
           // Create a temporary hidden wrapper
           const tempContainer = document.createElement("div");
           tempContainer.style.position = "fixed";
@@ -643,16 +642,7 @@
           document.body.appendChild(tempContainer);
 
           for (let i = 0; i < loadedPages.length; i++) {
-            // loadedPages[i].html is already a .outerHTML string, so we need only the inner content
-            // Remove the outer .template-page if present
-            let html = loadedPages[i].html;
-            // If html starts with <div class="template-page">...</div>, strip the outer div
-            if (html.startsWith('<div class="template-page"')) {
-              const tempDiv = document.createElement("div");
-              tempDiv.innerHTML = html;
-              html = tempDiv.firstChild.innerHTML;
-            }
-
+            const html = loadedPages[i].html;
             const pageDiv = document.createElement("div");
             pageDiv.className = "template-page";
             pageDiv.innerHTML = html;
@@ -675,10 +665,9 @@
           pdf.save("template.pdf");
         });
       }
-
       // ---- END PDF DOWNLOADER ----
 
-      // Optionally, call this once on page load
+      // Call once on page load
       initPdfDownloader();
     });
   </script>
