@@ -11,6 +11,10 @@
 
         background-attachment: local;
       }
+      .ring {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 1);
+        border-radius: 0.5rem; /* same as your image */
+      }
     </style>
 
     <!--  -->
@@ -200,10 +204,18 @@
     </div>
     <div class="flex justify-center mx-24 p-0 overflow-scroll no-scrollbar">
       <div id="editable-area">
+        {% comment %}
         <div id="templateContent">
           {% if html_content %} {{ html_content|safe }} {% else %}
           <p>No cover page selected for this template.</p>
           {% endif %}
+        </div>
+        {% endcomment %}
+        <div
+          id="templateContent"
+          class="text-gray-500 italic text-center p-8 template-page"
+        >
+          Please select a template part to begin editing.
         </div>
 
         <!-- TOOLBAR -->
@@ -339,12 +351,14 @@
       >
         <!-- Option 1 -->
         <button class="flex flex-col items-center option-btn" data-text="Cover">
+          {% comment %}
           <img
             src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
             alt="Template Image"
             class="border-[#B7E546] border-2 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
           />
         </button>
+        {% endcomment %}
         <!-- option 1 end -->
 
         <!-- plus button -->
@@ -366,12 +380,13 @@
           <div class="inline-block bg-white shadow-lg p-6 rounded-xl">
             <h2 class="font-semibold text-lg">Select Template Parts</h2>
 
-            <!-- Option 1 -->
+            <!-- Option -->
             <div id="popup-options" class="gap-4 grid grid-cols-4 my-4">
               {% for part in parts %}
               <button
                 class="flex flex-col items-center option-btn"
                 data-text="{{ part.name }}"
+                data-html-url="{{ part.html_file.url }}"
               >
                 <img
                   src="{{ part.thumbnail.url }}"
@@ -381,6 +396,7 @@
               </button>
               {% endfor %}
             </div>
+            <!-- Option end -->
 
             <!-- Close Modal -->
             <button
@@ -435,60 +451,214 @@
     <!--  -->
     <!--  -->
   </div>
-  <!-- pop up (modal script) -->
+
+  <!-- PDF downloader -->
+  <!-- JS Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- <script>
+    function initPdfDownloader() {
+      const oldButton = document.getElementById("generatePdfButton");
+
+      if (!oldButton) return;
+
+      const newButton = oldButton.cloneNode(true);
+      oldButton.replaceWith(newButton);
+
+      newButton.addEventListener("click", async () => {
+        const element = document.getElementById("templateContent");
+        if (!element) return;
+
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL("image/png");
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("template.pdf");
+      });
+    }
+  </script> -->
+
   <script>
+    function initPdfDownloader() {
+      const oldButton = document.getElementById("generatePdfButton");
+      if (!oldButton) return;
+
+      const newButton = oldButton.cloneNode(true);
+      oldButton.replaceWith(newButton);
+
+      newButton.addEventListener("click", async () => {
+        if (loadedPages.length === 0) return;
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        // Create a temporary hidden wrapper
+        const tempContainer = document.createElement("div");
+        tempContainer.style.position = "fixed";
+        tempContainer.style.top = "-9999px";
+        tempContainer.style.width = "800px"; // optional, just to force A4 layout look
+        document.body.appendChild(tempContainer);
+
+        for (let i = 0; i < loadedPages.length; i++) {
+          const html = loadedPages[i].html;
+          const pageDiv = document.createElement("div");
+          pageDiv.className = "template-page";
+          pageDiv.innerHTML = html;
+          tempContainer.appendChild(pageDiv);
+
+          const canvas = await html2canvas(pageDiv);
+          const imgData = canvas.toDataURL("image/png");
+
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+          if (i > 0) pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+          tempContainer.removeChild(pageDiv); // clean up
+        }
+
+        document.body.removeChild(tempContainer); // final clean-up
+        pdf.save("template.pdf");
+      });
+    }
+  </script>
+
+  <!-- PDF downloader end -->
+  <!-- pop up (modal script) -->
+
+  <script>
+    // STEP 1: Initialize the loadedPages array to store added pages
+    const loadedPages = []; // Each item will be { id: 'cover', html: '<div>...</div>' }
+
+    // STEP 2 (revised): Allow duplicates intentionally
+    function addPageToLoadedPages(id, html) {
+      loadedPages.push({ id, html });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       const openBtn = document.getElementById("open-popup");
       const closeBtn = document.getElementById("close-popup");
       const popup = document.getElementById("popup-window");
-      const previewBar = openBtn.parentElement; // the flex container where the thumbnails are
+      const previewBar = openBtn.parentElement;
       const editableArea = document.getElementById("editable-area");
 
+      let currentSelectedThumbnail = null; // Track the currently selected thumbnail
+
+      // OPEN POPUP
       openBtn.addEventListener("click", () => {
         popup.classList.remove("hidden");
       });
 
+      // CLOSE POPUP
       closeBtn.addEventListener("click", () => {
         popup.classList.add("hidden");
       });
 
-      // Function to create a new thumbnail button
-      function createThumbnail(selectedText, selectedImageSrc) {
+      // Handles highlighting the currently selected thumbnail
+      function selectThumbnail(thumbnailElement) {
+        if (currentSelectedThumbnail) {
+          currentSelectedThumbnail.classList.remove("ring", "ring-red-500");
+        }
+        thumbnailElement.classList.add("ring", "ring-red-500");
+        currentSelectedThumbnail = thumbnailElement;
+      }
+
+      // Creates a new thumbnail button and attaches click behavior
+      function createThumbnail(selectedText, selectedImageSrc, htmlFileUrl) {
         const newThumbnail = document.createElement("button");
         newThumbnail.className = "flex flex-col items-center option-btn";
         newThumbnail.setAttribute("data-text", selectedText);
+        newThumbnail.setAttribute("data-html-url", htmlFileUrl);
         newThumbnail.innerHTML = `
-          <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
-        `;
+        <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
+      `;
 
-        // When clicking this thumbnail, change the editable area
+        // When user clicks a thumbnail, load its content
         newThumbnail.addEventListener("click", function () {
-          editableArea.innerHTML = `<h1 class="text-2xl font-bold">${selectedText}</h1>`;
+          const htmlUrl = newThumbnail.getAttribute("data-html-url");
+          const partId = newThumbnail.getAttribute("data-text");
+
+          fetch(htmlUrl)
+            .then((res) => res.text())
+            .then((html) => {
+              // STEP 3: Add the page to loadedPages[] safely
+              addPageToLoadedPages(partId, html);
+
+              // Show only this page in the editable area
+              editableArea.innerHTML = `
+              <div class="template-page">
+                ${html}
+              </div>
+            `;
+
+              initBackgroundColorPicker();
+              initImageUploader();
+              initPdfDownloader();
+            });
+
+          selectThumbnail(newThumbnail); // Highlight the selected thumbnail
         });
 
         return newThumbnail;
       }
 
-      // Handle clicking on any template part inside the popup
+      // On click of popup option (template part), add it to preview and editable area
       document.querySelectorAll("#popup-window .option-btn").forEach((btn) => {
         btn.addEventListener("click", function () {
           const selectedText = this.getAttribute("data-text");
           const selectedImageSrc =
             this.querySelector("img").getAttribute("src");
+          const htmlFileUrl = this.getAttribute("data-html-url");
 
-          // 1. Add thumbnail to the preview bar (before the plus button)
-          const newThumbnail = createThumbnail(selectedText, selectedImageSrc);
+          // Create the thumbnail and add to preview bar
+          const newThumbnail = createThumbnail(
+            selectedText,
+            selectedImageSrc,
+            htmlFileUrl
+          );
           previewBar.insertBefore(newThumbnail, openBtn);
 
-          // 2. Replace the main editable area content immediately
-          editableArea.innerHTML = `<h1 class="text-2xl font-bold">${selectedText}</h1>`;
+          // Load the template content and show in editor
+          fetch(htmlFileUrl)
+            .then((res) => res.text())
+            .then((html) => {
+              // STEP 3 (again): Add to loadedPages[] immediately on insert
+              addPageToLoadedPages(selectedText, html);
 
-          // 3. Close the popup
-          popup.classList.add("hidden");
+              // Show the page in the editable area
+              editableArea.innerHTML = `
+              <div class="template-page">
+                ${html}
+              </div>
+            `;
+
+              initBackgroundColorPicker();
+              initImageUploader();
+              initPdfDownloader();
+            })
+            .catch((err) => {
+              editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
+              console.error("Error loading HTML file:", err);
+            });
+
+          popup.classList.add("hidden"); // Hide the popup
+          selectThumbnail(newThumbnail); // Highlight the new one
         });
       });
     });
   </script>
+
   <!-- pop up (modal script) end -->
 
   <!-- zoom slider script -->
@@ -652,40 +822,45 @@
 
   <!-- ColorPicker end -->
 
-  <!-- Image upload -->
   <script>
-    const imageUploader = document.getElementById("imageUploader");
-    const svgImage = document.getElementById("image0_2001_2");
-    const bobLayer = document.querySelector('g[mask="url(#mask1_2001_2)"]');
+    function initImageUploader() {
+      const imageUploader = document.getElementById("imageUploader");
+      const svgImage = document.getElementById("image0_2001_2");
+      const bobLayer = document.querySelector('g[mask="url(#mask1_2001_2)"]');
 
-    bobLayer.addEventListener("click", () => {
-      imageUploader.click();
-    });
+      if (!imageUploader || !svgImage || !bobLayer) {
+        console.warn("Missing image upload elements.");
+        return;
+      }
 
-    imageUploader.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
+      bobLayer.addEventListener("click", () => {
+        imageUploader.click();
+      });
 
-      const reader = new FileReader();
+      imageUploader.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
 
-      reader.onload = function (e) {
-        svgImage.setAttribute("xlink:href", e.target.result);
-      };
+        const reader = new FileReader();
 
-      reader.readAsDataURL(file);
-    });
+        reader.onload = function (e) {
+          svgImage.setAttribute("xlink:href", e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
   </script>
-  <!-- Image upload end -->
 
   <!-- BG color  -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    function initBackgroundColorPicker() {
       const colorPicker = document.getElementById("bgColorPicker");
       const targetElement = document.querySelector(".background");
       const colorDisplay = document.getElementById("colorDisplay");
 
       if (!colorPicker || !targetElement || !colorDisplay) {
-        console.warn("Missing elements.");
+        console.warn("Missing elements for BG color picker.");
         return;
       }
 
@@ -714,47 +889,8 @@
         colorDisplay.style.backgroundColor = newColor;
         targetElement.style.setProperty("--color-design-bg-color", newColor);
       });
-    });
+    }
   </script>
   <!-- BG color end -->
-  <!-- PDF downloader -->
-  <!-- JS Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const generatePdfButton = document.getElementById("generatePdfButton");
-
-      if (!generatePdfButton) return;
-
-      generatePdfButton.addEventListener("click", async () => {
-        const element = document.getElementById("templateContent");
-
-        if (!element) {
-          console.warn("No element with id 'templateContent'");
-          return;
-        }
-
-        // Use html2canvas from global (already loaded via CDN)
-        const canvas = await html2canvas(element);
-        const imgData = canvas.toDataURL("image/png");
-
-        // jsPDF is available under window.jspdf
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("template.pdf");
-      });
-    });
-  </script>
-
-  <!-- PDF downloader -->
 </body>
 {% endblock %}
