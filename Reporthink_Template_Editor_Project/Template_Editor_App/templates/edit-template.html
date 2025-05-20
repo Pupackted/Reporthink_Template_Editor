@@ -217,119 +217,6 @@
         >
           Please select a template part to begin editing.
         </div>
-
-        <!-- TOOLBAR -->
-        <div
-          id="text-toolbar"
-          class="hidden absolute bg-white/75 backdrop-blur-md border border-gray-300 rounded-xl p-3 shadow-lg z-[1000] flex gap-2 items-center justify-center"
-        >
-          <select
-            onchange="applyFont(this.value)"
-            class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
-          >
-            <option value="Open Sans">Open Sans</option>
-            <option value="Montserrat">Montserrat</option>
-            <option value="Arial">Arial</option>
-          </select>
-
-          <select
-            onchange="applyFontSize(this.value)"
-            class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
-          >
-            <option value="3">Normal</option>
-            <option value="1">Small</option>
-            <option value="5">Large</option>
-            <option value="7">Huge</option>
-          </select>
-
-          <button
-            onclick="execCmd('bold')"
-            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            B
-          </button>
-          <button
-            onclick="execCmd('italic')"
-            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            I
-          </button>
-          <button
-            onclick="execCmd('underline')"
-            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            U
-          </button>
-          <button
-            onclick="execCmd('strikeThrough')"
-            class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            S
-          </button>
-
-          <button
-            onclick="execCmd('justifyLeft')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            Left
-          </button>
-          <button
-            onclick="execCmd('justifyCenter')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            Center
-          </button>
-          <button
-            onclick="execCmd('justifyRight')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            Right
-          </button>
-
-          <button
-            onclick="execCmd('insertUnorderedList')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            • List
-          </button>
-          <button
-            onclick="execCmd('insertOrderedList')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            1. List
-          </button>
-
-          <input
-            type="color"
-            title="Text Color"
-            onchange="execCmd('foreColor', this.value)"
-            class="w-8 border-none p-0 rounded-md cursor-pointer"
-          />
-
-          <input
-            type="color"
-            title="Background Color"
-            onchange="execCmd('hiliteColor', this.value)"
-            class="w-8 border-none p-0 rounded-md cursor-pointer"
-          />
-
-          <button
-            onclick="execCmd('removeFormat')"
-            class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-          >
-            Clear Styling
-          </button>
-        </div>
-        <!-- TOOLBAR END -->
-
-        <!-- Color Picker -->
-        <input
-          type="color"
-          id="colorPicker"
-          style="position: absolute; display: none; z-index: 1000"
-        />
-
-        <!-- Color Picker end -->
       </div>
 
       <!-- Image upload-->
@@ -443,6 +330,142 @@
       <!-- zoom slider end -->
     </div>
     <!-- page number and zoom part end -->
+    <!-- TOOLBAR -->
+    <div
+      id="text-toolbar"
+      class="absolute bg-white/75 backdrop-blur-md border border-gray-300 rounded-xl px-3 py-1 shadow-lg z-[999999999999999] flex gap-2 items-center justify-center min-h-[4rem]"
+    >
+      <select
+        onchange="applyFont(this.value)"
+        class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
+      >
+        <option value="Open Sans">Open Sans</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Arial">Arial</option>
+      </select>
+
+      <select
+        onchange="applyFontSize(this.value)"
+        class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
+      >
+        <option value="3">Normal</option>
+        <option value="1">Small</option>
+        <option value="5">Large</option>
+        <option value="7">Huge</option>
+      </select>
+
+      <button
+        onclick="execCmd('bold')"
+        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        B
+      </button>
+      <button
+        onclick="execCmd('italic')"
+        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        I
+      </button>
+      <button
+        onclick="execCmd('underline')"
+        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        U
+      </button>
+      <button
+        onclick="execCmd('strikeThrough')"
+        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        S
+      </button>
+
+      <button
+        onclick="execCmd('justifyLeft')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        Left
+      </button>
+      <button
+        onclick="execCmd('justifyCenter')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        Center
+      </button>
+      <button
+        onclick="execCmd('justifyRight')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        Right
+      </button>
+
+      <button
+        onclick="execCmd('insertUnorderedList')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        • List
+      </button>
+      <button
+        onclick="execCmd('insertOrderedList')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        1. List
+      </button>
+
+      <!-- Text Color Picker -->
+      <div class="relative inline-block top-2">
+        <input
+          type="color"
+          id="textColorPicker"
+          title="Text Color"
+          class="opacity-0 w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out absolute"
+          style="z-index: 10"
+          oninput="execCmd('foreColor', this.value)"
+        />
+        <div
+          id="textColorSwatch"
+          class="w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out"
+          title="Pick Text Color"
+        ></div>
+      </div>
+
+      <!-- Background Color Picker -->
+      <div class="relative inline-block top-2">
+        <input
+          type="color"
+          id="txtbgColorPicker"
+          title="Background Color"
+          class="opacity-0 w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out absolute"
+          style="z-index: 10"
+          oninput="execCmd('hiliteColor', this.value)"
+        />
+        <div
+          id="bgColorSwatch"
+          class="w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out"
+          title="Pick Background Color"
+        ></div>
+      </div>
+
+      <button
+        onclick="execCmd('removeFormat')"
+        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
+      >
+        Clear Styling
+      </button>
+    </div>
+    <!-- TOOLBAR END -->
+    <!-- Color Picker -->
+
+    <!-- Hidden native color input -->
+    <input type="color" id="colorPicker" />
+
+    <!-- Custom color swatch -->
+    <div
+      id="colorSwatch"
+      class="w-12 h-12 rounded-full border-4 border-white shadow-md cursor-pointer transition-shadow duration-300 ease-in-out hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500 z-[999999]"
+      title="Pick a color"
+    ></div>
+
+    <!-- Color Picker end -->
 
     <!--  -->
     <!--  -->
@@ -452,7 +475,203 @@
     <!--  -->
   </div>
 
-  <!-- JS Libraries -->
+  <!-- text toolbar (working)-->
+  <script>
+    // Text toolbar logic as a function
+    function initTextToolbar() {
+      console.log("Toolbar initialized");
+      const toolbar = document.getElementById("text-toolbar");
+      if (!toolbar) return;
+
+      let currentEditable = null;
+
+      // Hide toolbar initially
+      toolbar.style.display = "none";
+
+      // Remove any previous listeners by cloning the toolbar (prevents stacking listeners)
+      const newToolbar = toolbar.cloneNode(true);
+      toolbar.parentNode.replaceChild(newToolbar, toolbar);
+
+      // Hide toolbar when clicking outside toolbar or editable elements
+      document.addEventListener("mousedown", function (e) {
+        const clickedInsideToolbar = newToolbar.contains(e.target);
+        const clickedEditable = e.target.closest("[contenteditable]");
+
+        if (!clickedInsideToolbar && !clickedEditable) {
+          newToolbar.style.display = "none";
+          currentEditable = null;
+        }
+      });
+
+      // Show toolbar when clicking on editable elements
+      document.addEventListener("click", function (e) {
+        console.log("Click event fired on:", e.target);
+        const editable = e.target.closest("[contenteditable]");
+        if (editable) {
+          currentEditable = editable;
+
+          // Position the toolbar near the editable element
+          const rect = currentEditable.getBoundingClientRect();
+          newToolbar.style.display = "block";
+          newToolbar.style.position = "absolute";
+          newToolbar.style.top = `${window.scrollY + rect.top - 105}px`;
+          newToolbar.style.left = `${window.scrollX + rect.left - 200}px`;
+
+          // Refocus to enable editing again
+          currentEditable.focus();
+        }
+      });
+
+      // Expose execCmd globally for toolbar buttons
+      window.execCmd = function (command, value = null) {
+        if (currentEditable) {
+          currentEditable.focus();
+          document.execCommand(command, false, value);
+        }
+      };
+      window.applyFont = function (font) {
+        window.execCmd("fontName", font);
+      };
+      window.applyFontSize = function (size) {
+        window.execCmd("fontSize", size);
+      };
+
+      // Find color pickers and swatches
+      const textColorPicker = document.getElementById("textColorPicker");
+      const textColorSwatch = document.getElementById("textColorSwatch");
+      const txtbgColorPicker = document.getElementById("txtbgColorPicker");
+      const bgColorSwatch = document.getElementById("bgColorSwatch");
+
+      // Check if elements exist
+      if (
+        !textColorPicker ||
+        !textColorSwatch ||
+        !txtbgColorPicker ||
+        !bgColorSwatch
+      ) {
+        console.warn("Missing color picker or swatch elements in toolbar.");
+        return;
+      }
+
+      // Initialize swatch colors
+      textColorSwatch.style.backgroundColor =
+        textColorPicker.value || "#000000";
+      bgColorSwatch.style.backgroundColor = bgColorPicker.value || "#ffffff";
+
+      // When swatch is clicked, trigger the native color picker
+      textColorSwatch.addEventListener("click", () => {
+        textColorPicker.click();
+      });
+
+      bgColorSwatch.addEventListener("click", () => {
+        txtbgColorPicker.click();
+      });
+
+      // When native color picker changes, update swatch background
+      textColorPicker.addEventListener("input", (e) => {
+        textColorSwatch.style.backgroundColor = e.target.value;
+      });
+
+      txtbgColorPicker.addEventListener("input", (e) => {
+        bgColorSwatch.style.backgroundColor = e.target.value;
+      });
+    }
+  </script>
+
+  <!-- text toolbar end -->
+  <!-- ColorPicker -->
+  <script>
+    function initColorPicker() {
+      const colorPicker = document.getElementById("colorPicker");
+      const colorSwatch = document.getElementById("colorSwatch");
+
+      if (!colorPicker) {
+        console.warn("Color picker element (#colorPicker) not found.");
+        return;
+      }
+      if (!colorSwatch) {
+        console.warn("Color swatch element (#colorSwatch) not found.");
+        return;
+      }
+
+      // Hide native color input (it will be triggered by swatch)
+      colorPicker.style.position = "absolute";
+      colorPicker.style.opacity = 0;
+      colorPicker.style.width = "40px";
+      colorPicker.style.height = "40px";
+      colorPicker.style.cursor = "pointer";
+      colorPicker.style.zIndex = 1001;
+      colorPicker.style.display = "none"; // hidden initially
+
+      // Hide swatch initially
+      colorSwatch.style.display = "none";
+
+      let currentElement = null;
+
+      // When a clickable-fill element is clicked
+      const clickableElements = document.querySelectorAll(".clickable-fill");
+      if (clickableElements.length === 0) {
+        console.warn("No elements with class 'clickable-fill' found.");
+        return;
+      }
+
+      clickableElements.forEach((element) => {
+        element.addEventListener("click", () => {
+          currentElement = element;
+
+          const rect = element.getBoundingClientRect();
+
+          // Position the swatch near the clicked element
+          colorSwatch.style.position = "absolute";
+          colorSwatch.style.left = `${rect.left + window.scrollX + 10}px`;
+          colorSwatch.style.top = `${rect.top + window.scrollY + 40}px`;
+          colorSwatch.style.display = "block";
+
+          // Set swatch background to current fill color or default
+          const fillColor = element.getAttribute("fill") || "#000000";
+          colorSwatch.style.backgroundColor = fillColor;
+
+          // Position the native color input exactly over the swatch
+          colorPicker.style.left = colorSwatch.style.left;
+          colorPicker.style.top = colorSwatch.style.top;
+          colorPicker.style.display = "block";
+
+          // Set native color input's value to current fill color
+          colorPicker.value = fillColor;
+        });
+      });
+
+      // Clicking the swatch triggers native color input
+      colorSwatch.addEventListener("click", () => {
+        colorPicker.click();
+      });
+
+      // When native color input changes, update fill and swatch color
+      colorPicker.addEventListener("input", (e) => {
+        if (currentElement) {
+          currentElement.setAttribute("fill", e.target.value);
+          colorSwatch.style.backgroundColor = e.target.value;
+        }
+      });
+
+      // Hide color picker and swatch if clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !e.target.classList.contains("clickable-fill") &&
+          e.target !== colorSwatch &&
+          e.target !== colorPicker
+        ) {
+          colorSwatch.style.display = "none";
+          colorPicker.style.display = "none";
+          currentElement = null;
+        }
+      });
+    }
+  </script>
+
+  <!-- ColorPicker end -->
+
+  <!-- Modal popup and pdf downloader  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
@@ -523,10 +742,13 @@
           <div class="template-page">
             ${found.html}
           </div>
+          
         `;
             initBackgroundColorPicker();
             initImageUploader();
             initPdfDownloader();
+            initTextToolbar();
+            initColorPicker();
           } else {
             // This should never happen, but for safety:
             fetch(htmlUrl)
@@ -541,6 +763,8 @@
                 initBackgroundColorPicker();
                 initImageUploader();
                 initPdfDownloader();
+                initTextToolbar();
+                initColorPicker();
               })
               .catch((err) => {
                 editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
@@ -609,6 +833,8 @@
               initBackgroundColorPicker();
               initImageUploader();
               initPdfDownloader();
+              initTextToolbar();
+              initColorPicker();
             })
             .catch((err) => {
               editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
@@ -669,9 +895,11 @@
 
       // Call once on page load
       initPdfDownloader();
+      initTextToolbar();
+      initColorPicker();
     });
   </script>
-
+  <!-- Modal popup and pdf downloader end -->
   <!-- zoom slider script -->
   <script>
     const background = document.querySelector(".background");
@@ -722,59 +950,8 @@
   </script>
   <!-- zoom slider script end -->
 
-  <!-- text editor toolbar script -->
-
-  <script>
-    let currentEditable = null;
-    const toolbar = document.getElementById("text-toolbar");
-
-    document.addEventListener("mousedown", function (e) {
-      const clickedInsideToolbar = toolbar.contains(e.target);
-      const clickedEditable = e.target.closest("[contenteditable]");
-
-      if (!clickedInsideToolbar && !clickedEditable) {
-        // Hide toolbar when clicking outside both
-        toolbar.style.display = "none";
-        currentEditable = null;
-      }
-    });
-
-    document.addEventListener("click", function (e) {
-      const editable = e.target.closest("[contenteditable]");
-
-      if (editable) {
-        currentEditable = editable;
-
-        // Position the toolbar near the element
-        const rect = currentEditable.getBoundingClientRect();
-        toolbar.style.display = "block";
-        toolbar.style.top = `${window.scrollY + rect.top - 105}px`;
-        toolbar.style.left = `${window.scrollX + rect.left - 200}px`;
-
-        // Refocus to enable editing again
-        currentEditable.focus();
-      }
-    });
-
-    function execCmd(command, value = null) {
-      if (currentEditable) {
-        currentEditable.focus();
-        document.execCommand(command, false, value);
-      }
-    }
-
-    function applyFont(font) {
-      execCmd("fontName", font);
-    }
-    function applyFontSize(size) {
-      execCmd("fontSize", size);
-    }
-  </script>
-
-  <!-- text editor toolbar script end -->
-
   <!-- Edit Image  -->
-  <!-- Company Logo  -->
+  <!-- Company Logo (working) -->
   <script>
     function uploadLogo(input) {
       const file = input.files[0];
@@ -793,46 +970,7 @@
   <!-- Company Logo end -->
   <!-- Edit Image  end -->
 
-  <!-- ColorPicker -->
-  <script>
-    const colorPicker = document.getElementById("colorPicker");
-
-    document.querySelectorAll(".clickable-fill").forEach((element) => {
-      element.addEventListener("click", (event) => {
-        const rect = element.getBoundingClientRect();
-
-        // Position the color picker near the clicked element
-        colorPicker.style.left = `${rect.left + window.scrollX + 10}px`;
-        colorPicker.style.top = `${rect.top + window.scrollY + 10}px`;
-
-        // Show the color picker
-        colorPicker.style.display = "block";
-
-        // Listen for color changes
-        colorPicker.oninput = (e) => {
-          element.setAttribute("fill", e.target.value);
-        };
-
-        // Optional: Hide picker after selecting a color
-        colorPicker.onchange = () => {
-          colorPicker.style.display = "none";
-        };
-      });
-    });
-
-    // Optional: Hide color picker if user clicks outside
-    document.addEventListener("click", (e) => {
-      if (
-        !e.target.classList.contains("clickable-fill") &&
-        e.target !== colorPicker
-      ) {
-        colorPicker.style.display = "none";
-      }
-    });
-  </script>
-
-  <!-- ColorPicker end -->
-  <!-- image uploader -->
+  <!-- image uploader (working)-->
   <script>
     function initImageUploader() {
       const imageUploader = document.getElementById("imageUploader");
@@ -863,7 +1001,7 @@
     }
   </script>
   <!-- image uploader end -->
-  <!-- BG color  -->
+  <!-- BG color (working) -->
   <script>
     function initBackgroundColorPicker() {
       const colorPicker = document.getElementById("bgColorPicker");
@@ -902,6 +1040,7 @@
       });
     }
   </script>
+
   <!-- BG color end -->
 </body>
 {% endblock %}
