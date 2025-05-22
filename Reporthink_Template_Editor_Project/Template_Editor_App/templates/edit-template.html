@@ -15,6 +15,42 @@
         box-shadow: 0 0 0 3px rgba(239, 68, 68, 1);
         border-radius: 0.5rem; /* same as your image */
       }
+
+      #zoom-slider {
+        width: 120px;
+        height: 5px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #d3d3d3; /* grey track */
+        border-radius: 5px;
+        outline: none;
+      }
+
+      /* Chrome, Edge, Safari */
+      #zoom-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        background: #000000; /* black thumb */
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      /* Firefox */
+      #zoom-slider::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        background: #000000;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+      }
+
+      #zoom-slider::-moz-range-track {
+        background: #d3d3d3;
+        border-radius: 5px;
+      }
     </style>
 
     <!--  -->
@@ -173,7 +209,8 @@
 
     <div class="flex justify-center mb-1">
       <div class="flex justify-start items-center w-[210mm] text-xl gap-auto">
-        <span class="mr-auto">Page 1 / 2 - Cover Page</span>
+        <span id="page-indicator-top" class="mr-auto font-bold"></span>
+
         <!-- Change BG color-->
 
         <label for="bgColorPicker" class="flex items-center gap-2">
@@ -193,7 +230,7 @@
         </label>
 
         <!-- Change BG color end-->
-        <button>
+        <button id="delete-page-btn">
           <img
             class="w-5 h-5"
             src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/trash-512.png"
@@ -202,15 +239,8 @@
         </button>
       </div>
     </div>
-    <div class="flex justify-center mx-24 p-0 overflow-scroll no-scrollbar">
+    <div class="flex justify-center mx-4 p-0 overflow-scroll no-scrollbar">
       <div id="editable-area">
-        {% comment %}
-        <div id="templateContent">
-          {% if html_content %} {{ html_content|safe }} {% else %}
-          <p>No cover page selected for this template.</p>
-          {% endif %}
-        </div>
-        {% endcomment %}
         <div
           id="templateContent"
           class="text-gray-500 italic text-center p-8 template-page"
@@ -236,18 +266,6 @@
       <div
         class="flex justify-center items-center space-x-3 min-w-max h-32 pt-5"
       >
-        <!-- Option 1 -->
-        <button class="flex flex-col items-center option-btn" data-text="Cover">
-          {% comment %}
-          <img
-            src="https://s3-id-jkt-1.kilatstorage.id/reporthink/rpthink/cover-big.png"
-            alt="Template Image"
-            class="border-[#B7E546] border-2 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
-          />
-        </button>
-        {% endcomment %}
-        <!-- option 1 end -->
-
         <!-- plus button -->
         <!-- The Button -->
         <button
@@ -303,28 +321,23 @@
 
     <!-- page number and zoom part -->
     <div class="flex w-full h-10">
-      <div class="ml-24 font-bold text-gray-700 text-2xl text-center">
-        Page 1 / 2
-      </div>
+      <div
+        id="page-indicator-center"
+        class="ml-24 font-bold text-gray-700 text-2xl text-center"
+      ></div>
       <!-- zoom slider  -->
       <div class="flex items-center mr-24 ml-auto">
-        <!-- <button id="zoom-out"></button> -->
+        <button id="zoom-in"></button>
         <input
-          class="hover:scale-105 transition-all duration-100 ease-in-out"
-          style="width: 200px; height: 5px"
           id="zoom-slider"
           type="range"
           min="0.1"
           max="2"
           step="0.1"
-          value="2"
+          value="1"
         />
-        <button id="zoom-in">
-          <img
-            class="opacity-50 hover:opacity-100 ml-5 w-7 h-auto hover:scale-125 transition-all duration-100 ease-in-out"
-            src="https://img.icons8.com/ios/50/000000/zoom-in.png"
-          />
-        </button>
+
+        <button id="zoom-out"></button>
       </div>
 
       <!-- zoom slider end -->
@@ -681,10 +694,46 @@
       const popup = document.getElementById("popup-window");
       const previewBar = openBtn.parentElement;
       const editableArea = document.getElementById("editable-area");
+      const deleteBtn = document.getElementById("delete-page-btn");
 
       let currentSelectedThumbnail = null;
       let currentSelectedId = null;
       const loadedPages = [];
+      //delete page
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", function () {
+          if (!currentSelectedId) return;
+
+          // Remove from loadedPages
+          const index = loadedPages.findIndex(
+            (p) => p.id === currentSelectedId
+          );
+          if (index !== -1) loadedPages.splice(index, 1);
+
+          // Remove the thumbnail from the preview bar
+          const thumb = Array.from(previewBar.children).find(
+            (el) =>
+              el.getAttribute &&
+              el.getAttribute("data-text") === currentSelectedId
+          );
+          if (thumb) thumb.remove();
+
+          // Select another page or clear the editor
+          if (loadedPages.length > 0) {
+            const newIndex = index > 0 ? index - 1 : 0;
+            const newPageId = loadedPages[newIndex].id;
+            const newThumb = Array.from(previewBar.children).find(
+              (el) =>
+                el.getAttribute && el.getAttribute("data-text") === newPageId
+            );
+            if (newThumb) newThumb.click();
+          } else {
+            editableArea.innerHTML = `<div id="templateContent" class="text-gray-500 italic text-center p-8 template-page">Please select a template part to begin editing.</div>`;
+            currentSelectedId = null;
+          }
+          updatePageIndicator();
+        });
+      }
 
       // Save only the inner HTML of the page
       function saveCurrentPageHtml() {
@@ -772,7 +821,73 @@
               });
           }
           selectThumbnail(thumbnail);
+          updatePageIndicator();
         });
+      }
+
+      function attachThumbnailDragListeners(thumbnail) {
+        thumbnail.addEventListener("dragstart", function (e) {
+          e.dataTransfer.setData(
+            "text/plain",
+            thumbnail.getAttribute("data-text")
+          );
+          thumbnail.classList.add("opacity-50");
+        });
+
+        thumbnail.addEventListener("dragend", function (e) {
+          thumbnail.classList.remove("opacity-50");
+        });
+
+        thumbnail.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          thumbnail.classList.add("ring", "ring-blue-400");
+        });
+
+        thumbnail.addEventListener("dragleave", function (e) {
+          thumbnail.classList.remove("ring", "ring-blue-400");
+        });
+
+        thumbnail.addEventListener("drop", function (e) {
+          e.preventDefault();
+          thumbnail.classList.remove("ring", "ring-blue-400");
+          const draggedId = e.dataTransfer.getData("text/plain");
+          if (draggedId === thumbnail.getAttribute("data-text")) return; // Dropped on itself
+
+          // Find elements
+          const dragged = Array.from(previewBar.children).find(
+            (el) =>
+              el.getAttribute && el.getAttribute("data-text") === draggedId
+          );
+          if (!dragged) return;
+
+          // Move DOM node
+          previewBar.insertBefore(dragged, thumbnail);
+
+          // Update loadedPages order
+          reorderLoadedPages();
+
+          // Update indicators and selection if needed
+          updatePageIndicator();
+        });
+      }
+
+      // ==== reorder loadedPages based on the new order of thumbnails======
+      function reorderLoadedPages() {
+        // Get all thumbnail buttons in order, excluding the open-popup button
+        const orderedIds = Array.from(previewBar.children)
+          .filter((el) => el.classList && el.classList.contains("option-btn"))
+          .map((el) => el.getAttribute("data-text"));
+
+        // Reorder loadedPages to match the new order
+        const newLoadedPages = [];
+        orderedIds.forEach((id) => {
+          const page = loadedPages.find((p) => p.id === id);
+          if (page) newLoadedPages.push(page);
+        });
+
+        // Preserve reference
+        loadedPages.length = 0;
+        loadedPages.push(...newLoadedPages);
       }
 
       function createThumbnail(selectedText, selectedImageSrc, htmlFileUrl) {
@@ -780,17 +895,21 @@
         newThumbnail.className = "flex flex-col items-center option-btn";
         newThumbnail.setAttribute("data-text", selectedText);
         newThumbnail.setAttribute("data-html-url", htmlFileUrl);
+        newThumbnail.setAttribute("draggable", "true");
         newThumbnail.innerHTML = `
       <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
     `;
         attachThumbnailClickListener(newThumbnail);
+        attachThumbnailDragListeners(newThumbnail);
+
         return newThumbnail;
       }
 
       // Attach click listeners to any existing thumbnails in preview bar on page load
       const previewThumbnails = previewBar.querySelectorAll(".option-btn");
       previewThumbnails.forEach((thumbnail) => {
-        attachThumbnailClickListener(thumbnail);
+        attachThumbnailClickListener(thumbnail); // click listener
+        attachThumbnailDragListeners(thumbnail); // drag listeners
       });
 
       // OPEN POPUP
@@ -835,6 +954,7 @@
               initPdfDownloader();
               initTextToolbar();
               initColorPicker();
+              updatePageIndicator(); // Initialize the page indicator
             })
             .catch((err) => {
               editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
@@ -893,57 +1013,78 @@
       }
       // ---- END PDF DOWNLOADER ----
 
+      // ------ page counter ---------
+      function updatePageIndicator() {
+        const indicatorTop = document.getElementById("page-indicator-top");
+        const indicatorCenter = document.getElementById(
+          "page-indicator-center"
+        );
+        if (!indicatorTop || !indicatorCenter) return;
+
+        const currentIndex = loadedPages.findIndex(
+          (p) => p.id === currentSelectedId
+        );
+        const totalPages = loadedPages.length;
+        const page = loadedPages.find((p) => p.id === currentSelectedId);
+        const displayName = page?.id || "Page " + (currentIndex + 1);
+
+        // Update both indicators
+        indicatorTop.textContent = `${
+          currentIndex + 1
+        } / ${totalPages} | ${displayName}`;
+        indicatorCenter.textContent = `Page ${
+          currentIndex + 1
+        } / ${totalPages}`;
+
+        // If you want the center to also show the name, use:
+        // indicatorCenter.textContent = `Page ${currentIndex + 1} / ${totalPages} - ${displayName}`;
+      }
+
+      // ------ page counter ---------
+
       // Call once on page load
       initPdfDownloader();
       initTextToolbar();
       initColorPicker();
+      updatePageIndicator(); // Initialize the page indicator
     });
   </script>
   <!-- Modal popup and pdf downloader end -->
-  <!-- zoom slider script -->
+  <!-- zoom slider script (working)-->
+
   <script>
-    const background = document.querySelector(".background");
-    const backgroundChange = document.getElementById("background-change");
     const zoomSlider = document.getElementById("zoom-slider");
-    const zoomOutButton = document.getElementById("zoom-out");
     const zoomInButton = document.getElementById("zoom-in");
+    const zoomOutButton = document.getElementById("zoom-out");
 
-    //change bg
-    backgroundChange.addEventListener("click", () => {
-      // Select the background element
-      const background = document.querySelector(".background");
-
-      // Update the background gradient to match Nahida's color theme
-      background.style.background =
-        "linear-gradient(to bottom, #5a7d5a, #406d40)";
-    });
-    // Set default scale
     const defaultScale = 1;
-    zoomSlider.value = defaultScale; // Ensure slider starts at 0.5
-    background.style.transform = `scale(${defaultScale})`; // Set initial scale
+    zoomSlider.value = defaultScale;
+    setScale(defaultScale);
 
-    // Function to set the scale
     function setScale(scale) {
-      background.style.transform = `scale(${scale})`;
+      const templatePage = document.querySelector(
+        "#editable-area .template-page"
+      );
+      if (templatePage) {
+        templatePage.style.transform = `scale(${scale})`;
+        templatePage.style.transformOrigin = "top";
+      }
     }
 
-    // Zoom In Button
     zoomInButton.addEventListener("click", () => {
       let newScale = parseFloat(zoomSlider.value) + 0.1;
-      if (newScale > 2) newScale = 2; // Cap at 100%
-      zoomSlider.value = newScale.toFixed(1); // Update slider value
+      if (newScale > 2) newScale = 2;
+      zoomSlider.value = newScale.toFixed(1);
       setScale(newScale);
     });
 
-    // Zoom Out Button
     zoomOutButton.addEventListener("click", () => {
       let newScale = parseFloat(zoomSlider.value) - 0.1;
-      if (newScale < 0.1) newScale = 0.1; // Cap at 10%
-      zoomSlider.value = newScale.toFixed(1); // Update slider value
+      if (newScale < 0.1) newScale = 0.1;
+      zoomSlider.value = newScale.toFixed(1);
       setScale(newScale);
     });
 
-    // Slider Input
     zoomSlider.addEventListener("input", (e) => {
       setScale(e.target.value);
     });
