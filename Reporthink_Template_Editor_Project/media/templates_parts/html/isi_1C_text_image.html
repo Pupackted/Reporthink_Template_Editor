@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>isi 1C text image</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #f25922;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 510px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 405px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div class="static-styling1">
+        <div class="headline">Headline<br />Headline</div>
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam, ornare eu bibendum ac, luctus id
+                arcu. Donec in gravida nunc.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/isi%201C%20text%20image%20dots.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2004_8799"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="316"
+          height="282"
+        >
+          <path d="M0.515625 0H315.017V281.709H0.515625V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2004_8799)">
+          <rect
+            x="-53.3367"
+            width="422.335"
+            height="281.71"
+            fill="url(#pattern0_2004_8799)"
+          />
+        </g>
+        <mask
+          id="mask1_2004_8799"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="454"
+          y="200"
+          width="141"
+          height="163"
+        >
+          <path
+            d="M454.135 200.464H594.446V362.951H454.135V200.464Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask1_2004_8799)">
+          <path
+            d="M535.297 281.674V362.951C580.165 362.951 616.533 326.563 616.533 281.67C616.533 236.785 580.165 200.394 535.297 200.394C490.436 200.394 454.064 236.785 454.064 281.67H535.297V281.674Z"
+            fill="#F4BC33"
+          />
+        </g>
+        <mask
+          id="mask2_2004_8799"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="315"
+          y="0"
+          width="141"
+          height="141"
+        >
+          <path
+            d="M315.286 0.269531H455.774V140.833H315.286V0.269531Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2004_8799)">
+          <path
+            d="M315.017 141.103C392.901 141.103 456.039 77.93 456.043 0H315.017V141.103Z"
+            fill="#F25922"
+          />
+        </g>
+        <mask
+          id="mask3_2004_8799"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="456"
+          y="0"
+          width="139"
+          height="141"
+        >
+          <path d="M456.051 0H594.446V140.833H456.051V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask3_2004_8799)">
+          <path
+            d="M597.077 0C519.189 0 456.051 63.1727 456.051 141.103H597.077V0Z"
+            fill="#F25922"
+          />
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2004_8799"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2004_8799"
+              transform="scale(0.000365497 0.000548246)"
+            />
+          </pattern>
+          <image
+            id="image0_2004_8799"
+            width="2736"
+            height="1824"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/isi%201c%20text%20image%20-%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

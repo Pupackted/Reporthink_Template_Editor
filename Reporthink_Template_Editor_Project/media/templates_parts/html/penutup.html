@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Penutup</title>
+    <style>
+      :root {
+        --color-design-bg-color: #4c3f3b;
+        --color-design-icon-bg: #4c3f3b;
+        --color-design-icons: #ffce62;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20.5pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+
+        font-weight: bold;
+        font-size: 60pt;
+        color: #f25922;
+        line-height: 1;
+        text-align: start;
+        margin-left: 290px;
+        z-index: 300;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+      .static-styling1 {
+        position: absolute;
+        top: 380px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-design1 {
+        position: absolute;
+        top: 380px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+              align-items: center; */
+        z-index: 2;
+      }
+      .contact-us {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 30.6pt;
+        color: #ffce62;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        text-align: start;
+      }
+      .static-design3 {
+        position: absolute;
+        top: 61.5%;
+        left: 290px;
+
+        z-index: 30;
+        background-color: rgba(216, 112, 147, 0);
+        display: flex;
+        flex-direction: column;
+        z-index: 2000;
+      }
+
+      .contact-title {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 13.1pt;
+        color: #ffce62; /* Color */
+        z-index: 200;
+        margin-left: 75px;
+        line-height: 1.26;
+        text-align: justify;
+      }
+      .contact-info {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 17.7pt;
+        color: #ffce62; /* Color */
+        z-index: 200;
+        margin-bottom: 18px;
+        margin-left: 75px;
+        line-height: 1.26;
+        text-align: justify;
+      }
+      /* .warna-design {
+                     background-color: #2b46bd;
+                   } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div
+        style="position: absolute; top: 43.5%; width: 100%; z-index: 2173918371"
+      >
+        <div class="headline">THANK<br />YOU!</div>
+      </div>
+
+      <div class="static-design3">
+        <div class="contact-us">CONTACT US</div>
+        <div class="contact-title">Phone Number:</div>
+        <div class="contact-info">+123-456-7890</div>
+        <div>
+          <div class="contact-title">Website:</div>
+          <div class="contact-info">reallygreatsite.com</div>
+        </div>
+
+        <div>
+          <div class="contact-title">Location:</div>
+          <div class="contact-info">123 Anywhere St., Any City</div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <!-- contact icons -->
+      <svg
+        style="
+          position: absolute;
+          bottom: 175px;
+          left: 290px;
+          width: 55px;
+          height: auto;
+          z-index: 2;
+        "
+        viewBox="0 0 40 138"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <mask
+          id="mask0_2024_30632"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="98"
+          width="40"
+          height="40"
+        >
+          <path
+            d="M0.951172 98.2998H39.8313V137.191H0.951172V98.2998Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2024_30632)">
+          <mask
+            id="mask1_2024_30632"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="98"
+            width="40"
+            height="40"
+          >
+            <path
+              d="M20.3912 98.2998C9.65411 98.2998 0.951172 107.008 0.951172 117.747C0.951172 128.486 9.65411 137.191 20.3912 137.191C31.1284 137.191 39.8313 128.486 39.8313 117.747C39.8313 107.008 31.1284 98.2998 20.3912 98.2998Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2024_30632)">
+            <path
+              d="M0.951172 98.2998H39.8313V137.191H0.951172V98.2998Z"
+              fill="var(--color-design-icons)"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask2_2024_30632"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="13"
+          y="107"
+          width="15"
+          height="21"
+        >
+          <path
+            d="M13.7148 107.664H27.1187V127.818H13.7148V107.664Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2024_30632)">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M20.3914 107.672C24.0772 107.672 27.0679 110.663 27.0679 114.35C27.0679 115.58 26.7361 116.736 26.1543 117.724C26.0606 117.884 25.9591 118.04 25.8498 118.192L20.3914 126.666L14.9486 118.216C14.8276 118.048 14.7183 117.876 14.6129 117.7C14.0428 116.716 13.7148 115.572 13.7148 114.35C13.7148 110.663 16.7056 107.672 20.3914 107.672ZM15.1634 123.452H17.9355L20.3914 127.178L22.8473 123.452H25.6194C26.2988 123.452 26.8571 124.011 26.8571 124.69V126.576C26.8571 127.256 26.2988 127.814 25.6194 127.814H15.1634C14.4801 127.814 13.9257 127.256 13.9257 126.576V124.69C13.9257 124.011 14.4801 123.452 15.1634 123.452ZM20.3914 111.382C21.8204 111.382 22.98 112.542 22.98 113.971C22.98 115.4 21.8204 116.56 20.3914 116.56C18.9624 116.56 17.8028 115.4 17.8028 113.971C17.8028 112.542 18.9624 111.382 20.3914 111.382Z"
+            fill="var(--color-design-icon-bg)"
+          />
+        </g>
+        <mask
+          id="mask3_2024_30632"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="40"
+          height="40"
+        >
+          <path
+            d="M0.267578 0.852051H39.1126V39.8053H0.267578V0.852051Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask3_2024_30632)">
+          <path
+            d="M19.6217 0.852051C8.93147 0.852051 0.263672 9.52135 0.263672 20.2096C0.263672 30.9017 8.93147 39.571 19.6217 39.571C30.312 39.571 38.9759 30.9017 38.9759 20.2096C38.9759 9.52135 30.312 0.852051 19.6217 0.852051ZM13.0272 9.49011C16.0375 9.49011 18.4778 11.5832 18.4778 14.1645C18.4778 16.7458 16.0375 18.8389 13.0272 18.8389C12.4259 18.8389 11.8481 18.7569 11.3053 18.6007C10.8524 19.8152 11.7778 21.0257 11.7778 21.0257C9.33753 20.4751 9.41952 18.2766 9.48199 17.7142C8.31457 16.859 7.58054 15.586 7.58054 14.1645C7.58054 11.5832 10.0169 9.49011 13.0272 9.49011ZM32.1627 20.0143C32.1549 20.0339 32.1471 20.0573 32.1354 20.0768C31.6825 21.0218 31.1241 22.0489 30.4331 23.1189C29.4882 24.5872 25.8883 29.0507 24.7014 30.2457C23.8034 31.1516 22.921 31.921 22.0971 32.5653C22.0776 32.5809 22.0581 32.5926 22.0386 32.6043C21.3553 33.0534 19.1142 34.3929 16.0961 34.0531C14.2532 33.8462 12.8788 33.1003 12.0628 32.5458C11.77 32.3427 11.3756 32.3544 11.0906 32.5692C10.8642 32.741 10.5713 32.784 10.3058 32.6903C9.97004 32.5731 9.54055 32.3466 9.18135 31.921C8.94708 31.6398 8.81043 31.3508 8.73234 31.1204C8.67768 30.9681 8.66987 30.8002 8.71282 30.6401C8.98613 29.5623 9.5796 27.8518 10.9032 26.1219C12.1253 24.5208 13.4879 23.5328 14.4328 22.9666C14.6436 22.8377 14.9013 22.8104 15.1356 22.8924C15.4362 22.9978 15.7954 23.1618 16.1624 23.4196C16.5802 23.7125 16.8848 24.0405 17.1034 24.3295C17.3103 24.6067 17.326 24.9855 17.1385 25.2784C17.1112 25.3213 17.08 25.3682 17.0526 25.4112C16.7676 25.8563 16.9628 26.4499 17.4587 26.6413L19.04 27.2427C19.3445 27.3598 19.6881 27.2856 19.9224 27.0591L26.2905 19.1435C26.4623 18.8662 26.4584 18.5148 26.2788 18.2414L25.3495 16.8278C25.0567 16.3826 24.4359 16.3201 24.0611 16.695C24.0259 16.7341 23.9869 16.7692 23.9478 16.8083C23.7058 17.0543 23.3309 17.1207 23.0186 16.9762C22.6906 16.8278 22.3041 16.6013 21.9253 16.2576C21.5935 15.953 21.3592 15.6367 21.1913 15.3634C21.0625 15.1525 21.0312 14.8987 21.1093 14.6644C21.4607 13.6178 22.1284 12.0753 23.4285 10.5367C24.8341 8.8692 26.3764 7.92417 27.3681 7.42041C27.5165 7.34622 27.6805 7.31888 27.8444 7.33841C28.0865 7.36574 28.395 7.43603 28.719 7.60395C29.211 7.86169 29.5272 8.23267 29.7147 8.53336C29.863 8.77157 29.8825 9.07227 29.7654 9.33C29.617 9.65413 29.6912 10.0407 29.9489 10.2867C30.6673 10.9584 31.6942 12.1417 32.2916 13.899C33.2755 16.7731 32.4516 19.2489 32.1627 20.0143Z"
+            fill="var(--color-design-icons)"
+          />
+        </g>
+        <path
+          d="M16.2809 56.1559C16.2887 56.1598 16.2965 56.1637 16.3043 56.1676C16.6166 56.316 16.9719 56.4449 17.3546 56.5464C18.0378 56.726 18.8148 56.8197 19.623 56.8197C20.4312 56.8197 21.2082 56.726 21.8915 56.5464C22.2741 56.4449 22.6294 56.316 22.9418 56.1676C22.9496 56.1637 22.9574 56.1598 22.9652 56.1559C23.3205 55.9801 23.6055 55.7849 23.8008 55.5818C23.2932 55.41 22.77 55.2694 22.2351 55.164C21.3878 54.9922 20.5171 54.9023 19.623 54.9023C18.7289 54.9023 17.8543 54.9922 17.011 55.164C16.4761 55.2694 15.9529 55.41 15.4414 55.5818C15.6405 55.7849 15.9256 55.9801 16.2809 56.1559Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M14.5149 60.6353C14.7335 59.7528 14.9951 58.921 15.2918 58.1634C15.4558 57.7456 15.6315 57.3511 15.815 56.988C15.2216 56.6951 14.7804 56.3358 14.4992 55.9375C12.1683 56.9294 10.1771 58.5695 8.75586 60.6353H14.5149Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M23.8434 61.748H15.4021C15.035 63.5092 14.8242 65.4735 14.793 67.5198H24.4525C24.4212 65.4735 24.2104 63.5092 23.8434 61.748Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M22.9185 58.5695C22.7506 58.1438 22.5749 57.7533 22.3914 57.394C21.5636 57.644 20.611 57.7767 19.6231 57.7767C18.6353 57.7767 17.6826 57.644 16.8549 57.394C16.6714 57.7533 16.4957 58.1438 16.3278 58.5695C16.0779 59.2099 15.8554 59.9011 15.6641 60.6353H23.5822C23.3909 59.9011 23.1683 59.2099 22.9185 58.5695Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M23.9529 58.1634C24.2496 58.921 24.5112 59.7528 24.7299 60.6353H30.485C29.0677 58.5695 27.0764 56.9294 24.7455 55.9375C24.4644 56.3358 24.0232 56.6951 23.4297 56.988C23.6132 57.3511 23.7889 57.7456 23.9529 58.1634Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M16.8549 78.7549C17.6826 78.5088 18.6353 78.3761 19.6231 78.3761C20.6109 78.3761 21.5636 78.5088 22.3914 78.7549C22.5749 78.3995 22.7506 78.0051 22.9184 77.5794C23.18 76.9117 23.4104 76.1853 23.6095 75.4082H15.6367C15.8358 76.1853 16.0662 76.9117 16.3278 77.5794C16.4957 78.0051 16.6714 78.3995 16.8549 78.7549Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M24.4525 68.6328H14.793C14.8242 70.6361 15.0233 72.5613 15.3786 74.2991H23.8668C24.2182 72.5613 24.4212 70.6361 24.4525 68.6328Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M14.2659 61.748H8.07346C7.12469 63.4741 6.55074 65.4345 6.46484 67.5198H13.6802C13.7114 65.4852 13.9106 63.5249 14.2659 61.748Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M24.998 74.2991H31.2295C32.1431 72.5965 32.6975 70.6752 32.7795 68.6328H25.5642C25.533 70.6244 25.3416 72.5457 24.998 74.2991Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M24.9746 61.748C25.3299 63.5249 25.5329 65.4852 25.5642 67.5198H32.7795C32.6936 65.4345 32.1197 63.4741 31.1709 61.748H24.9746Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M23.9529 77.9895C23.7889 78.4073 23.6132 78.7978 23.4297 79.161C24.0232 79.4578 24.4644 79.8131 24.7455 80.2115C27.1155 79.2079 29.1379 77.5248 30.5591 75.4082H24.7533C24.5307 76.3337 24.2613 77.2006 23.9529 77.9895Z"
+          fill="var(--color-design-icons)"
+        />
+        <mask
+          id="mask4_2024_30632"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="48"
+          width="40"
+          height="40"
+        >
+          <path
+            d="M0.267578 48.7168H39.1126V87.6701H0.267578V48.7168Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2024_30632)">
+          <path
+            d="M19.6217 48.7168C8.93147 48.7168 0.263672 57.3822 0.263672 68.0743C0.263672 78.7665 8.93147 87.4358 19.6217 87.4358C30.312 87.4358 38.9759 78.7665 38.9759 68.0743C38.9759 57.3822 30.312 48.7168 19.6217 48.7168ZM32.7835 73.6352C32.0612 75.3378 31.0343 76.8647 29.7225 78.1768C28.4106 79.4889 26.884 80.5199 25.1816 81.2384C25.1504 81.254 25.1192 81.2657 25.084 81.2774C24.7287 81.4258 24.3656 81.5625 23.9986 81.6797C22.593 82.1327 21.1249 82.3631 19.6217 82.3631C18.1185 82.3631 16.6505 82.1327 15.2449 81.6797C14.8779 81.5625 14.5148 81.4258 14.1556 81.2774C14.1243 81.2657 14.0931 81.254 14.0619 81.2384C12.3595 80.5199 10.8329 79.4889 9.52103 78.1768C8.20915 76.8647 7.17839 75.3378 6.45997 73.6352C5.71423 71.874 5.33941 70.0034 5.33941 68.0743C5.33941 66.1491 5.71423 64.2786 6.45997 62.5135C7.17839 60.8148 8.20915 59.2879 9.52103 57.9758C10.8329 56.6637 12.3595 55.6327 14.0619 54.9142C14.0931 54.8986 14.1243 54.8868 14.1556 54.8712C14.5148 54.7228 14.8779 54.5901 15.2449 54.4729C16.6505 54.0199 18.1185 53.7895 19.6217 53.7895C21.1249 53.7895 22.593 54.0199 23.9986 54.4729C24.3656 54.5901 24.7287 54.7228 25.084 54.8712C25.1192 54.8868 25.1504 54.8986 25.1816 54.9142C26.884 55.6327 28.4106 56.6637 29.7225 57.9758C31.0343 59.2879 32.0612 60.8148 32.7835 62.5135C33.5254 64.2786 33.9041 66.1491 33.9041 68.0743C33.9041 70.0034 33.5254 71.874 32.7835 73.6352Z"
+            fill="var(--color-design-icons)"
+          />
+        </g>
+        <path
+          d="M22.9652 79.9969C22.9574 79.993 22.9496 79.9891 22.9418 79.9852C22.6294 79.8368 22.2741 79.7079 21.8915 79.6064C21.2082 79.4267 20.4312 79.333 19.623 79.333C18.8109 79.333 18.0378 79.4267 17.3546 79.6064C16.9719 79.7079 16.6166 79.8368 16.3043 79.9852C16.2965 79.9891 16.2887 79.993 16.2809 79.9969C15.9256 80.1687 15.6405 80.364 15.4414 80.5709C15.9529 80.7427 16.4761 80.8833 17.011 80.9888C17.8543 81.1606 18.7289 81.2504 19.623 81.2504C20.5171 81.2504 21.3878 81.1606 22.2351 80.9888C22.77 80.8833 23.2932 80.7427 23.8008 80.5709C23.6055 80.364 23.3205 80.1687 22.9652 79.9969Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M15.2918 77.9895C14.9834 77.2006 14.714 76.3337 14.4875 75.4082H8.68555C10.1068 77.5248 12.1292 79.2079 14.4992 80.2115C14.7803 79.8131 15.2215 79.4578 15.815 79.161C15.6315 78.7978 15.4558 78.4073 15.2918 77.9895Z"
+          fill="var(--color-design-icons)"
+        />
+        <path
+          d="M13.6802 68.6328H6.46484C6.54684 70.6752 7.10126 72.5965 8.0149 74.2991H14.2463C13.9027 72.5457 13.7114 70.6244 13.6802 68.6328Z"
+          fill="var(--color-design-icons)"
+        />
+      </svg>
+      <!-- ==================main design=========== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/penutup%20dots.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2004_26671)">
+          <mask
+            id="mask0_2004_26671"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="145"
+            y="0"
+            width="450"
+            height="341"
+          >
+            <path d="M145.238 0H594.446V340.899H145.238V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask0_2004_26671)">
+            <rect
+              x="114.317"
+              width="511.364"
+              height="341.095"
+              fill="url(#pattern0_2004_26671)"
+            />
+          </g>
+          <mask
+            id="mask1_2004_26671"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="578"
+            width="323"
+            height="264"
+          >
+            <path
+              d="M0.515625 578.973H322.858V841.25H0.515625V578.973Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2004_26671)">
+            <path
+              d="M145.452 756.51V578.973C47.4489 578.973 -31.9922 658.461 -31.9922 756.514C-31.9922 854.563 47.4489 934.051 145.452 934.051C243.448 934.051 322.893 854.563 322.893 756.514H145.452V756.51Z"
+              fill="#F4BC33"
+            />
+          </g>
+          <mask
+            id="mask2_2004_26671"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="146"
+            height="171"
+          >
+            <path d="M0.515625 0H145.23V170.539H0.515625V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask2_2004_26671)">
+            <path
+              d="M-25.2167 170.539C68.9191 170.539 145.23 94.1869 145.23 0H-25.2167V170.539Z"
+              fill="#F25922"
+            />
+          </g>
+          <mask
+            id="mask3_2004_26671"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="170"
+            width="146"
+            height="172"
+          >
+            <path
+              d="M0.515625 170.547H145.23V341.344H0.515625V170.547Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2004_26671)">
+            <path
+              d="M-25.2167 170.547C68.9191 170.547 145.23 246.899 145.23 341.086H-25.2167V170.547Z"
+              fill="#F25922"
+            />
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2004_26671"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2004_26671"
+              transform="scale(0.000228938 0.000343407)"
+            />
+          </pattern>
+          <clipPath id="clip0_2004_26671">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2004_26671"
+            width="4368"
+            height="2912"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/penutup%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

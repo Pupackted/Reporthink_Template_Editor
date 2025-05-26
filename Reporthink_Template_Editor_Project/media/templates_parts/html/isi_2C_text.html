@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>isi 2C text</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #f25922;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000;
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000;
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        height: 820px;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 820px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 465px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-styling1 {
+        position: absolute;
+        top: 90px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div class="static-styling1">
+        <div class="headline">Headline<br />Headline</div>
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="column-layout">
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                  auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                  vel ultrices sem placerat. Praesent rhoncus neque in est
+                  lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                  pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                  ante eget pretium. Vestibulum non odio interdum, commodo mi
+                  non, iaculis nisi. Phasellus fringilla elit erat, vel
+                  consequat metus maximus bibendum. Fusce imperdiet tempor ante,
+                  eu mattis eros viverra in. Ut quis arcu vel sem vulputate
+                  aliquam a in massa. In et neque imperdiet, scelerisque quam
+                  vel, laoreet mi. Phasellus et ante porttitor, congue augue a,
+                  pulvinar nisl. Integer vel nibh aliquet, pulvinar augue et,
+                  eleifend lorem. Fusce ut quam in tellus scelerisque vehicula.
+                  Ut aliquet dignissim auctor.
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Nullam mollis convallis urna. Nam augue diam, ornare eu
+                  bibendum ac, luctus id arcu. Donec in gravida nunc. Vivamus
+                  vel tristique mauris, at cursus massa. Nunc eget nunc nec
+                  lacus auctor tristique. Maecenas ac dolor fringilla arcu
+                  efficitur iaculis a nec tortor. Pellentesque habitant morbi
+                  tristique senectus et netus et malesuada fames ac turpis
+                  egestas. Nullam nunc purus, rhoncus vel nisi in, dignissim
+                  aliquam odio.Nullam mollis convallis urna. Nam augue diam,
+                  ornare eu bibendum ac, luctus id arcu. Donec in gravida nunc.
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Nullam mollis convallis urna. Nam augue diam, ornare eu
+                  bibendum ac, luctus id arcu. Donec in gravida nunc. Vivamus
+                  vel tristique mauris, at cursus massa. Nunc eget nunc nec
+                  lacus auctor tristique. Maecenas ac dolor fringilla arcu
+                  efficitur iaculis a nec tortor. Pellentesque habitant morbi
+                  tristique senectus et netus et malesuada fames ac turpis
+                  egestas. Nullam nunc purus, rhoncus vel nisi in, dignissim
+                  aliquam odio.Nullam mollis convallis urna. Nam augue diam,
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                  auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                  vel ultrices sem placerat. Praesent rhoncus neque in est
+                  lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                  pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                  ante eget pretium. Vestibulum non odio interdum, commodo mi
+                  non, iaculis nisi. Phasellus fringilla elit erat, vel
+                  consequat metus maximus bibendum. Fusce imperdiet tempor ante,
+                  eu mattis eros viverra in. Ut quis arcu vel sem vulputate
+                  aliquam a in massa. In et neque imperdiet, scelerisque quam
+                  vel, laoreet mi. Phasellus et ante porttitor, congue augue a,
+                  pulvinar nisl. Integer vel nibh aliquet, pulvinar augue et,
+                  eleifend lorem. Fusce ut quam in tellus scelerisque vehicula.
+                  Ut aliquet dignissim auctor.
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                  auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                  vel ultrices sem placerat. Praesent rhoncus neque in est
+                  lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                  pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                  ante eget pretium. Vestibulum non odio interdum, commodo mi
+                  non, iaculis nisi. Phasellus fringilla elit erat, vel
+                  consequat metus maximus bibendum. Fusce imperdiet tempor ante,
+                  eu mattis eros viverra in. Ut quis arcu vel sem vulputate
+                  aliquam a in massa. In et neque imperdiet, scelerisque quam
+                  vel, laoreet mi. Phasellus et ante porttitor, congue augue a,
+                  pulvinar nisl. Integer vel nibh aliquet, pulvinar augue et,
+                  eleifend lorem. Fusce ut quam in tellus scelerisque vehicula.
+                  Ut aliquet dignissim auctor.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                  auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                  vel ultrices sem placerat. Praesent rhoncus neque in est
+                  lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                  pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                  ante
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/isi%201C%20text.png"
+      />
+    </div>
+  </body>
+</html>
