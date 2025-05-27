@@ -215,6 +215,7 @@ def add_template_part(request, template_id):
 def set_cover_part(request, template_id):
     template = get_object_or_404(Template, id=template_id)
     parts = template.parts.all()
+    
     if request.method == 'POST':
         cover_id = request.POST.get('cover_part')
         if cover_id:
@@ -222,4 +223,6 @@ def set_cover_part(request, template_id):
             template.cover_part = cover_part
             template.save()
             return redirect('index')  # or wherever you want
+        
     return render(request, 'set_cover_part.html', {'template': template, 'parts': parts})
+
