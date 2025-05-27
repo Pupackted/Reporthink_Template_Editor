@@ -166,25 +166,48 @@ def create_template(request):
 #     return render(request, 'add_template_part.html', {'form': form, 'template': template})
 
 
+# def add_template_part(request, template_id):
+#     template = get_object_or_404(Template, id=template_id)
+#     parts = template.parts.all()
+#     if request.method == 'POST':
+#         form = TemplatePartForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             part = form.save(commit=False)
+#             part.template = template
+#             part.save()
+#             if not template.cover_part:
+#                 template.cover_part = part
+#                 template.save()
+#             if 'add_another' in request.POST:
+#                 return redirect('add_template_part', template_id=template.id)
+#             else:
+#                 return redirect('set_cover_part', template_id=template.id)
+#     else:
+#         form = TemplatePartForm()
+#     return render(request, 'add_template_part.html', {'form': form, 'template': template, 'parts': parts})
+
 def add_template_part(request, template_id):
     template = get_object_or_404(Template, id=template_id)
-    parts = template.parts.all()
+    parts = template.parts.all()  # Get existing parts
+
     if request.method == 'POST':
         form = TemplatePartForm(request.POST, request.FILES)
         if form.is_valid():
             part = form.save(commit=False)
             part.template = template
             part.save()
-            if not template.cover_part:
-                template.cover_part = part
-                template.save()
             if 'add_another' in request.POST:
                 return redirect('add_template_part', template_id=template.id)
             else:
                 return redirect('set_cover_part', template_id=template.id)
     else:
         form = TemplatePartForm()
-    return render(request, 'add_template_part.html', {'form': form, 'template': template, 'parts': parts})
+
+    return render(request, 'add_template_part.html', {
+        'form': form,
+        'template': template,
+        'parts': parts,  # Pass parts to template
+    })
 
 
 # set cover part

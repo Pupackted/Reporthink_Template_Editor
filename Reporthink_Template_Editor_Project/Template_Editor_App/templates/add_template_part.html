@@ -5,6 +5,7 @@
   <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
     Add Template Parts
   </h1>
+  
 
   <form
     method="post"
@@ -87,6 +88,22 @@
       </button>
     </div>
   </form>
+  {% if parts %}
+  <h2 class="text-xl font-semibold mb-4 mt-12">Parts Added</h2>
+  <div class="flex flex-wrap gap-4 mb-6 justify-center">
+    {% for part in parts %}
+    <div
+      class="w-24 h-auto rounded overflow-hidden border border-gray-300 shadow-sm"
+    >
+      <img
+        src="{{ part.thumbnail.url }}"
+        alt="{{ part.name }}"
+        class="object-cover w-full h-full"
+      />
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
 
 <style>
