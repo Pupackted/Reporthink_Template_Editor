@@ -232,7 +232,7 @@
           transition-transform duration-200 ease-in-out 
           hover:scale-[98%]">
 
-            <button
+          <button
             class="selection-btn"
             data-name="{{ template.name }}"
             data-id="{{ template.id }}"
@@ -375,7 +375,7 @@
     <!-- main stuff end-->
   </div>
 
-
+<a id="add-parts-btn" href="#" class="hidden btn btn-secondary ml-2">Add Parts</a>
 
 
   <!-- scripts -->
@@ -387,6 +387,7 @@
       const nameField = document.getElementById("selected-template-name");
       const useBtn = document.getElementById("use-template-btn");
       const previewImg = document.getElementById("selected-template-image");
+      const addPartsBtn = document.getElementById("add-parts-btn");
 
       let selected = document.querySelector(
         '.selection-btn[data-selected="true"]'
@@ -406,6 +407,8 @@
         previewImg.src = selected.dataset.thumbnail;
         previewImg.alt = `Thumbnail for ${selected.dataset.name}`;
         previewImg.classList.remove("hidden");
+        addPartsBtn.href = `/add-template-part/${selected.dataset.id}/`;
+  addPartsBtn.classList.remove("hidden");
       }
 
       buttons.forEach((button) => {
@@ -432,6 +435,8 @@
           previewImg.src = thumbnail;
           previewImg.alt = `Thumbnail for ${name}`;
           previewImg.classList.remove("hidden");
+           addPartsBtn.href = `/add-template-part/${button.dataset.id}/`;
+    addPartsBtn.classList.remove("hidden");
         });
       });
     });

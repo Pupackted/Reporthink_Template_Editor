@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Select Cover Part</h3>
+    {% for part in parts %}
+        <label>
+            <input type="radio" name="cover_part" value="{{ part.id }}" {% if template.cover_part and part.id == template.cover_part.id %}checked{% endif %}>
+            {{ part.name }}
+            <img src="{{ part.thumbnail.url }}" width="100" />
+        </label><br />
+    {% endfor %}
+    <button type="submit">Set Cover</button>
+</form>
+
+{% endblock %}

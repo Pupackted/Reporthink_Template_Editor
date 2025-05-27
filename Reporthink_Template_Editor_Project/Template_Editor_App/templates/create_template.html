@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<div
+  class="min-h-screen flex flex-col items-center justify-start pt-[20%] bg-gray-50 px-4"
+>
+  <h1 class="text-4xl font-bold text-gray-800 mb-8">Create New Template</h1>
+
+  <form
+    method="post"
+    class="w-full max-w-sm items-center justify-center flex flex-col"
+  >
+    {% csrf_token %}
+    <input
+      type="text"
+      name="name"
+      placeholder="Enter template name"
+      required
+      class="w-full px-4 py-3 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg mb-6"
+    />
+
+    <button
+      type="submit"
+      class="w-[70%] py-3 bg-orange-400 text-white font-bold rounded-3xl shadow hover:bg-orange-600 focus:outline-none transition"
+    >
+      Create Template
+    </button>
+  </form>
+</div>
+{% endblock %}

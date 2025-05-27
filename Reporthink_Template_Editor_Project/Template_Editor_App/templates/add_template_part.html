@@ -1,0 +1,219 @@
+{% extends "base.html" %} {% block content %}
+<div
+  class="min-h-screen flex flex-col items-center justify-start pt-[15%] bg-gray-50 px-4"
+>
+  <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    Add Template Parts
+  </h1>
+
+  <form
+    method="post"
+    enctype="multipart/form-data"
+    class="w-full max-w-sm flex flex-col space-y-6 bg-white p-6 rounded-3xl shadow-md"
+  >
+    {% csrf_token %} {{ form.non_field_errors }}
+    <!-- HTML File Upload -->
+    <div>
+      <label class="block mb-2 font-semibold text-gray-700" for="id_html_file"
+        >HTML File</label
+      >
+      <div id="html-file-dropzone" class="file-dropzone">
+        <p class="text-gray-500">
+          Drag & drop your HTML file here, or click to select
+        </p>
+        <input
+          type="file"
+          name="html_file"
+          id="id_html_file"
+          accept=".html,text/html"
+          class="hidden"
+          required
+        />
+        <p id="html-file-name" class="mt-2 text-gray-700"></p>
+        <iframe
+          id="html-file-preview"
+          class="mt-2 w-full rounded max-h-64 border border-gray-300 hidden"
+          sandbox="allow-scripts allow-same-origin"
+        ></iframe>
+      </div>
+      {% for error in form.html_file.errors %}
+      <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <!-- Thumbnail Upload -->
+    <div>
+      <label class="block mb-2 font-semibold text-gray-700" for="id_thumbnail"
+        >Thumbnail Image</label
+      >
+      <div id="thumbnail-dropzone" class="file-dropzone">
+        <p class="text-gray-500">
+          Drag & drop your thumbnail image here, or click to select
+        </p>
+        <input
+          type="file"
+          name="thumbnail"
+          id="id_thumbnail"
+          accept="image/*"
+          class="hidden"
+          required
+        />
+        <p id="thumbnail-file-name" class="mt-2 text-gray-700"></p>
+        <img
+          id="thumbnail-file-preview"
+          class="mt-2 rounded max-h-48 hidden block mx-auto"
+          alt="Thumbnail preview"
+        />
+      </div>
+      {% for error in form.thumbnail.errors %}
+      <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-between space-x-4">
+      <button
+        type="submit"
+        name="add_another"
+        class="w-1/2 py-3 bg-orange-400 text-white font-bold rounded-3xl shadow hover:bg-orange-600 focus:outline-none transition"
+      >
+        Add Another Part
+      </button>
+
+      <button
+        type="submit"
+        class="w-1/2 py-3 bg-blue-600 text-white font-bold rounded-3xl shadow hover:bg-blue-700 focus:outline-none transition"
+      >
+        Continue
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .file-dropzone {
+    border: 2px dashed #cbd5e1; /* Tailwind slate-300 */
+    border-radius: 1rem; /* rounded-3xl */
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  .file-dropzone.dragover {
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    background-color: #eff6ff; /* Tailwind blue-100 */
+  }
+  #html-file-preview {
+    width: 100%;
+    height: 256px; /* max-h-64 = 16rem = 256px */
+    border: 1px solid #d1d5db; /* Tailwind gray-300 */
+    border-radius: 0.375rem; /* rounded */
+    overflow: hidden;
+    transform-origin: center;
+    /* scale down to fit more content */
+    transform: scale(1);
+  }
+  #html-file-preview::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  function setupDropzone(dropzoneId, inputId, fileNameId, previewId, fileType) {
+    const dropzone = document.getElementById(dropzoneId);
+    const input = document.getElementById(inputId);
+    const fileNameDisplay = document.getElementById(fileNameId);
+    const preview = document.getElementById(previewId);
+
+    function clearPreview() {
+      fileNameDisplay.textContent = "";
+      if (preview) {
+        if (fileType === "image") {
+          preview.src = "";
+          preview.classList.add("hidden");
+        } else if (fileType === "html") {
+          preview.srcdoc = "";
+          preview.classList.add("hidden");
+        }
+      }
+    }
+
+    function previewImageFile(file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function previewHtmlFile(file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.srcdoc = e.target.result;
+        preview.classList.remove("hidden");
+      };
+      reader.readAsText(file);
+    }
+
+    dropzone.addEventListener("click", () => input.click());
+
+    dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+
+    dropzone.addEventListener("dragleave", () => {
+      dropzone.classList.remove("dragover");
+    });
+
+    dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        input.files = files;
+        fileNameDisplay.textContent = files[0].name;
+
+        if (fileType === "image") {
+          previewImageFile(files[0]);
+        } else if (fileType === "html") {
+          previewHtmlFile(files[0]);
+        }
+      }
+    });
+
+    input.addEventListener("change", () => {
+      if (input.files.length > 0) {
+        const file = input.files[0];
+        fileNameDisplay.textContent = file.name;
+
+        if (fileType === "image") {
+          previewImageFile(file);
+        } else if (fileType === "html") {
+          previewHtmlFile(file);
+        }
+      } else {
+        clearPreview();
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupDropzone(
+      "html-file-dropzone",
+      "id_html_file",
+      "html-file-name",
+      "html-file-preview",
+      "html"
+    );
+    setupDropzone(
+      "thumbnail-dropzone",
+      "id_thumbnail",
+      "thumbnail-file-name",
+      "thumbnail-file-preview",
+      "image"
+    );
+  });
+</script>
+{% endblock %}
