@@ -106,44 +106,6 @@
           />
         </div>
 
-        {% comment %}
-        <div
-          x-data="{
-          editing: false,
-          name: '{{ template.name }}',
-          originalName: '{{ template.name }}',
-          updateName() {
-            this.editing = false;
-            // send event DIRECTLY to the input
-            this.$refs.input.dispatchEvent(new CustomEvent('update-name', { detail: { name: this.name } }));
-          }
-        }"
-          class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
-        >
-          <div
-            x-show="!editing"
-            class="font-bold text-gray-700 text-2xl"
-            @click="editing = true"
-          >
-            {{ template.name }}
-          </div>
-
-          <input
-            x-ref="input"
-            x-show="editing"
-            x-model="name"
-            @blur="updateName()"
-            @keydown.enter="updateName()"
-            hx-post="/update-template-name/{{ template.id }}/"
-            hx-trigger="update-name"
-            hx-vals="js:{ name: $event.detail.name }"
-            hx-swap="none"
-            class="font-bold text-gray-700 text-2xl p-0 border-none focus:outline-none"
-            style="width: 100%"
-          />
-        </div>
-        {% endcomment %}
-
         <!-- file name end  -->
 
         <div
@@ -488,6 +450,88 @@
     <!--  -->
   </div>
 
+  <!-- inject to svg (working) kinda  -->
+  <script>
+    function addClickableFillClass() {
+      const editableArea = document.getElementById("editable-area");
+      if (!editableArea) return;
+
+      const paths = editableArea.querySelectorAll("svg path");
+
+      paths.forEach((path) => {
+        const existingClass = path.getAttribute("class");
+        if (existingClass) {
+          if (!existingClass.split(" ").includes("clickable-fill")) {
+            path.setAttribute("class", existingClass + " clickable-fill");
+          }
+        } else {
+          path.setAttribute("class", "clickable-fill");
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const editableArea = document.getElementById("editable-area");
+      if (!editableArea) return;
+
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType === 1) {
+              // ELEMENT_NODE
+              if (
+                node.matches("svg") ||
+                node.matches("svg path") ||
+                node.querySelector("svg path")
+              ) {
+                addClickableFillClass();
+                break;
+              }
+            }
+          }
+        }
+      });
+
+      observer.observe(editableArea, { childList: true, subtree: true });
+    });
+  </script>
+  <!-- inject to svg (working) kinda  -->
+
+  <!-- make texts editable (working) -->
+  <script>
+    function makeElementsEditable(containerId = "editable-area") {
+      const editableSelectors = [
+        ".sub-sub-headline",
+        ".sub-headline",
+        ".headline",
+        ".headline-content",
+        ".headline2",
+        ".content",
+        ".content p",
+        ".Company-name1",
+        ".Company-name2",
+        ".year",
+        ".toc-num",
+        ".divider-num",
+        ".contact-us",
+        ".contact-title",
+        ".contact-info",
+        ".ceo-name",
+        ".ceo-pos",
+      ];
+
+      const container = document.getElementById(containerId) || document;
+
+      editableSelectors.forEach((selector) => {
+        const elements = container.querySelectorAll(selector);
+        elements.forEach((el) => {
+          el.setAttribute("contenteditable", "true");
+        });
+      });
+    }
+  </script>
+  <!-- make texts editable end (working) -->
+
   <!-- text toolbar (working)-->
   <script>
     // Text toolbar logic as a function
@@ -592,7 +636,7 @@
   </script>
 
   <!-- text toolbar end -->
-  <!-- ColorPicker -->
+  <!-- ColorPicker (working) -->
   <script>
     function initColorPicker() {
       const colorPicker = document.getElementById("colorPicker");
@@ -687,6 +731,7 @@
   <!-- Modal popup and pdf downloader  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const openBtn = document.getElementById("open-popup");
@@ -694,6 +739,7 @@
       const popup = document.getElementById("popup-window");
       const previewBar = openBtn.parentElement;
       const editableArea = document.getElementById("editable-area");
+
       const deleteBtn = document.getElementById("delete-page-btn");
 
       let currentSelectedThumbnail = null;
@@ -796,6 +842,8 @@
             initBackgroundColorPicker();
             initImageUploader();
             initPdfDownloader();
+            makeElementsEditable();
+            addClickableFillClass();
             initTextToolbar();
             initColorPicker();
           } else {
@@ -812,6 +860,9 @@
                 initBackgroundColorPicker();
                 initImageUploader();
                 initPdfDownloader();
+                makeElementsEditable();
+                addClickableFillClass();
+
                 initTextToolbar();
                 initColorPicker();
               })
@@ -952,6 +1003,8 @@
               initBackgroundColorPicker();
               initImageUploader();
               initPdfDownloader();
+              makeElementsEditable();
+              addClickableFillClass();
               initTextToolbar();
               initColorPicker();
               updatePageIndicator(); // Initialize the page indicator
@@ -967,6 +1020,34 @@
       });
 
       // ---- PDF DOWNLOADER ----
+      // Convert a single image element to Base64 and replace its src
+      async function convertImageToBase64(imgElement) {
+        try {
+          const response = await fetch(imgElement.src, { mode: "cors" });
+          const blob = await response.blob();
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              imgElement.src = reader.result;
+              resolve();
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        } catch (error) {
+          console.error("Failed to convert image to base64:", error);
+        }
+      }
+
+      // Convert all images with class 'static-image-design' inside a container element
+      async function convertImagesInContainer(container) {
+        const images = container.querySelectorAll(".static-image-design");
+        const promises = Array.from(images).map((img) =>
+          convertImageToBase64(img)
+        );
+        await Promise.all(promises);
+      }
+
       function initPdfDownloader() {
         const oldButton = document.getElementById("generatePdfButton");
         if (!oldButton) return;
@@ -975,12 +1056,17 @@
         oldButton.replaceWith(newButton);
 
         newButton.addEventListener("click", async () => {
-          if (loadedPages.length === 0) return;
+          if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+            alert("No pages loaded");
+            return;
+          }
 
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF();
-          saveCurrentPageHtml();
-          // Create a temporary hidden wrapper
+
+          saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+          // Create a temporary hidden container to hold pages for rendering
           const tempContainer = document.createElement("div");
           tempContainer.style.position = "fixed";
           tempContainer.style.top = "-9999px";
@@ -994,6 +1080,10 @@
             pageDiv.innerHTML = html;
             tempContainer.appendChild(pageDiv);
 
+            // Convert all images inside this pageDiv to base64 before rendering
+            await convertImagesInContainer(pageDiv);
+
+            // Render to canvas and add to PDF
             const canvas = await html2canvas(pageDiv);
             const imgData = canvas.toDataURL("image/png");
 
@@ -1004,13 +1094,19 @@
             if (i > 0) pdf.addPage();
             pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-            tempContainer.removeChild(pageDiv); // clean up
+            tempContainer.removeChild(pageDiv);
           }
 
-          document.body.removeChild(tempContainer); // final clean-up
+          document.body.removeChild(tempContainer);
+
           pdf.save("template.pdf");
         });
       }
+
+      // Initialize the PDF downloader button on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        initPdfDownloader();
+      });
       // ---- END PDF DOWNLOADER ----
 
       // ------ page counter ---------
@@ -1044,6 +1140,8 @@
 
       // Call once on page load
       initPdfDownloader();
+      makeElementsEditable();
+      addClickableFillClass();
       initTextToolbar();
       initColorPicker();
       updatePageIndicator(); // Initialize the page indicator
