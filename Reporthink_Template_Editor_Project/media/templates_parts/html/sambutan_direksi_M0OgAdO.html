@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>sambutan direksi</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        font-size: 28pt;
+        color: #f25922; /* Color */
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 18px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto;
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2;
+        column-gap: 40px;
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto;
+      }
+      .ceo-name {
+        font-family: "Open Sans", sans-serif;
+
+        font-weight: bold;
+        font-size: 17.3pt;
+        color: #f25922; /* Color */
+        z-index: 200;
+        text-align: start;
+        margin-left: 80px;
+        line-height: 1.11;
+      }
+      .ceo-pos {
+        font-family: "Open Sans", sans-serif;
+
+        font-weight: normal;
+        font-size: 13.8pt;
+        color: #f25922; /* Color */
+        z-index: 200;
+        text-align: start;
+        margin-left: 80px;
+        line-height: 1.11;
+      }
+
+      .main-column {
+        height: 650px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 350px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-styling2 {
+        position: absolute;
+        top: 140px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+      .line {
+        width: 240px;
+        height: 8px;
+        background-color: #87cc1d;
+        z-index: 3000;
+        margin-left: 80px;
+        margin-bottom: 30px;
+      }
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- main texts -->
+      <div class="static-styling2">
+        <div class="headline">SAMBUTAN<br />DIREKSI</div>
+        <div class="ceo-name">Taylor Alonso</div>
+        <div class="ceo-pos">Founder Of Company</div>
+      </div>
+
+      <div class="static-styling1">
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam, ornare eu bibendum ac, luctus id
+                arcu. Donec in gravida nunc.
+              </p>
+            </div>
+
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/sambutan%20direksi%20dots.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2004_26771"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="280"
+          y="0"
+          width="315"
+          height="230"
+        >
+          <path d="M280.257 0H594.446V229.697H280.257V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2004_26771)" class="ImageChangerClass">
+          <rect
+            x="232.224"
+            width="410.72"
+            height="273.663"
+            fill="url(#pattern0_2004_26771)"
+          />
+        </g>
+        <mask
+          id="mask1_2004_26771"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="120"
+          height="171"
+        >
+          <path d="M0.515625 0H119.88V170.789H0.515625V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask1_2004_26771)">
+          <path
+            d="M29.663 80.6518V170.918C-20.1624 170.918 -60.5581 130.504 -60.5581 80.6479C-60.5581 30.7955 -20.1624 -9.61829 29.663 -9.61829C79.4883 -9.61829 119.88 30.7955 119.88 80.6479H29.663V80.6518Z"
+            fill="#F4BC33"
+          />
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2004_26771"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2004_26771"
+              transform="scale(0.000416667 0.000625)"
+            />
+          </pattern>
+          <image
+            id="image0_2004_26771"
+            width="2400"
+            height="1600"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/direksi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

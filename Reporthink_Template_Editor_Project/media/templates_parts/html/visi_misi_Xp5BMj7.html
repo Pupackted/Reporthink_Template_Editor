@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>visi misi</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 25pt;
+        color: #f25922;
+        line-height: 1.4;
+        margin-bottom: 5px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        /* font-family: "Open Sans", sans-serif; */
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        font-size: 35pt;
+        color: #ffce62;
+
+        line-height: 1.11;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 245px;
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 580px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 445px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 218371983718931817399188;
+      }
+      .static-styling2 {
+        position: absolute;
+        top: 340px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+
+      .red-line {
+        width: 150px;
+        height: 8px;
+        background-color: #599200;
+        z-index: 3000;
+
+        margin-bottom: 30px;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- main texts -->
+      <div class="headline">VISION &<br />MISSION</div>
+
+      <div class="static-styling1">
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">VISION</div>
+            <div class="red-line"></div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                accumsan volutpat metus quis vulputate. Sed volutpat tincidunt
+                leo quis commodo. Morbi venenatis neque a enim rutrum
+                consectetur. Proin a quam mauris. Aliquam vestibulum nulla in
+                est hendrerit efficitur. Integer ultricies, arcu vel semper
+                ullamcorper, metus libero vestibulum lacus, malesuada molestie
+                lectus ligula ut lacus. Aliquam non nisl orci. Vestibulum congue
+                odio nec nisi aliquet, at tincidunt urna luctus. Lorem ipsum
+                dolor sit amet, consectetur adipiscing elit. In accumsan
+                volutpat metus quis vulputate. Sed volutpat tincidunt leo quis
+                commodo. Morbi venenatis neque a enim rutrum consectetur. Proin
+                a quam mauris. Aliquam vestibulum nulla in est hendrerit
+                efficitur. Integer ultricies, arcu vel semper ullamcorper, metus
+                libero vestibulum lacus, malesuada molestie lectus ligula ut
+                lacus. Aliquam non nisl orci. Vestibulum congue odio nec nisi
+                aliquet, at tincidunt urna luctus.
+              </p>
+            </div>
+
+            <div class="sub-headline">MISSION</div>
+            <div class="red-line"></div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                accumsan volutpat metus quis vulputate. Sed volutpat tincidunt
+                leo quis commodo. Morbi venenatis neque a enim rutrum
+                consectetur. Proin a quam mauris. Aliquam vestibulum nulla in
+                est hendrerit efficitur. Integer ultricies, arcu vel semper
+                ullamcorper, metus libero vestibulum lacus, malesuada molestie
+                lectus ligula ut lacus. Aliquam non nisl orci. Vestibulum congue
+                odio nec nisi aliquet, at tincidunt urna luctus. Lorem ipsum
+                dolor sit amet, consectetur adipiscing elit. In accumsan
+                volutpat metus quis vulputate. Sed volutpat tincidunt leo quis
+                commodo. Morbi venenatis neque a enim rutrum consectetur. Proin
+                a quam mauris. Aliquam vestibulum nulla in est hendrerit
+                efficitur. Integer ultricies, arcu vel semper ullamcorper, metus
+                libero vestibulum lacus, malesuada molestie lectus ligula ut
+                lacus. Aliquam non nisl orci. Vestibulum congue odio nec nisi
+                aliquet, at tincidunt urna luctus.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/visi%20misi%20dots.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2004_35612"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="280"
+          y="0"
+          width="315"
+          height="282"
+        >
+          <path d="M280.257 0H594.446V281.709H280.257V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2004_35612)" class="ImageChangerClass">
+          <rect
+            x="179.595"
+            width="515.82"
+            height="281.71"
+            fill="url(#pattern0_2004_35612)"
+          />
+        </g>
+        <mask
+          id="mask1_2004_35612"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="124"
+          height="158"
+        >
+          <path d="M0.515625 0H123.838V157.313H0.515625V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask1_2004_35612)">
+          <path
+            d="M-33.1318 0C53.5609 0 123.838 70.3151 123.838 157.055H-33.1318V0Z"
+            fill="#F25922"
+          />
+        </g>
+        <mask
+          id="mask2_2004_35612"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="157"
+          width="281"
+          height="125"
+        >
+          <path
+            d="M0.515625 157.067H280.257V281.709H0.515625V157.067Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2004_35612)">
+          <path
+            d="M0.515625 157.067H280.323V281.709H0.515625V157.067Z"
+            fill="#4C3F3B"
+          />
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2004_35612"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2004_35612"
+              transform="scale(0.00032041 0.000587199)"
+            />
+          </pattern>
+          <image
+            id="image0_2004_35612"
+            width="3121"
+            height="1703"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/visi%20misi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

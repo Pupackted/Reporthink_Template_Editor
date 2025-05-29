@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>divider 01</title>
+    <style>
+      :root {
+        --color-design-bg-color: #07592b;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 45pt;
+        color: #07592b;
+        line-height: 1.11;
+        text-align: center;
+        width: 470px;
+        background-color: rgba(255, 105, 180, 0);
+
+        /* text-shadow: 4px 4px 1px rgba(0, 0, 0, 0.5);  */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .divider-num {
+        font-family: "Montserrat", sans-serif;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+
+        font-weight: 700;
+        font-size: 100pt;
+        color: #07592b;
+        line-height: 1;
+        text-align: center;
+        position: absolute;
+        top: 165px;
+        left: 35px;
+        z-index: 23132;
+        background-color: rgba(255, 105, 180, 0);
+        width: 205px;
+        height: 206px;
+      }
+
+      .static-styling1 {
+        display: flex;
+        position: absolute;
+        top: 760px;
+        justify-content: center;
+        align-items: center;
+        align-items: center; /* Center vertically */
+        width: 100%;
+        background-color: rgba(255, 0, 212, 0);
+        z-index: 20000;
+        height: 300px;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <div class="divider-num">
+        <!-- change divider number here -->
+        01
+      </div>
+      <div class="static-styling1">
+        <div class="headline">
+          <!-- change title here -->
+          Ikhtisar Kinerja Keberlanjutan
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2009_2398)">
+          <mask
+            id="mask0_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="247"
+            y="0"
+            width="348"
+            height="393"
+          >
+            <path d="M247.07 0H594.446V392.645H247.07V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask0_2009_2398)" class="ImageChangerClass">
+            <mask
+              id="mask1_2009_2398"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="247"
+              y="-177"
+              width="489"
+              height="570"
+            >
+              <path
+                d="M491.513 -176.76L735.96 -34.4588V250.136L491.513 392.438L247.07 250.136V-34.4588L491.513 -176.76Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask1_2009_2398)">
+              <rect
+                x="64.9824"
+                y="-176.759"
+                width="853.643"
+                height="569.405"
+                fill="url(#pattern0_2009_2398)"
+              />
+            </g>
+          </g>
+          <path
+            d="M321.391 413.885L276.729 388.084L232.052 413.885V465.495L276.729 491.288L321.391 465.495V413.885Z"
+            fill="#D9D9D9"
+          />
+          <path
+            d="M294.952 418.735L232.621 382.726L170.275 418.735V490.753L232.621 526.769L294.952 490.753V418.735Z"
+            fill="#599200"
+          />
+          <mask
+            id="mask2_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="347"
+            width="249"
+            height="353"
+          >
+            <path
+              d="M103.761 347.896H351.974V699.515H103.761V347.896Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask2_2009_2398)">
+            <path
+              d="M174.003 417.47L232.641 383.234V370.862L193.139 348.115L103.784 399.729V599.548L276.729 699.456L351.135 656.676V569.46L275.609 526.148L234.904 549.86V453.361L174.003 417.477"
+              fill="#D9D9D9"
+            />
+          </g>
+          <path
+            d="M448.186 550.289L405.125 525.418L362.071 550.289V600.033L405.125 624.908L448.186 600.033V550.289Z"
+            fill="#599200"
+          />
+          <path
+            d="M448.167 495.236L418.317 477.991L388.471 495.236V529.718L418.317 546.959L448.167 529.718V495.236Z"
+            fill="#D9D9D9"
+          />
+          <path
+            d="M448.897 400.483L407.802 376.748L366.712 400.483V447.961L407.802 471.704L448.897 447.961V400.483Z"
+            fill="#599200"
+          />
+          <path
+            d="M367.586 461.371L322.472 435.312L277.357 461.371V513.484L322.472 539.539L367.586 513.484V461.371Z"
+            fill="#D9D9D9"
+          />
+          <path
+            d="M514.107 401.139L495.326 390.287L476.541 401.139V422.839L495.326 433.688L514.107 422.839V401.139Z"
+            fill="#D9D9D9"
+          />
+          <path
+            d="M505.041 504.237L486.26 493.389L467.475 504.237V525.949L486.26 536.798L505.041 525.949V504.237Z"
+            fill="#599200"
+          />
+          <path
+            d="M543.505 425.194L533.525 419.43L523.541 425.194V436.722L533.525 442.49L543.505 436.722V425.194Z"
+            fill="#599200"
+          />
+          <path
+            d="M521.515 494.76L511.539 488.992L501.56 494.76V506.291L511.539 512.04L521.515 506.291V494.76Z"
+            fill="#599200"
+          />
+          <path
+            d="M535.531 534.076L525.555 528.312L515.575 534.076V545.608L525.555 551.375L535.531 545.608V534.076Z"
+            fill="#D9D9D9"
+          />
+          <mask
+            id="mask3_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="568"
+            y="375"
+            width="22"
+            height="25"
+          >
+            <path
+              d="M568.792 375.888H589.61V399.881H568.792V375.888Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2009_2398)">
+            <path
+              d="M589.391 382.304L579.415 376.537L569.436 382.304V393.832L579.415 399.6L589.391 393.832V382.304Z"
+              fill="#D9D9D9"
+            />
+          </g>
+          <mask
+            id="mask4_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="238"
+            y="301"
+            width="77"
+            height="88"
+          >
+            <path
+              d="M238.07 301.738H314.006V388.884H238.07V301.738Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask4_2009_2398)">
+            <path
+              d="M313.647 323.326L276.311 301.754L238.976 323.326V366.473L276.311 388.053L313.647 366.473V323.326Z"
+              fill="#D9D9D9"
+            />
+          </g>
+          <path
+            d="M391.039 368.312L359.581 350.142L328.123 368.312V404.661L359.581 422.831L391.039 404.661V368.312Z"
+            fill="#D9D9D9"
+          />
+          <mask
+            id="mask5_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="473"
+            width="389"
+            height="369"
+          >
+            <path
+              d="M103.761 473.746H491.513V841.25H103.761V473.746Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask5_2009_2398)">
+            <mask
+              id="mask6_2009_2398"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="103"
+              y="473"
+              width="389"
+              height="453"
+            >
+              <path
+                d="M297.637 473.746L491.513 586.611V812.337L297.637 925.198L103.761 812.337V586.611L297.637 473.746Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask6_2009_2398)">
+              <path
+                d="M103.761 473.746H491.513V925.362H103.761V473.746Z"
+                fill="#D9D9D9"
+              />
+            </g>
+          </g>
+          <mask
+            id="mask7_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="699"
+            width="389"
+            height="143"
+          >
+            <path
+              d="M103.761 699.472H491.513V841.25H103.761V699.472Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask7_2009_2398)">
+            <path
+              d="M103.761 699.472H491.646V877.845H103.761V699.472Z"
+              fill="#D9D9D9"
+            />
+          </g>
+          <mask
+            id="mask8_2009_2398"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="79"
+            width="209"
+            height="244"
+          >
+            <path
+              d="M0.515625 79.2422H208.15V322.404H0.515625V79.2422Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask8_2009_2398)">
+            <mask
+              id="mask9_2009_2398"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="-1"
+              y="79"
+              width="210"
+              height="244"
+            >
+              <path
+                d="M103.761 79.2422L208.15 140.009V261.547L103.761 322.315L-0.62793 261.547V140.009L103.761 79.2422Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask9_2009_2398)">
+              <path
+                d="M-0.62793 79.2422H208.15V322.404H-0.62793V79.2422Z"
+                fill="#D9D9D9"
+              />
+            </g>
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2009_2398"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2009_2398"
+              transform="scale(0.000245942 0.000369004)"
+            />
+          </pattern>
+          <clipPath id="clip0_2009_2398">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2009_2398"
+            width="4066"
+            height="2710"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/divider%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

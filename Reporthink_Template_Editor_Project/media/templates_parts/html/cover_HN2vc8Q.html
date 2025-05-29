@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg-color: #d9d9d9;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 22pt;
+        color: #95de38;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 35pt;
+        color: #f9ede9;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+        text-align: start;
+        margin-bottom: 45px;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #f9ede9; /* Color */
+        z-index: 200;
+
+        line-height: 1.4;
+
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      /* ========================================== */
+      .company-logo {
+        width: 60pt;
+        height: 60pt;
+        background-color: #d9d9d9;
+        background-image: url(); /* enter company logo here */
+        border-radius: 100%;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 19pt;
+        color: #07592b; /* Color */
+
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 17.1pt;
+        color: #07592b; /* Color */
+        line-height: 1;
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .static-design1 {
+        position: absolute;
+        top: 25px;
+        left: 200px;
+        background-color: rgba(137, 43, 226, 0);
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64.8%;
+        left: 185px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 450px;
+      }
+
+      .static-design3 {
+        position: absolute;
+        left: 160px;
+        top: 880px;
+        z-index: 200;
+        width: 350px;
+        background-color: rgba(155, 84, 119, 0);
+      }
+      .static-design4 {
+        height: 90px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 12478912471849817491748918941794189472198;
+        position: absolute;
+        top: 88.2%;
+        left: 100px;
+      }
+
+      .year {
+        font-family: "Montserrat", sans-serif;
+        position: absolute;
+        top: 280px;
+        left: 40px;
+        font-weight: 800;
+        font-size: 40pt;
+        color: #95de38;
+        z-index: 200;
+        line-height: 1;
+
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- company logo -->
+      <div class="static-design1">
+        <div class="company-logo"></div>
+        <div class="Company-name1">Logo</div>
+        <div class="Company-name2">Company</div>
+      </div>
+
+      <div class="year">2024<br />2025</div>
+      <!-- Headline -->
+
+      <div class="static-design2">
+        <div class="sub-headline">Sustainability Report</div>
+        <div class="headline">
+          LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET
+        </div>
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+          egestas tortor.
+        </div>
+      </div>
+
+      <!-- year -->
+
+      <!-- main text -->
+
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2006_2)">
+          <path
+            d="M321.356 413.901L276.694 388.096L232.009 413.901V465.514L276.694 491.311L321.356 465.514V413.901Z"
+            fill="#07592B"
+          />
+          <path
+            d="M294.917 418.751L232.578 382.734L170.225 418.751V490.776L232.578 526.797L294.917 490.776V418.751Z"
+            fill="#7DBD33"
+          />
+          <mask
+            id="mask0_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="347"
+            width="249"
+            height="353"
+          >
+            <path
+              d="M103.761 347.896H351.974V699.515H103.761V347.896Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_2006_2)">
+            <path
+              d="M173.952 417.481L232.598 383.242V370.87L193.088 348.119L103.726 399.741V599.584L276.694 699.503L351.108 656.719V569.491L275.569 526.176L234.861 549.887V453.377L173.952 417.489"
+              fill="#07592B"
+            />
+          </g>
+          <path
+            d="M448.167 550.321L405.102 525.445L362.044 550.321V600.072L405.102 624.947L448.167 600.072V550.321Z"
+            fill="#7DBD33"
+          />
+          <path
+            d="M448.147 495.259L418.293 478.014L388.447 495.259V529.745L418.293 546.99L448.147 529.745V495.259Z"
+            fill="#07592B"
+          />
+          <path
+            d="M448.881 400.494L407.783 376.755L366.685 400.494V447.976L407.783 471.723L448.881 447.976V400.494Z"
+            fill="#7DBD33"
+          />
+          <path
+            d="M367.563 461.386L322.441 435.328L277.318 461.386V513.511L322.441 539.566L367.563 513.511V461.386Z"
+            fill="#07592B"
+          />
+          <path
+            d="M514.1 401.151L495.315 390.298L476.53 401.151V422.855L495.315 433.703L514.1 422.855V401.151Z"
+            fill="#07592B"
+          />
+          <path
+            d="M505.033 504.26L486.244 493.412L467.463 504.26V525.977L486.244 536.825L505.033 525.977V504.26Z"
+            fill="#7DBD33"
+          />
+          <path
+            d="M543.497 425.21L533.521 419.442L523.533 425.21V436.738L533.521 442.509L543.497 436.738V425.21Z"
+            fill="#7DBD33"
+          />
+          <path
+            d="M521.508 494.783L511.528 489.015L501.548 494.783V506.315L511.528 512.063L521.508 506.315V494.783Z"
+            fill="#7DBD33"
+          />
+          <path
+            d="M535.523 534.103L525.547 528.335L515.563 534.103V545.639L525.547 551.403L535.523 545.639V534.103Z"
+            fill="#07592B"
+          />
+          <mask
+            id="mask1_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="568"
+            y="375"
+            width="22"
+            height="25"
+          >
+            <path
+              d="M568.792 375.888H589.61V399.881H568.792V375.888Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2006_2)">
+            <path
+              d="M589.392 382.316L579.412 376.544L569.432 382.316V393.844L579.412 399.612L589.392 393.844V382.316Z"
+              fill="#07592B"
+            />
+          </g>
+          <mask
+            id="mask2_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="238"
+            y="301"
+            width="77"
+            height="88"
+          >
+            <path
+              d="M238.07 301.738H314.006V388.884H238.07V301.738Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask2_2006_2)">
+            <path
+              d="M313.615 323.326L276.272 301.754L238.932 323.326V366.481L276.272 388.06L313.615 366.481V323.326Z"
+              fill="#07592B"
+            />
+          </g>
+          <path
+            d="M391.015 368.32L359.554 350.146L328.092 368.32V404.673L359.554 422.847L391.015 404.673V368.32Z"
+            fill="#07592B"
+          />
+          <mask
+            id="mask3_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="217"
+            y="0"
+            width="378"
+            height="385"
+          >
+            <path d="M217.778 0H594.446V384.788H217.778V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask3_2006_2)">
+            <mask
+              id="mask4_2006_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="217"
+              y="-185"
+              width="490"
+              height="570"
+            >
+              <path
+                d="M462.221 -184.617L706.664 -42.3196V242.279L462.221 384.577L217.778 242.279V-42.3196L462.221 -184.617Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask4_2006_2)" class="ImageChangerClass">
+              <rect
+                x="159.378"
+                y="-184.618"
+                width="853.643"
+                height="569.404"
+                fill="url(#pattern0_2006_2)"
+              />
+            </g>
+          </g>
+          <mask
+            id="mask5_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="473"
+            width="389"
+            height="369"
+          >
+            <path
+              d="M103.761 473.746H491.513V841.25H103.761V473.746Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask5_2006_2)">
+            <mask
+              id="mask6_2006_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="103"
+              y="473"
+              width="389"
+              height="453"
+            >
+              <path
+                d="M297.637 473.746L491.513 586.611V812.337L297.637 925.198L103.761 812.337V586.611L297.637 473.746Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask6_2006_2)">
+              <path
+                d="M103.761 473.746H491.513V925.362H103.761V473.746Z"
+                fill="#07592B"
+              />
+            </g>
+          </g>
+          <mask
+            id="mask7_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="699"
+            width="389"
+            height="143"
+          >
+            <path
+              d="M103.761 699.472H491.513V841.25H103.761V699.472Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask7_2006_2)">
+            <path
+              d="M103.761 699.472H491.646V877.845H103.761V699.472Z"
+              fill="#07592B"
+            />
+          </g>
+          <mask
+            id="mask8_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="130"
+            width="182"
+            height="244"
+          >
+            <path
+              d="M0.515625 130.18H181.239V373.342H0.515625V130.18Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask8_2006_2)">
+            <mask
+              id="mask9_2006_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="-28"
+              y="130"
+              width="210"
+              height="244"
+            >
+              <path
+                d="M76.8498 130.18L181.239 190.951V312.485L76.8498 373.253L-27.5391 312.485V190.951L76.8498 130.18Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask9_2006_2)">
+              <path
+                d="M-27.5391 130.18H181.239V373.342H-27.5391V130.18Z"
+                fill="#07592B"
+              />
+            </g>
+          </g>
+          <mask
+            id="mask10_2006_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="103"
+            y="0"
+            width="199"
+            height="175"
+          >
+            <path d="M103.761 0H301.965V174.925H103.761V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask10_2006_2)">
+            <mask
+              id="mask11_2006_2"
+              style="mask-type: luminance"
+              maskUnits="userSpaceOnUse"
+              x="103"
+              y="-56"
+              width="199"
+              height="231"
+            >
+              <path
+                d="M202.861 -55.9248L301.965 1.7651V117.149L202.861 174.839L103.761 117.149V1.7651L202.861 -55.9248Z"
+                fill="white"
+              />
+            </mask>
+            <g mask="url(#mask11_2006_2)">
+              <path
+                d="M103.761 -55.9248H301.965V174.925H103.761V-55.9248Z"
+                fill="#ACC986"
+              />
+            </g>
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2006_2"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2006_2"
+              transform="scale(0.000217014 0.000325521)"
+            />
+          </pattern>
+          <clipPath id="clip0_2006_2">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2006_2"
+            width="4608"
+            height="3072"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

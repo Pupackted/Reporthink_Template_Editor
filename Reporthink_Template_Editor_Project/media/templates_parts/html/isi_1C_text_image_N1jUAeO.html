@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>isi 1C text image</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #599200;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 510px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 410px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div class="static-styling1">
+        <div class="headline">Headline<br />Headline</div>
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam, ornare eu bibendum ac, luctus id
+                arcu. Donec in gravida nunc.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/isi%201C%20text%20image%20design.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2009_8187"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="350"
+          y="0"
+          width="245"
+          height="284"
+        >
+          <path d="M350.714 0H594.447V283.916H350.714V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2009_8187)" class="ImageChangerClass">
+          <mask
+            id="mask1_2009_8187"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="350"
+            y="0"
+            width="245"
+            height="285"
+          >
+            <path
+              d="M472.736 0L594.763 71.0336V213.105L472.736 284.138L350.714 213.105V71.0336L472.736 0Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2009_8187)">
+            <rect
+              x="259.749"
+              width="426.131"
+              height="284.242"
+              fill="url(#pattern0_2009_8187)"
+            />
+          </g>
+        </g>
+        <path
+          d="M198.24 80.0543L230.17 61.6379L262.116 80.0543V116.895L230.17 135.307L198.24 116.895V80.0543Z"
+          fill="#07592B"
+        />
+        <path
+          d="M217.143 83.5182L261.711 57.811L306.29 83.5182V134.925L261.711 160.636L217.143 134.925V83.5182Z"
+          fill="#7DBD33"
+        />
+        <mask
+          id="mask2_2009_8187"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="176"
+          y="32"
+          width="178"
+          height="252"
+        >
+          <path
+            d="M176.122 32.9902H353.852V283.912H176.122V32.9902Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2009_8187)">
+          <path
+            d="M303.624 82.6123L261.694 58.1742V49.3448L289.944 33.1074L353.836 69.952V212.585L230.17 283.904L176.969 253.366V191.111L230.974 160.191L260.079 177.119V108.234L303.624 82.6201"
+            fill="#07592B"
+          />
+        </g>
+        <path
+          d="M250.653 194.825L284.11 175.522L317.578 194.825V233.419L284.11 252.722L250.653 233.419V194.825Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M107.574 177.424L138.365 159.671L169.147 177.424V212.933L138.365 230.689L107.574 212.933V177.424Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M107.59 138.127L128.931 125.818L150.273 138.127V162.741L128.931 175.05L107.59 162.741V138.127Z"
+          fill="#07592B"
+        />
+        <path
+          d="M107.062 70.4908L136.448 53.5466L165.83 70.4908V104.379L136.448 121.327L107.062 104.379V70.4908Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M165.205 113.951L197.463 95.3506L229.721 113.951V151.154L197.463 169.75L165.205 151.154V113.951Z"
+          fill="#07592B"
+        />
+        <path
+          d="M60.4336 70.9555L73.8637 63.2117L87.2977 70.9555V86.447L73.8637 94.1908L60.4336 86.447V70.9555Z"
+          fill="#07592B"
+        />
+        <path
+          d="M66.917 144.551L80.351 136.807L93.7811 144.551V160.05L80.351 167.794L66.917 160.05V144.551Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M160.226 224.414L176.969 214.757L193.725 224.414V243.728L176.969 253.39L160.226 243.728V224.414Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M39.417 88.1301L46.5516 84.0142L53.6902 88.1301V96.3582L46.5516 100.474L39.417 96.3582V88.1301Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M55.1377 137.787L62.2723 133.667L69.407 137.787V146.019L62.2723 150.119L55.1377 146.019V137.787Z"
+          fill="#7DBD33"
+        />
+        <path
+          d="M45.1191 165.853L52.2538 161.737L59.3884 165.853V174.085L52.2538 178.201L45.1191 174.085V165.853Z"
+          fill="#07592B"
+        />
+        <mask
+          id="mask3_2009_8187"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="6"
+          y="52"
+          width="16"
+          height="18"
+        >
+          <path
+            d="M6.45215 52.9844H21.2522V69.9793H6.45215V52.9844Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask3_2009_8187)">
+          <path
+            d="M6.60449 57.5105L13.7391 53.3945L20.8738 57.5105V65.7385L13.7391 69.8584L6.60449 65.7385V57.5105Z"
+            fill="#07592B"
+          />
+        </g>
+        <path
+          d="M203.774 15.4095L230.471 0.0117188L257.167 15.4095V46.2128L230.471 61.6145L203.774 46.2128V15.4095Z"
+          fill="#07592B"
+        />
+        <path
+          d="M148.435 47.525L170.931 34.5522L193.424 47.525V73.4704L170.931 86.4431L148.435 73.4704V47.525Z"
+          fill="#07592B"
+        />
+        <defs>
+          <pattern
+            id="pattern0_2009_8187"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2009_8187"
+              transform="scale(0.000400641 0.000600962)"
+            />
+          </pattern>
+          <image
+            id="image0_2009_8187"
+            width="2496"
+            height="1664"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/isi%201c%20text%20image%20-%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

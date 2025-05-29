@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>daftar isi</title>
+    <style>
+      :root {
+        --color-design-bg: #022873;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        background-image: url("");
+        background-color: var(--color-design-bg);
+        background-size: cover;
+        background-position: center;
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 30pt;
+        color: #89c8ff;
+        line-height: 1;
+        margin-right: 80px;
+        z-index: 300;
+        /* margin-left: 80px; */
+      }
+      .headline2 {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 40pt;
+        color: #89c8ff;
+        line-height: 1;
+        margin-right: 80px;
+        z-index: 300;
+        /* margin-left: 80px; */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #fff5da; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: end;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-design1 {
+        position: absolute;
+        top: 210px;
+        width: 100%;
+        background-color: rgba(137, 43, 226, 0);
+        text-align: end;
+
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 200;
+      }
+      /* -------- for table of content--------- */
+
+      .toc-num {
+        font-family: "League Spartan", sans-serif;
+        font-weight: bold;
+        font-size: 50pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+        margin: 0;
+
+        width: 90px;
+        /* line-height: 1.4; */
+        line-height: 1;
+      }
+      .table-of-contents-row {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 0px;
+        margin-top: 0;
+        background-color: rgba(105, 165, 255, 0);
+      }
+      .table-of-contents-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 17pt;
+        color: #89c8ff;
+        z-index: 200;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        line-height: 1.4;
+      }
+      .column-toc {
+        display: flex;
+        flex-direction: column;
+
+        background-color: rgba(255, 105, 180, 0);
+        margin-bottom: 5px;
+        width: calc(100% - 30px);
+        justify-content: start;
+        align-items: start;
+      }
+      .static-styling-toc {
+        display: flex;
+        background-color: rgba(255, 105, 180, 0);
+        flex-direction: column;
+        margin-left: 320px;
+        margin-right: 80px;
+        position: absolute;
+        top: 31%;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        width: calc(100% - 345px);
+      }
+
+      ul {
+        padding-left: 0;
+        margin-left: 20px;
+        margin-top: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+      }
+      li {
+        font-family: "Open Sans", sans-serif;
+        font-size: 12pt;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 1.25; /* Adjust this to control the spacing between lines */
+      }
+
+      li::before {
+        content: "• "; /* Add custom bullet point */
+        font-size: 12pt; /* Increase this value for a bigger bullet point */
+        color: #ffffff; /* Bullet color */
+        margin-right: 10px; /* Space between bullet and text */
+      }
+
+      span {
+        margin-left: 95px;
+      }
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ------------------------------------------------ */
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <div class="static-design1">
+        <div class="headline">Table Of</div>
+        <div class="headline2">CONTENTS</div>
+        <!-- ---line--- -->
+      </div>
+      <!--------------- table of content --------------------- -->
+
+      <!-- table of content main column -->
+      <div class="static-styling-toc">
+        <!-- toc row -->
+        <div class="table-of-contents-row">
+          <div class="toc-num">1</div>
+          <div class="column-toc">
+            <div class="table-of-contents-content">
+              Ikhtisar Kinerja Keberlanjutan
+            </div>
+            <!-- Bullet points with page numbers -->
+            <ul>
+              <li>Lorem Ipsum <span>2</span></li>
+              <li>Lorem Ipsum <span>3</span></li>
+              <li>Lorem Ipsum <span>4</span></li>
+              <li>Lorem Ipsum <span>5</span></li>
+              <li>Lorem Ipsum <span>6</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- toc row end -->
+        <!-- toc row -->
+        <div class="table-of-contents-row">
+          <div class="toc-num">2</div>
+          <div class="column-toc">
+            <div class="table-of-contents-content">Sambutan Direksi</div>
+            <!-- Bullet points with page numbers -->
+            <ul>
+              <li>Lorem Ipsum <span>2</span></li>
+              <li>Lorem Ipsum <span>3</span></li>
+              <li>Lorem Ipsum <span>4</span></li>
+              <li>Lorem Ipsum <span>5</span></li>
+              <li>Lorem Ipsum <span>6</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- toc row end -->
+        <!-- toc row -->
+        <div class="table-of-contents-row">
+          <div class="toc-num">3</div>
+          <div class="column-toc">
+            <div class="table-of-contents-content">Detil Perusahaan</div>
+            <!-- Bullet points with page numbers -->
+            <ul>
+              <li>Lorem Ipsum <span>2</span></li>
+              <li>Lorem Ipsum <span>3</span></li>
+              <li>Lorem Ipsum <span>4</span></li>
+              <li>Lorem Ipsum <span>5</span></li>
+              <li>Lorem Ipsum <span>6</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- toc row end -->
+        <!-- toc row -->
+        <div class="table-of-contents-row">
+          <div class="toc-num">4</div>
+          <div class="column-toc">
+            <div class="table-of-contents-content">
+              Tentang Laporan Keberlanjutan
+            </div>
+            <!-- Bullet points with page numbers -->
+            <ul>
+              <li>Lorem Ipsum <span>2</span></li>
+              <li>Lorem Ipsum <span>3</span></li>
+              <li>Lorem Ipsum <span>4</span></li>
+              <li>Lorem Ipsum <span>5</span></li>
+              <li>Lorem Ipsum <span>6</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- toc row end -->
+        <!-- toc row -->
+        <div class="table-of-contents-row">
+          <div class="toc-num">5</div>
+          <div class="column-toc">
+            <div class="table-of-contents-content">Strategi Sustainability</div>
+            <!-- Bullet points with page numbers -->
+            <ul>
+              <li>Lorem Ipsum <span>2</span></li>
+              <li>Lorem Ipsum <span>3</span></li>
+              <li>Lorem Ipsum <span>4</span></li>
+              <li>Lorem Ipsum <span>5</span></li>
+              <li>Lorem Ipsum <span>6</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- toc row end -->
+      </div>
+      <!--------------- table of content end--------------------- -->
+      <!-- ==================== designs ====================== -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2004_909"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="204"
+          height="841"
+        >
+          <path d="M0.515625 0H203.654V840.75H0.515625V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2004_909)">
+          <rect
+            x="-751.163"
+            width="1260.09"
+            height="840.778"
+            fill="url(#pattern0_2004_909)"
+          />
+        </g>
+        <mask
+          id="mask1_2004_909"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="322"
+          height="318"
+        >
+          <path d="M0.621094 0H321.707V317.378H0.621094V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask1_2004_909)">
+          <path
+            d="M321.812 0.316406L0.558594 317.019V0.316406H321.812Z"
+            fill="#011640"
+          />
+        </g>
+        <mask
+          id="mask2_2004_909"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="342"
+          y="0"
+          width="116"
+          height="94"
+        >
+          <path d="M342.018 0H457.319V93.9721H342.018V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask2_2004_909)">
+          <path
+            d="M413.227 0.0859375L342.018 71.6272L364.058 93.773L457.304 0.0859375H413.227Z"
+            fill="#47C5FB"
+          />
+        </g>
+        <mask
+          id="mask3_2004_909"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="373"
+          y="65"
+          width="85"
+          height="62"
+        >
+          <path
+            d="M373.956 65.9805H457.319V126.962H373.956V65.9805Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask3_2004_909)">
+          <path
+            d="M412.728 66.0625L374.604 104.368L396.722 126.923L418.723 104.821L457.304 66.0625H412.728Z"
+            fill="#47C5FB"
+          />
+        </g>
+        <mask
+          id="mask4_2004_909"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="395"
+          y="103"
+          width="63"
+          height="41"
+        >
+          <path
+            d="M395.937 103.969H457.319V143.828H395.937V103.969Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2004_909)">
+          <path
+            d="M396.722 126.923L413.469 143.746H457.304L418.723 104.82L396.722 126.923Z"
+            fill="#00569E"
+          />
+        </g>
+        <path
+          d="M374.354 104.614L396.394 82.4678L418.723 104.821L396.722 126.923L374.354 104.614Z"
+          fill="#00B5F8"
+        />
+        <defs>
+          <pattern
+            id="pattern0_2004_909"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2004_909"
+              transform="scale(0.000166667 0.00025)"
+            />
+          </pattern>
+          <image
+            id="image0_2004_909"
+            width="6000"
+            height="4000"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/daftar%20isi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

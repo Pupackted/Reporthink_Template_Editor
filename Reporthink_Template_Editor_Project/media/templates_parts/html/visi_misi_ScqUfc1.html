@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>visi misi</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 25pt;
+        color: #599200;
+        line-height: 1.4;
+        margin-bottom: 5px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        /* font-family: "Open Sans", sans-serif; */
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        font-size: 35pt;
+        color: #07592b;
+
+        line-height: 1.11;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 180px;
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 580px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 445px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 218371983718931817399188;
+      }
+      .static-styling2 {
+        position: absolute;
+        top: 340px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+
+      .red-line {
+        width: 150px;
+        height: 8px;
+        background-color: #07592b;
+        z-index: 3000;
+
+        margin-bottom: 30px;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- main texts -->
+      <div class="headline">VISION &<br />MISSION</div>
+
+      <div class="static-styling1">
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="sub-headline">VISION</div>
+            <div class="red-line"></div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                accumsan volutpat metus quis vulputate. Sed volutpat tincidunt
+                leo quis commodo. Morbi venenatis neque a enim rutrum
+                consectetur. Proin a quam mauris. Aliquam vestibulum nulla in
+                est hendrerit efficitur. Integer ultricies, arcu vel semper
+                ullamcorper, metus libero vestibulum lacus, malesuada molestie
+                lectus ligula ut lacus. Aliquam non nisl orci. Vestibulum congue
+                odio nec nisi aliquet, at tincidunt urna luctus. Lorem ipsum
+                dolor sit amet, consectetur adipiscing elit. In accumsan
+                volutpat metus quis vulputate. Sed volutpat tincidunt leo quis
+                commodo. Morbi venenatis neque a enim rutrum consectetur. Proin
+                a quam mauris. Aliquam vestibulum nulla in est hendrerit
+                efficitur. Integer ultricies, arcu vel semper ullamcorper, metus
+                libero vestibulum lacus, malesuada molestie lectus ligula ut
+                lacus. Aliquam non nisl orci. Vestibulum congue odio nec nisi
+                aliquet, at tincidunt urna luctus.
+              </p>
+            </div>
+
+            <div class="sub-headline">MISSION</div>
+            <div class="red-line"></div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                accumsan volutpat metus quis vulputate. Sed volutpat tincidunt
+                leo quis commodo. Morbi venenatis neque a enim rutrum
+                consectetur. Proin a quam mauris. Aliquam vestibulum nulla in
+                est hendrerit efficitur. Integer ultricies, arcu vel semper
+                ullamcorper, metus libero vestibulum lacus, malesuada molestie
+                lectus ligula ut lacus. Aliquam non nisl orci. Vestibulum congue
+                odio nec nisi aliquet, at tincidunt urna luctus. Lorem ipsum
+                dolor sit amet, consectetur adipiscing elit. In accumsan
+                volutpat metus quis vulputate. Sed volutpat tincidunt leo quis
+                commodo. Morbi venenatis neque a enim rutrum consectetur. Proin
+                a quam mauris. Aliquam vestibulum nulla in est hendrerit
+                efficitur. Integer ultricies, arcu vel semper ullamcorper, metus
+                libero vestibulum lacus, malesuada molestie lectus ligula ut
+                lacus. Aliquam non nisl orci. Vestibulum congue odio nec nisi
+                aliquet, at tincidunt urna luctus.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/visi%20misi.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2013_44282"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="95"
+          width="298"
+          height="151"
+        >
+          <path
+            d="M0.515625 95.1827H297.02V245.544H0.515625V95.1827Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2013_44282)">
+          <mask
+            id="mask1_2013_44282"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="95"
+            width="298"
+            height="151"
+          >
+            <path
+              d="M252.55 95.1827H0.515625V245.544H252.55L297.118 170.363L252.55 95.1827Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2013_44282)">
+            <path
+              d="M0.515625 95.1827H296.962V245.544H0.515625V95.1827Z"
+              fill="#D9D9D9"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask2_2013_44282"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="291"
+          y="0"
+          width="304"
+          height="327"
+        >
+          <path d="M291.369 0H594.446V326.903H291.369V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask2_2013_44282)" class="ImageChangerClass">
+          <mask
+            id="mask3_2013_44282"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="291"
+            y="0"
+            width="428"
+            height="328"
+          >
+            <path
+              d="M718.057 163.697L622.864 327.399H386.563L291.369 163.697L386.563 0H622.864L718.057 163.697Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2013_44282)">
+            <rect
+              x="191.391"
+              width="581.583"
+              height="327.397"
+              fill="url(#pattern0_2013_44282)"
+            />
+          </g>
+        </g>
+        <path
+          d="M259.396 150.768L248.175 170.215L259.396 189.67H281.846L293.067 170.215L281.846 150.768H259.396Z"
+          fill="#D9D9D9"
+        />
+        <path
+          d="M261.507 162.28L245.845 189.42L261.507 216.572H292.833L308.499 189.42L292.833 162.28H261.507Z"
+          fill="#07592B"
+        />
+        <mask
+          id="mask4_2013_44282"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="230"
+          y="136"
+          width="154"
+          height="110"
+        >
+          <path
+            d="M230.077 136.959H383.565V245.212H230.077V136.959Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2013_44282)">
+          <path
+            d="M260.957 214.948L246.063 189.413H240.681L230.787 206.614L253.241 245.525H340.16L383.62 170.215L365.01 137.815H327.069L308.23 170.703L318.545 188.428H276.569L260.961 214.948"
+            fill="#D9D9D9"
+          />
+        </g>
+        <path
+          d="M329.337 182.688L317.573 203.061L329.337 223.445H352.852L364.616 203.061L352.852 182.688H329.337Z"
+          fill="#07592B"
+        />
+        <path
+          d="M318.733 95.5537L307.914 114.302L318.733 133.05H340.371L351.19 114.302L340.371 95.5537H318.733Z"
+          fill="#07592B"
+        />
+        <path
+          d="M294.784 95.5615L287.282 108.558L294.784 121.554H309.783L317.284 108.558L309.783 95.5615H294.784Z"
+          fill="#D9D9D9"
+        />
+        <path
+          d="M253.568 95.2413L243.241 113.134L253.568 131.031H274.219L284.546 113.134L274.219 95.2413H253.568Z"
+          fill="#07592B"
+        />
+        <path
+          d="M280.054 130.649L268.716 150.295L280.054 169.942H302.722L314.053 150.295L302.722 130.649H280.054Z"
+          fill="#D9D9D9"
+        />
+        <path
+          d="M253.853 66.8434L249.131 75.0246L253.853 83.2019H263.291L268.01 75.0246L263.291 66.8434H253.853Z"
+          fill="#D9D9D9"
+        />
+        <path
+          d="M298.699 70.7915L293.98 78.9727L298.699 87.1499H308.144L312.863 78.9727L308.144 70.7915H298.699Z"
+          fill="#07592B"
+        />
+        <path
+          d="M347.365 127.618L341.479 137.815L347.365 148.019H359.137L365.022 137.815L359.137 127.618H347.365Z"
+          fill="#07592B"
+        />
+        <path
+          d="M264.317 54.0426L261.808 58.3889L264.317 62.7353H269.333L271.842 58.3889L269.333 54.0426H264.317Z"
+          fill="#07592B"
+        />
+        <path
+          d="M294.577 63.6178L292.067 67.9642L294.577 72.3106H299.592L302.094 67.9642L299.592 63.6178H294.577Z"
+          fill="#07592B"
+        />
+        <path
+          d="M311.68 57.5142L309.17 61.8605L311.68 66.2069H316.695L319.204 61.8605L316.695 57.5142H311.68Z"
+          fill="#D9D9D9"
+        />
+        <mask
+          id="mask5_2013_44282"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="243"
+          y="34"
+          width="12"
+          height="9"
+        >
+          <path
+            d="M243.065 34.2906H254.056V42.9872H243.065V34.2906Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask5_2013_44282)">
+          <path
+            d="M245.661 34.0602L243.151 38.4066L245.661 42.7529H250.672L253.182 38.4066L250.672 34.0602H245.661Z"
+            fill="#D9D9D9"
+          />
+        </g>
+        <path
+          d="M239.572 120.437L231.669 134.136L239.572 147.835H255.383L263.291 134.136L255.383 120.437H239.572Z"
+          fill="#D9D9D9"
+        />
+        <defs>
+          <pattern
+            id="pattern0_2013_44282"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2013_44282"
+              transform="scale(0.00025 0.000444444)"
+            />
+          </pattern>
+          <image
+            id="image0_2013_44282"
+            width="4000"
+            height="2250"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2072%20-%20Green%20Grey%20Hexagonal%20Shapes%20Modern%20Futuristic/visi%20misi%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

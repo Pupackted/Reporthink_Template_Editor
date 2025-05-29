@@ -753,9 +753,17 @@ select {
   width: 100%;
 }
 
+.\!container {
+  width: 100% !important;
+}
+
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
+  }
+
+  .\!container {
+    max-width: 640px !important;
   }
 }
 
@@ -763,11 +771,19 @@ select {
   .container {
     max-width: 768px;
   }
+
+  .\!container {
+    max-width: 768px !important;
+  }
 }
 
 @media (min-width: 1024px) {
   .container {
     max-width: 1024px;
+  }
+
+  .\!container {
+    max-width: 1024px !important;
   }
 }
 
@@ -775,11 +791,19 @@ select {
   .container {
     max-width: 1280px;
   }
+
+  .\!container {
+    max-width: 1280px !important;
+  }
 }
 
 @media (min-width: 1536px) {
   .container {
     max-width: 1536px;
+  }
+
+  .\!container {
+    max-width: 1536px !important;
   }
 }
 
@@ -971,6 +995,14 @@ select {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+.mb-24 {
+  margin-bottom: 6rem;
 }
 
 .block {
@@ -1595,6 +1627,16 @@ select {
   padding-bottom: 3px;
 }
 
+.py-\[5\%\] {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.py-\[15\%\] {
+  padding-top: 15%;
+  padding-bottom: 15%;
+}
+
 .pr-2 {
   padding-right: 0.5rem;
 }
@@ -1609,6 +1651,14 @@ select {
 
 .pt-\[20\%\] {
   padding-top: 20%;
+}
+
+.pt-\[10\%\] {
+  padding-top: 10%;
+}
+
+.pt-\[5\%\] {
+  padding-top: 5%;
 }
 
 .text-center {

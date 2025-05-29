@@ -51,6 +51,12 @@
         background: #d3d3d3;
         border-radius: 5px;
       }
+      .static-image-design {
+        z-index: 0 !important;
+      }
+      .static-styling1 {
+        z-index: 1;
+      }
     </style>
 
     <!--  -->
@@ -840,10 +846,12 @@
           
         `;
             initBackgroundColorPicker();
-            initImageUploader();
+            // initImageUploader();
+            initImageChangers();
             initPdfDownloader();
             makeElementsEditable();
             addClickableFillClass();
+            injectCompanyLogoInputs();
             initTextToolbar();
             initColorPicker();
           } else {
@@ -858,11 +866,12 @@
               </div>
             `;
                 initBackgroundColorPicker();
-                initImageUploader();
+                // initImageUploader();
+                initImageChangers();
                 initPdfDownloader();
                 makeElementsEditable();
                 addClickableFillClass();
-
+                injectCompanyLogoInputs();
                 initTextToolbar();
                 initColorPicker();
               })
@@ -1001,10 +1010,12 @@
           `;
               currentSelectedId = selectedText;
               initBackgroundColorPicker();
-              initImageUploader();
+              // initImageUploader();
+              initImageChangers();
               initPdfDownloader();
               makeElementsEditable();
               addClickableFillClass();
+              injectCompanyLogoInputs();
               initTextToolbar();
               initColorPicker();
               updatePageIndicator(); // Initialize the page indicator
@@ -1019,7 +1030,6 @@
         });
       });
 
-      // ---- PDF DOWNLOADER ----
       // Convert a single image element to Base64 and replace its src
       async function convertImageToBase64(imgElement) {
         try {
@@ -1048,6 +1058,8 @@
         await Promise.all(promises);
       }
 
+      // ---- PDF DOWNLOADER ----
+
       function initPdfDownloader() {
         const oldButton = document.getElementById("generatePdfButton");
         if (!oldButton) return;
@@ -1062,7 +1074,11 @@
           }
 
           const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF();
+          const pdf = new jsPDF({
+            unit: "pt",
+            format: "a4",
+            orientation: "portrait",
+          });
 
           saveCurrentPageHtml(); // Your existing function to update loadedPages
 
@@ -1070,27 +1086,61 @@
           const tempContainer = document.createElement("div");
           tempContainer.style.position = "fixed";
           tempContainer.style.top = "-9999px";
-          tempContainer.style.width = "800px";
+          tempContainer.style.width = "794px"; // A4 width in px at 96dpi
           document.body.appendChild(tempContainer);
+
+          const pdfWidth = pdf.internal.pageSize.getWidth(); // ~595.28 pt
+          const pdfHeight = pdf.internal.pageSize.getHeight(); // ~841.89 pt
 
           for (let i = 0; i < loadedPages.length; i++) {
             const html = loadedPages[i].html;
             const pageDiv = document.createElement("div");
             pageDiv.className = "template-page";
+            pageDiv.style.width = "794px"; // match container width
+            pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
+            pageDiv.style.boxSizing = "border-box";
             pageDiv.innerHTML = html;
             tempContainer.appendChild(pageDiv);
 
+            // const headlines = document.querySelectorAll(".headline");
+            const headlines = pageDiv.querySelectorAll(".headline");
+
+            headlines.forEach((h) => {
+              h.style.position = "static";
+            });
+
+            // headlines.forEach((h) => {
+            //   const parent = h.parentElement;
+            //   if (!parent) return;
+
+            //   const hRect = h.getBoundingClientRect();
+            //   const pRect = parent.getBoundingClientRect();
+
+            //   // If headline is visually outside parent bounds (with some tolerance)
+            //   if (
+            //     hRect.left < pRect.left - 10 ||
+            //     hRect.top < pRect.top - 10 ||
+            //     hRect.left > pRect.right + 10 ||
+            //     hRect.top > pRect.bottom + 10
+            //   ) {
+            //     // Fix only this headline
+            //     h.style.position = "static";
+            //     h.style.top = "auto";
+            //     h.style.left = "auto";
+            //   }
+            // });
             // Convert all images inside this pageDiv to base64 before rendering
             await convertImagesInContainer(pageDiv);
 
             // Render to canvas and add to PDF
-            const canvas = await html2canvas(pageDiv);
+            const canvas = await html2canvas(pageDiv, {
+              scale: 2,
+              useCORS: true,
+              allowTaint: true,
+            });
             const imgData = canvas.toDataURL("image/png");
 
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
+            // Add image stretched to full A4 page size
             if (i > 0) pdf.addPage();
             pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
@@ -1142,6 +1192,7 @@
       initPdfDownloader();
       makeElementsEditable();
       addClickableFillClass();
+      injectCompanyLogoInputs();
       initTextToolbar();
       initColorPicker();
       updatePageIndicator(); // Initialize the page indicator
@@ -1192,6 +1243,75 @@
   <!-- Edit Image  -->
   <!-- Company Logo (working) -->
   <script>
+    function injectCompanyLogoInputs() {
+      // Select both label and div elements with class 'company-logo'
+      const containers = document.querySelectorAll(
+        "label.company-logo, div.company-logo"
+      );
+
+      containers.forEach((container) => {
+        // Avoid injecting multiple inputs
+        if (!container.querySelector('input[type="file"]')) {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.className = "hidden";
+          input.setAttribute("onchange", "uploadLogo(this)");
+          container.appendChild(input);
+
+          // Make container cursor pointer to indicate clickable
+          container.style.cursor = "pointer";
+
+          // If container is a div, add click handler to open file dialog
+          if (container.tagName.toLowerCase() === "div") {
+            container.addEventListener("click", () => {
+              input.click();
+            });
+          }
+
+          // Add drag & drop event listeners
+          container.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            container.style.border = "2px dashed #007BFF"; // Visual feedback
+          });
+
+          container.addEventListener("dragleave", (e) => {
+            e.preventDefault();
+            container.style.border = ""; // Remove visual feedback
+          });
+
+          container.addEventListener("drop", (e) => {
+            e.preventDefault();
+            container.style.border = ""; // Remove visual feedback
+
+            const files = e.dataTransfer.files;
+            if (files.length === 0) return;
+
+            const file = files[0];
+            if (!file.type.startsWith("image/")) {
+              alert("Please drop an image file.");
+              return;
+            }
+
+            // Use FileReader to read dropped file
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              container.style.backgroundImage = `url(${event.target.result})`;
+              container.style.backgroundColor = "transparent";
+              container.style.backgroundSize = "cover";
+              container.style.backgroundPosition = "center";
+              container.style.position = "relative";
+              container.style.zIndex = "10";
+
+              // Reset file input value so user can upload same file again if needed
+              input.value = "";
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+      });
+    }
+
     function uploadLogo(input) {
       const file = input.files[0];
       if (!file) return;
@@ -1199,32 +1319,127 @@
       const reader = new FileReader();
 
       reader.onload = function (e) {
-        const label = input.parentElement;
-        label.style.backgroundImage = `url(${e.target.result})`;
+        const container = input.parentElement;
+        container.style.backgroundImage = `url(${e.target.result})`;
+        container.style.backgroundColor = "transparent";
+        container.style.backgroundSize = "cover";
+        container.style.backgroundPosition = "center";
+        container.style.position = "relative";
+        container.style.zIndex = "10";
+
+        // Reset input value so user can upload the same file again if needed
+        input.value = "";
       };
 
       reader.readAsDataURL(file);
     }
+
+    // Initialize on DOM ready
+    document.addEventListener("DOMContentLoaded", () => {
+      injectCompanyLogoInputs();
+    });
   </script>
+
   <!-- Company Logo end -->
-  <!-- Edit Image  end -->
 
   <!-- image uploader (working)-->
-  <script>
-    function initImageUploader() {
-      const imageUploader = document.getElementById("imageUploader");
-      const svgImage = document.getElementById("image0_2001_2");
-      const bobLayer = document.querySelector('g[mask="url(#mask1_2001_2)"]');
 
-      if (!imageUploader || !svgImage || !bobLayer) {
-        console.warn("Missing image upload elements.");
+  <script>
+    function initImageChangers() {
+      const imageUploader = document.getElementById("imageUploader");
+      if (!imageUploader) {
+        console.warn("Image uploader input not found");
         return;
       }
 
-      bobLayer.addEventListener("click", () => {
-        imageUploader.click();
+      const changers = document.querySelectorAll("g.ImageChangerClass");
+
+      changers.forEach((gElement) => {
+        gElement.style.cursor = "pointer";
+
+        // Click to open file picker
+        gElement.addEventListener("click", () => {
+          imageUploader.currentGElement = gElement;
+          imageUploader.value = ""; // reset input
+          imageUploader.click();
+        });
+
+        // Drag & drop support
+        gElement.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          // Optional: visual feedback
+          gElement.style.opacity = "0.7";
+        });
+
+        gElement.addEventListener("dragleave", (e) => {
+          e.preventDefault();
+          gElement.style.opacity = "1";
+        });
+
+        gElement.addEventListener("drop", (e) => {
+          e.preventDefault();
+          gElement.style.opacity = "1";
+
+          const files = e.dataTransfer.files;
+          if (!files || files.length === 0) return;
+
+          const file = files[0];
+          if (!file.type.startsWith("image/")) {
+            alert("Please drop an image file.");
+            return;
+          }
+
+          imageUploader.currentGElement = gElement;
+
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const gElement = imageUploader.currentGElement;
+            if (!gElement) {
+              console.warn("No <g> element stored for image update");
+              return;
+            }
+
+            const maskAttr = gElement.getAttribute("mask");
+            if (!maskAttr) {
+              console.warn("No mask attribute found on <g> element");
+              return;
+            }
+
+            const maskIdMatch = maskAttr.match(/url\(#(mask.+)\)/);
+            if (!maskIdMatch || maskIdMatch.length < 2) {
+              console.warn("Mask id not found or invalid format:", maskAttr);
+              return;
+            }
+
+            const maskId = maskIdMatch[1]; // e.g. mask5_2012_44201
+            const suffix = maskId.replace(/^mask\d*/, ""); // e.g. _2012_44201
+
+            // Find image element whose ID ends with suffix
+            const svgImage = Array.from(
+              document.querySelectorAll("image")
+            ).find((img) => img.id.endsWith(suffix));
+
+            if (!svgImage) {
+              console.warn(
+                "Corresponding <image> element not found with suffix:",
+                suffix
+              );
+              return;
+            }
+
+            // Update image href
+            svgImage.setAttributeNS(
+              "http://www.w3.org/1999/xlink",
+              "xlink:href",
+              e.target.result
+            );
+          };
+
+          reader.readAsDataURL(file);
+        });
       });
 
+      // File input change event handler remains the same
       imageUploader.addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (!file) return;
@@ -1232,14 +1447,52 @@
         const reader = new FileReader();
 
         reader.onload = function (e) {
-          svgImage.setAttribute("xlink:href", e.target.result);
+          const gElement = imageUploader.currentGElement;
+          if (!gElement) {
+            console.warn("No <g> element stored for image update");
+            return;
+          }
+
+          const maskAttr = gElement.getAttribute("mask");
+          if (!maskAttr) {
+            console.warn("No mask attribute found on <g> element");
+            return;
+          }
+
+          const maskIdMatch = maskAttr.match(/url\(#(mask.+)\)/);
+          if (!maskIdMatch || maskIdMatch.length < 2) {
+            console.warn("Mask id not found or invalid format:", maskAttr);
+            return;
+          }
+
+          const maskId = maskIdMatch[1];
+          const imageId = maskId.replace(/^mask/, "image");
+          const svgImage = document.getElementById(imageId);
+          if (!svgImage) {
+            console.warn(
+              "Corresponding <image> element not found with id:",
+              imageId
+            );
+            return;
+          }
+
+          svgImage.setAttributeNS(
+            "http://www.w3.org/1999/xlink",
+            "xlink:href",
+            e.target.result
+          );
         };
 
         reader.readAsDataURL(file);
       });
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initImageChangers();
+    });
   </script>
   <!-- image uploader end -->
+  <!-- Edit Image  end -->
   <!-- BG color (working) -->
   <script>
     function initBackgroundColorPicker() {
