@@ -1,10 +1,89 @@
-{% extends 'base.html' %}
-{% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+{% extends 'base.html' %} {% block content %}
+<style>
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeSlideUp 0.6s ease-out forwards;
+  }
+</style>
+
+<div class="min-h-screen flex items-start justify-center bg-gray-100 px-4">
+  <div
+    class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl mt-[10%] opacity-0 fade-in-up"
+  >
+    <h2 class="text-2xl font-semibold text-center text-gray-900 mb-6">
+      Sign in to your account
+    </h2>
+
+    {% if form.non_field_errors %}
+    <div class="mb-4 text-sm text-red-600 bg-red-100 p-3 rounded-md">
+      {% for error in form.non_field_errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+
+      <!-- Username -->
+      <div>
+        <label for="id_username" class="block text-sm font-medium text-gray-700"
+          >Username</label
+        >
+        <input
+          type="text"
+          name="username"
+          id="id_username"
+          value="{{ form.username.value|default:'' }}"
+          class="mt-1 block w-full px-4 py-2 border {% if form.username.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+          required
+        />
+        {% if form.username.errors %}
+        <p class="mt-1 text-sm text-red-500">{{ form.username.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="id_password" class="block text-sm font-medium text-gray-700"
+          >Password</label
+        >
+        <input
+          type="password"
+          name="password"
+          id="id_password"
+          class="mt-1 block w-full px-4 py-2 border {% if form.password.errors %}border-red-500{% else %}border-gray-300{% endif %} rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+          required
+        />
+        {% if form.password.errors %}
+        <p class="mt-1 text-sm text-red-500">{{ form.password.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <button
+        type="submit"
+        class="w-full py-2 px-4 bg-black text-white rounded-xl hover:bg-gray-900 transition duration-300"
+      >
+        Login
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      Don't have an account?
+      <a href="{% url 'signup' %}" class="text-blue-600 hover:underline"
+        >Sign up here</a
+      >
+    </p>
+  </div>
+</div>
 {% endblock %}
