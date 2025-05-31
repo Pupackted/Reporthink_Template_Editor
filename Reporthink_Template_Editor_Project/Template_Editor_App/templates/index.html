@@ -245,7 +245,11 @@
         <!-- item end -->
         {% endif %} {% endfor %}
 
-       <!-- new template -->
+        <!-- new template -->
+
+        <!-- Admin-only button -->
+        {% if user.is_staff %}
+
         <a
           href="{% url 'create_template' %}"
           class="flex flex-col items-center justify-center w-full md:max-w-[341px] aspect-[341/529] bg-gray-200 rounded-[30px] border-2 border-gray-400 text-gray-700 font-extralight text-6xl hover:bg-gray-300 transition-transform duration-200 ease-in-out hover:scale-[98%] focus:outline-none focus:ring-4 focus:ring-gray-400"
@@ -253,7 +257,7 @@
         >
           +
         </a>
-
+        {% endif %}
         <!-- new template end -->
       </div>
       <!-- grid end -->
@@ -367,14 +371,30 @@
 
       <!-- number se=lector end -->
     </div>
+
     <!-- main section end -->
   </div>
 
+  <!-- {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }}!</p>
+  <a href="{% url 'choose_template' %}">Continue</a>
+  <a href="{% url 'logout' %}">Logout</a>
+
+  {% if user.is_staff %}
+
+  <a href="{% url 'create_template' %}" class="btn btn-danger">Admin Feature</a>
+  {% endif %} {% else %}
+  <p>Welcome, Guest!</p>
+  <a href="{% url 'login' %}">Login</a> or
+  <a href="{% url 'signup' %}">Sign Up</a>
+  {% endif %} -->
 
   <!-- debugging -->
 
   {% comment %} {% for template in templates %}
   <p>{{ template.name }} — cover_part: {{ template.cover_part }}</p>
   {% endfor %} {% endcomment %}
+
+  
 </body>
 {% endblock %}

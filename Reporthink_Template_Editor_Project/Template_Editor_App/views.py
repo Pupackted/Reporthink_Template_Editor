@@ -7,7 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from .forms import TemplateForm, TemplatePartForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+
+
+def is_admin(user):
+    return user.is_staff  # or user.is_superuser depending on your admin setup
 
 
 # def index(request):
@@ -28,7 +36,7 @@ def index(request):
 
 
 
-
+@login_required
 def choose_template(request):
     templates = Template.objects.all()
     selected_id = request.GET.get('selected_id')
@@ -44,16 +52,16 @@ def choose_template(request):
     })
 
 
-
+@login_required
 def edit_template(request):
      return render(request, 'edit-template.html')
+@login_required
 def template_to_be_edited(request):
      return render(request, 'template-to-be-edited.html')
 
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 
+@login_required
 def edit_template_view(request, template_id):
     template = get_object_or_404(Template, id=template_id)
     cover_part = template.cover_part
@@ -80,7 +88,7 @@ def edit_template_view(request, template_id):
 
     return render(request, 'edit-template.html', context)
 
-
+@login_required
 def edit_template_part(request, part_id):
     part = get_object_or_404(TemplatePart, id=part_id)
     print("Editing part:", part)
@@ -118,17 +126,7 @@ def update_template_name(request, template_id):
 
 # forms to upload and create templates and template parts
 
-
-# def create_template(request):
-#     if request.method == 'POST':
-#         form = TemplateForm(request.POST)
-#         if form.is_valid():
-#             template = form.save()
-#             return redirect('add_template_part', template_id=template.id)
-#     else:
-#         form = TemplateForm()
-#     return render(request, 'create_template.html', {'form': form})
-
+@user_passes_test(is_admin)
 def create_template(request):
     if request.method == 'POST':
         form = TemplateForm(request.POST)
@@ -142,50 +140,7 @@ def create_template(request):
     return render(request, 'create_template.html', {'form': form})
 
 
-# def add_template_part(request, template_id):
-#     template = get_object_or_404(Template, id=template_id)
-#     if request.method == 'POST':
-#         form = TemplatePartForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             part = form.save(commit=False)
-#             part.template = template
-#             part.save()
-
-#             # Jika ini adalah cover part pertama, set sebagai cover_part template
-#             if not template.cover_part:
-#                 template.cover_part = part
-#                 template.save()
-
-#             # Bisa tambah tombol untuk tambah part lagi atau selesai
-#             if 'add_another' in request.POST:
-#                 return redirect('add_template_part', template_id=template.id)
-#             else:
-#                 return redirect('choose_template')  # atau halaman lain
-#     else:
-#         form = TemplatePartForm()
-#     return render(request, 'add_template_part.html', {'form': form, 'template': template})
-
-
-# def add_template_part(request, template_id):
-#     template = get_object_or_404(Template, id=template_id)
-#     parts = template.parts.all()
-#     if request.method == 'POST':
-#         form = TemplatePartForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             part = form.save(commit=False)
-#             part.template = template
-#             part.save()
-#             if not template.cover_part:
-#                 template.cover_part = part
-#                 template.save()
-#             if 'add_another' in request.POST:
-#                 return redirect('add_template_part', template_id=template.id)
-#             else:
-#                 return redirect('set_cover_part', template_id=template.id)
-#     else:
-#         form = TemplatePartForm()
-#     return render(request, 'add_template_part.html', {'form': form, 'template': template, 'parts': parts})
-
+@user_passes_test(is_admin)
 def add_template_part(request, template_id):
     template = get_object_or_404(Template, id=template_id)
     parts = template.parts.all()  # Get existing parts
@@ -211,7 +166,7 @@ def add_template_part(request, template_id):
 
 
 # set cover part
-
+@user_passes_test(is_admin)
 def set_cover_part(request, template_id):
     template = get_object_or_404(Template, id=template_id)
     parts = template.parts.all()
@@ -225,4 +180,19 @@ def set_cover_part(request, template_id):
             return redirect('index')  # or wherever you want
         
     return render(request, 'set_cover_part.html', {'template': template, 'parts': parts})
+
+
+
+# authentication views
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log the user in immediately after signup
+            return redirect('choose_template')  # Redirect to next page after signup
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 

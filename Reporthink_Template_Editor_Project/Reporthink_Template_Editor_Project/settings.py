@@ -52,6 +52,10 @@ INSTALLED_APPS = [
     'Template_Editor_App',
 ]
 
+LOGIN_URL = 'login'  # Where to redirect if not logged in
+LOGIN_REDIRECT_URL = 'index'  # After login, redirect here
+LOGOUT_REDIRECT_URL = 'index'  # After logout, redirect here
+
 TAILWIND_APP_NAME = 'theme'
 
 INTERNAL_IPS = [
