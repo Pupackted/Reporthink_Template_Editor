@@ -1049,7 +1049,6 @@
         }
       }
 
-      // Convert all images with class 'static-image-design' inside a container element
       async function convertImagesInContainer(container) {
         const images = container.querySelectorAll(".static-image-design");
         const promises = Array.from(images).map((img) =>
@@ -1058,7 +1057,367 @@
         await Promise.all(promises);
       }
 
+      //head fixer
+      function inlineHeadlineStyles(container) {
+        const headlines = container.querySelectorAll(".headline");
+
+        headlines.forEach((headline) => {
+          const computedStyle = window.getComputedStyle(headline);
+          let inlineStyles = "";
+
+          // List of CSS properties you want to copy
+          // You can expand this list as needed
+          const propertiesToCopy = [
+            "font-family",
+            "font-weight",
+            "font-size",
+            "color",
+            "line-height",
+            "text-align",
+            "z-index",
+            "margin",
+            "margin-top",
+            "margin-left",
+            "margin-bottom",
+            "margin-right",
+            "padding",
+            "padding-top",
+            "padding-left",
+            "padding-bottom",
+            "padding-right",
+            "position",
+            "top",
+            "left",
+            "right",
+            "bottom",
+            "text-shadow",
+            "letter-spacing",
+            "word-spacing",
+            "white-space",
+            "background-color",
+            "display",
+            "width",
+            "height",
+            "box-sizing",
+            "border",
+            "border-radius",
+            "transform",
+            "opacity",
+            // add more if needed
+          ];
+
+          propertiesToCopy.forEach((prop) => {
+            const value = computedStyle.getPropertyValue(prop);
+            if (
+              value &&
+              value !== "initial" &&
+              value !== "none" &&
+              value !== ""
+            ) {
+              inlineStyles += `${prop}: ${value}; `;
+            }
+          });
+
+          // Set the inline style attribute
+          headline.setAttribute("style", inlineStyles.trim());
+
+          // Remove the class attribute
+          headline.removeAttribute("class");
+        });
+      }
+
+      // head fixer end
+
       // ---- PDF DOWNLOADER ----
+
+      // function initPdfDownloader() {
+      //   const oldButton = document.getElementById("generatePdfButton");
+      //   if (!oldButton) return;
+
+      //   const newButton = oldButton.cloneNode(true);
+      //   oldButton.replaceWith(newButton);
+
+      //   newButton.addEventListener("click", async () => {
+      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+      //       alert("No pages loaded");
+      //       return;
+      //     }
+
+      //     const { jsPDF } = window.jspdf;
+      //     const pdf = new jsPDF({
+      //       unit: "pt",
+      //       format: "a4",
+      //       orientation: "portrait",
+      //     });
+
+      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+      //     // Create a temporary hidden container to hold pages for rendering
+      //     const tempContainer = document.createElement("div");
+      //     tempContainer.style.position = "fixed";
+      //     tempContainer.style.top = "-9999px";
+      //     tempContainer.style.width = "794px"; // A4 width in px at 96dpi
+      //     document.body.appendChild(tempContainer);
+
+      //     const pdfWidth = pdf.internal.pageSize.getWidth(); // ~595.28 pt
+      //     const pdfHeight = pdf.internal.pageSize.getHeight(); // ~841.89 pt
+
+      //     for (let i = 0; i < loadedPages.length; i++) {
+      //       const html = loadedPages[i].html;
+      //       const pageDiv = document.createElement("div");
+      //       pageDiv.className = "template-page";
+      //       pageDiv.style.width = "794px"; // match container width
+      //       pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
+      //       pageDiv.style.boxSizing = "border-box";
+      //       pageDiv.innerHTML = html;
+      //       tempContainer.appendChild(pageDiv);
+
+      //       // const headlines = document.querySelectorAll(".headline");
+      //       const headlines = pageDiv.querySelectorAll(".headline");
+
+      //       headlines.forEach((h) => {
+      //         h.style.position = "static";
+      //       });
+
+      //       await convertImagesInContainer(pageDiv);
+
+      //       // Render to canvas and add to PDF
+      //       const canvas = await html2canvas(pageDiv, {
+      //         scale: 2,
+      //         useCORS: true,
+      //         allowTaint: true,
+      //       });
+      //       const imgData = canvas.toDataURL("image/png");
+
+      //       // Add image stretched to full A4 page size
+      //       if (i > 0) pdf.addPage();
+      //       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      //       tempContainer.removeChild(pageDiv);
+      //     }
+
+      //     document.body.removeChild(tempContainer);
+
+      //     pdf.save("template.pdf");
+      //   });
+      // }
+
+      // async function initPdfDownloader() {
+      //   const { PDFDocument } = PDFLib;
+      //   const oldButton = document.getElementById("generatePdfButton");
+      //   if (!oldButton) return;
+
+      //   const newButton = oldButton.cloneNode(true);
+      //   oldButton.replaceWith(newButton);
+
+      //   newButton.addEventListener("click", async () => {
+      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+      //       alert("No pages loaded");
+      //       return;
+      //     }
+
+      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+      //     // Create a temporary hidden container to hold pages for rendering
+      //     const tempContainer = document.createElement("div");
+      //     tempContainer.style.position = "fixed";
+      //     tempContainer.style.top = "-9999px";
+      //     tempContainer.style.width = "794px"; // A4 width in px at 96dpi
+      //     document.body.appendChild(tempContainer);
+
+      //     // Create a new PDF document
+      //     const pdfDoc = await PDFDocument.create();
+
+      //     for (let i = 0; i < loadedPages.length; i++) {
+      //       const html = loadedPages[i].html;
+      //       const pageDiv = document.createElement("div");
+      //       pageDiv.className = "template-page";
+      //       pageDiv.style.width = "794px";
+      //       pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
+      //       pageDiv.style.boxSizing = "border-box";
+      //       pageDiv.innerHTML = html;
+      //       tempContainer.appendChild(pageDiv);
+
+      //       const headlines = pageDiv.querySelectorAll(".headline");
+      //       headlines.forEach((h) => {
+      //         h.style.position = "static";
+      //       });
+
+      //       await convertImagesInContainer(pageDiv);
+
+      //       // Render pageDiv to canvas
+      //       const canvas = await html2canvas(pageDiv, {
+      //         scale: 2,
+      //         useCORS: true,
+      //         allowTaint: true,
+      //       });
+
+      //       // Convert canvas to PNG bytes
+      //       const imgDataUrl = canvas.toDataURL("image/png");
+      //       const imgBytes = await fetch(imgDataUrl).then((res) =>
+      //         res.arrayBuffer()
+      //       );
+
+      //       // Embed PNG image in PDF
+      //       const pngImage = await pdfDoc.embedPng(imgBytes);
+
+      //       // Create a new page with A4 size in points (595 x 842)
+      //       const pdfPage = pdfDoc.addPage([595, 842]);
+
+      //       // Calculate image dimensions to fit the page
+      //       const { width, height } = pngImage.scale(595 / pngImage.width);
+
+      //       // Draw the image on the PDF page
+      //       pdfPage.drawImage(pngImage, {
+      //         x: 0,
+      //         y: pdfPage.getHeight() - height,
+      //         width: 595,
+      //         height: height,
+      //       });
+
+      //       tempContainer.removeChild(pageDiv);
+      //     }
+
+      //     document.body.removeChild(tempContainer);
+
+      //     // Serialize the PDFDocument to bytes (a Uint8Array)
+      //     const pdfBytes = await pdfDoc.save();
+
+      //     // Trigger file download in browser
+      //     const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      //     const url = URL.createObjectURL(blob);
+      //     const a = document.createElement("a");
+      //     a.href = url;
+      //     a.download = "template.pdf";
+      //     document.body.appendChild(a);
+      //     a.click();
+      //     a.remove();
+      //     URL.revokeObjectURL(url);
+      //   });
+      // }
+
+      // this one is good
+
+      // function initPdfDownloader() {
+      //   const oldButton = document.getElementById("generatePdfButton");
+      //   if (!oldButton) return;
+
+      //   const newButton = oldButton.cloneNode(true);
+      //   oldButton.replaceWith(newButton);
+
+      //   newButton.addEventListener("click", async () => {
+      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+      //       alert("No pages loaded");
+      //       return;
+      //     }
+
+      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+      //     const { jsPDF } = window.jspdf;
+      //     const pdf = new jsPDF({
+      //       unit: "pt", // points
+      //       format: "a4", // A4 size
+      //       orientation: "portrait",
+      //     });
+
+      //     // A4 size in points: 595.28 x 841.89
+      //     const pdfWidth = pdf.internal.pageSize.getWidth();
+      //     const pdfHeight = pdf.internal.pageSize.getHeight();
+
+      //     // Temporary container for rendering pages
+      //     const tempContainer = document.createElement("div");
+      //     tempContainer.style.position = "fixed";
+      //     tempContainer.style.top = "-9999px";
+      //     tempContainer.style.left = "-9999px";
+      //     tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
+      //     document.body.appendChild(tempContainer);
+
+      //     for (let i = 0; i < loadedPages.length; i++) {
+      //       const html = loadedPages[i].html;
+      //       const pageDiv = document.createElement("div");
+      //       pageDiv.className = "template-page";
+      //       pageDiv.style.width = "794px";
+      //       pageDiv.style.height = "1123px"; // approx A4 height in px at 96dpi
+      //       pageDiv.style.boxSizing = "border-box";
+      //       pageDiv.innerHTML = html;
+      //       tempContainer.appendChild(pageDiv);
+
+      //       //debugging
+      //       console.log(html);
+      //       // Fix headline positions if needed
+
+      //       // inlineHeadlineStyles(pageDiv);
+
+      //       await convertImagesInContainer(pageDiv); // your existing image conversion
+
+      //       // Render to canvas with scale 2 for better quality
+      //       const canvas = await html2canvas(pageDiv, {
+      //         scale: 1,
+      //         useCORS: true,
+      //         allowTaint: true,
+      //         backgroundColor: "#ffffff", // ensure white background
+      //       });
+
+      //       const imgData = canvas.toDataURL("image/png");
+
+      //       if (i > 0) {
+      //         pdf.addPage();
+      //       }
+
+      //       // Add image to PDF page, fit exactly to A4 size
+      //       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      //       tempContainer.removeChild(pageDiv);
+      //     }
+
+      //     document.body.removeChild(tempContainer);
+
+      //     // Save the PDF to a file (un comment to save directly)
+      //     // pdf.save("template.pdf");
+
+      //     // Open the PDF in a new tab (debugging)
+      //     const pdfBlob = pdf.output("blob");
+      //     const pdfUrl = URL.createObjectURL(pdfBlob);
+      //     window.open(pdfUrl, "_blank");
+
+      //     // Optionally, revoke the URL after some time to free memory
+      //     setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
+      //   });
+      // }
+
+      function prefixCssSelectors(cssText, prefix) {
+        // This regex attempts to prefix all selectors except @-rules (e.g. @media, @font-face)
+        return cssText.replace(
+          /(^|})\s*([^{@}][^{]*)\s*{/g,
+          (match, brace, selector) => {
+            // Split selectors by comma and prefix each
+            const prefixed = selector
+              .split(",")
+              .map((sel) => `${prefix} ${sel.trim()}`)
+              .join(", ");
+            return `${brace} ${prefixed} {`;
+          }
+        );
+      }
+
+      function extractAndPrefixStyles(html, prefix) {
+        // Extract <style> blocks and prefix their content
+        const styleRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+        let styles = [];
+        let htmlWithoutStyles = html;
+        let match;
+        while ((match = styleRegex.exec(html)) !== null) {
+          styles.push(match[1]);
+          htmlWithoutStyles = htmlWithoutStyles.replace(match[0], "");
+        }
+        const scopedStyles = styles
+          .map((css) => prefixCssSelectors(css, prefix))
+          .join("\n");
+        return {
+          htmlWithoutStyles,
+          scopedStyles,
+        };
+      }
 
       function initPdfDownloader() {
         const oldButton = document.getElementById("generatePdfButton");
@@ -1073,6 +1432,8 @@
             return;
           }
 
+          saveCurrentPageHtml(); // Your existing function to update loadedPages
+
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF({
             unit: "pt",
@@ -1080,68 +1441,50 @@
             orientation: "portrait",
           });
 
-          saveCurrentPageHtml(); // Your existing function to update loadedPages
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
 
-          // Create a temporary hidden container to hold pages for rendering
+          // Temporary container for rendering pages
           const tempContainer = document.createElement("div");
           tempContainer.style.position = "fixed";
           tempContainer.style.top = "-9999px";
-          tempContainer.style.width = "794px"; // A4 width in px at 96dpi
+          tempContainer.style.left = "-9999px";
+          tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
           document.body.appendChild(tempContainer);
-
-          const pdfWidth = pdf.internal.pageSize.getWidth(); // ~595.28 pt
-          const pdfHeight = pdf.internal.pageSize.getHeight(); // ~841.89 pt
 
           for (let i = 0; i < loadedPages.length; i++) {
             const html = loadedPages[i].html;
+            const pageClass = `page${i + 1}`;
+            const { htmlWithoutStyles, scopedStyles } = extractAndPrefixStyles(
+              html,
+              `.${pageClass}`
+            );
+
+            // Create wrapper div with unique class
             const pageDiv = document.createElement("div");
-            pageDiv.className = "template-page";
-            pageDiv.style.width = "794px"; // match container width
-            pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
+            pageDiv.className = `template-page ${pageClass}`;
+            pageDiv.style.width = "794px";
+            pageDiv.style.height = "1123px";
             pageDiv.style.boxSizing = "border-box";
-            pageDiv.innerHTML = html;
+            pageDiv.innerHTML = `<style>${scopedStyles}</style>${htmlWithoutStyles}`;
             tempContainer.appendChild(pageDiv);
 
-            // const headlines = document.querySelectorAll(".headline");
-            const headlines = pageDiv.querySelectorAll(".headline");
-
-            headlines.forEach((h) => {
-              h.style.position = "static";
-            });
-
-            // headlines.forEach((h) => {
-            //   const parent = h.parentElement;
-            //   if (!parent) return;
-
-            //   const hRect = h.getBoundingClientRect();
-            //   const pRect = parent.getBoundingClientRect();
-
-            //   // If headline is visually outside parent bounds (with some tolerance)
-            //   if (
-            //     hRect.left < pRect.left - 10 ||
-            //     hRect.top < pRect.top - 10 ||
-            //     hRect.left > pRect.right + 10 ||
-            //     hRect.top > pRect.bottom + 10
-            //   ) {
-            //     // Fix only this headline
-            //     h.style.position = "static";
-            //     h.style.top = "auto";
-            //     h.style.left = "auto";
-            //   }
-            // });
-            // Convert all images inside this pageDiv to base64 before rendering
             await convertImagesInContainer(pageDiv);
 
-            // Render to canvas and add to PDF
+            // Render to canvas with scale 1 for better quality
             const canvas = await html2canvas(pageDiv, {
-              scale: 2,
+              scale: 1,
               useCORS: true,
               allowTaint: true,
+              backgroundColor: "#ffffff",
             });
+
             const imgData = canvas.toDataURL("image/png");
 
-            // Add image stretched to full A4 page size
-            if (i > 0) pdf.addPage();
+            if (i > 0) {
+              pdf.addPage();
+            }
+
             pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
             tempContainer.removeChild(pageDiv);
@@ -1149,14 +1492,17 @@
 
           document.body.removeChild(tempContainer);
 
-          pdf.save("template.pdf");
+          // Save the PDF to a file
+          // pdf.save("template.pdf");
+
+          // Open the PDF in a new tab (debugging)
+          const pdfBlob = pdf.output("blob");
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl, "_blank");
+          setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
         });
       }
 
-      // Initialize the PDF downloader button on page load
-      document.addEventListener("DOMContentLoaded", () => {
-        initPdfDownloader();
-      });
       // ---- END PDF DOWNLOADER ----
 
       // ------ page counter ---------

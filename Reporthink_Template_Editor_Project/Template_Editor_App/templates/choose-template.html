@@ -347,7 +347,7 @@
          
           <div class="mt-2 grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-3">
             {% for part in template.parts.all %}
-            <a href="" class="block group relative">
+            <div class="block group relative">
               <div>
                 <img
                   src="{{ part.thumbnail.url }}"
@@ -364,7 +364,7 @@
       </p>
     </div>
               </div>
-            </a>
+            </div>
             {% endfor %}
           </div>
           

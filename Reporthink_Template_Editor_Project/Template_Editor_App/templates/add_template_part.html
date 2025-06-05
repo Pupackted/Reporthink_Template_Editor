@@ -92,13 +92,23 @@
   <div class="flex flex-wrap gap-4 mb-24 justify-center">
     {% for part in parts %}
     <div
-      class="w-24 h-auto rounded overflow-hidden border border-gray-300 shadow-sm"
+      class="relative w-24 h-auto rounded overflow-hidden border border-gray-300 shadow-sm group"
     >
+      <!-- Image -->
       <img
         src="{{ part.thumbnail.url }}"
         alt="{{ part.name }}"
         class="object-cover w-full h-full"
       />
+
+      <!-- Hover Overlay with Part Name -->
+      <div
+        class="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+      >
+        <span class="text-white text-xs font-medium text-center px-2">
+          {{ part.name }}
+        </span>
+      </div>
     </div>
     {% endfor %}
   </div>
