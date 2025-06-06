@@ -18,11 +18,6 @@ def is_admin(user):
     return user.is_staff  # or user.is_superuser depending on your admin setup
 
 
-# def index(request):
-#     templates = Template.objects.all()
-#     print("Templates:", templates)  # Debugging
-#     return render(request, 'index.html', {'templates': templates})
-
 def index(request):
     templates = Template.objects.all()
     # Kirim template_id default, misal template pertama atau None
