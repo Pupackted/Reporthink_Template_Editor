@@ -148,10 +148,8 @@
         <!-- download as pdf end -->
       </div>
       <!-- save button -->
-      <a
-        href="https://drive.google.com/file/d/1eDtIsgFL5Esl7qf2AN8I7bRoZ41iPJYv/view?usp=sharing"
-        download="Nahida_Report.pdf"
-      >
+      <input type="hidden" id="template-id" value="{{ template.id }}" />
+      <button id="save-button">
         <div
           class="flex justify-center items-center bg-white hover:bg-green-500 mr-24 ml-2 border-[#808080] border-2 hover:border-green-500 rounded-[15px] h-10 w-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer"
         >
@@ -171,7 +169,7 @@
             <path d="M14 4v4H8V4m0 16v-8h8v8"></path>
           </svg>
         </div>
-      </a>
+      </button>
       <!-- save button end -->
     </div>
 
@@ -737,7 +735,13 @@
   <!-- Modal popup and pdf downloader  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  {% load static %} ... {{ user_edits|json_script:"user-edits-data" }}
+  <script>
+    // This makes window.USER_EDITS available in your JS
+    window.USER_EDITS = JSON.parse(
+      document.getElementById("user-edits-data").textContent
+    );
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const openBtn = document.getElementById("open-popup");
@@ -745,12 +749,62 @@
       const popup = document.getElementById("popup-window");
       const previewBar = openBtn.parentElement;
       const editableArea = document.getElementById("editable-area");
-
       const deleteBtn = document.getElementById("delete-page-btn");
 
       let currentSelectedThumbnail = null;
       let currentSelectedId = null;
       const loadedPages = [];
+
+      // ===== Helper functions for interacting with the server =====
+
+      // CSRF token helper (Django)
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      async function saveEdits(templateId, editedParts) {
+        const response = await fetch(`/save-user-edit/${templateId}/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"), // Use your CSRF helper
+          },
+          body: JSON.stringify({ edited_parts: editedParts }),
+        });
+        const data = await response.json();
+        if (data.status === "ok") {
+          alert("Edits saved!");
+        } else {
+          alert("Error saving edits: " + (data.error || "Unknown error"));
+        }
+      }
+
+      async function loadEdits(templateId) {
+        const response = await fetch(`/load-user-edit/${templateId}/`);
+        const data = await response.json();
+        if (data.status === "ok" || data.status === "not_found") {
+          // data.edited_parts is a dict: {part_id: html_content}
+          return data.edited_parts;
+        } else {
+          alert("Error loading edits: " + (data.error || "Unknown error"));
+          return {};
+        }
+      }
+
       //delete page
       if (deleteBtn) {
         deleteBtn.addEventListener("click", function () {
@@ -838,12 +892,21 @@
 
           const found = loadedPages.find((p) => p.id === partId);
 
+          // if (found) {
+          //   editableArea.innerHTML = `
+          // <div class="template-page">
+          //   ${found.html}
+          // </div>
           if (found) {
+            // Use user edits if available
+            let html = found.html;
+            if (window.USER_EDITS && window.USER_EDITS[partId]) {
+              html = window.USER_EDITS[partId];
+            }
             editableArea.innerHTML = `
-          <div class="template-page">
-            ${found.html}
-          </div>
-          
+    <div class="template-page">
+      ${html}
+    </div>
         `;
             initBackgroundColorPicker();
             // initImageUploader();
@@ -859,6 +922,11 @@
             fetch(htmlUrl)
               .then((res) => res.text())
               .then((html) => {
+                // Use user edits if available
+                if (window.USER_EDITS && window.USER_EDITS[selectedText]) {
+                  html = window.USER_EDITS[selectedText];
+                }
+                addPageToLoadedPages(selectedText, html);
                 // addPageToLoadedPages(partId, html);
                 editableArea.innerHTML = `
               <div class="template-page">
@@ -882,6 +950,15 @@
           }
           selectThumbnail(thumbnail);
           updatePageIndicator();
+
+          // Load user edits when a thumbnail is clicked
+          loadEdits(templateId).then((editedParts) => {
+            if (editedParts[partId]) {
+              // If the user has saved edits for this part, load them
+              editableArea.querySelector(".template-page").innerHTML =
+                editedParts[partId];
+            }
+          });
         });
       }
 
@@ -1057,334 +1134,6 @@
         await Promise.all(promises);
       }
 
-      //head fixer
-      function inlineHeadlineStyles(container) {
-        const headlines = container.querySelectorAll(".headline");
-
-        headlines.forEach((headline) => {
-          const computedStyle = window.getComputedStyle(headline);
-          let inlineStyles = "";
-
-          // List of CSS properties you want to copy
-          // You can expand this list as needed
-          const propertiesToCopy = [
-            "font-family",
-            "font-weight",
-            "font-size",
-            "color",
-            "line-height",
-            "text-align",
-            "z-index",
-            "margin",
-            "margin-top",
-            "margin-left",
-            "margin-bottom",
-            "margin-right",
-            "padding",
-            "padding-top",
-            "padding-left",
-            "padding-bottom",
-            "padding-right",
-            "position",
-            "top",
-            "left",
-            "right",
-            "bottom",
-            "text-shadow",
-            "letter-spacing",
-            "word-spacing",
-            "white-space",
-            "background-color",
-            "display",
-            "width",
-            "height",
-            "box-sizing",
-            "border",
-            "border-radius",
-            "transform",
-            "opacity",
-            // add more if needed
-          ];
-
-          propertiesToCopy.forEach((prop) => {
-            const value = computedStyle.getPropertyValue(prop);
-            if (
-              value &&
-              value !== "initial" &&
-              value !== "none" &&
-              value !== ""
-            ) {
-              inlineStyles += `${prop}: ${value}; `;
-            }
-          });
-
-          // Set the inline style attribute
-          headline.setAttribute("style", inlineStyles.trim());
-
-          // Remove the class attribute
-          headline.removeAttribute("class");
-        });
-      }
-
-      // head fixer end
-
-      // ---- PDF DOWNLOADER ----
-
-      // function initPdfDownloader() {
-      //   const oldButton = document.getElementById("generatePdfButton");
-      //   if (!oldButton) return;
-
-      //   const newButton = oldButton.cloneNode(true);
-      //   oldButton.replaceWith(newButton);
-
-      //   newButton.addEventListener("click", async () => {
-      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
-      //       alert("No pages loaded");
-      //       return;
-      //     }
-
-      //     const { jsPDF } = window.jspdf;
-      //     const pdf = new jsPDF({
-      //       unit: "pt",
-      //       format: "a4",
-      //       orientation: "portrait",
-      //     });
-
-      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
-
-      //     // Create a temporary hidden container to hold pages for rendering
-      //     const tempContainer = document.createElement("div");
-      //     tempContainer.style.position = "fixed";
-      //     tempContainer.style.top = "-9999px";
-      //     tempContainer.style.width = "794px"; // A4 width in px at 96dpi
-      //     document.body.appendChild(tempContainer);
-
-      //     const pdfWidth = pdf.internal.pageSize.getWidth(); // ~595.28 pt
-      //     const pdfHeight = pdf.internal.pageSize.getHeight(); // ~841.89 pt
-
-      //     for (let i = 0; i < loadedPages.length; i++) {
-      //       const html = loadedPages[i].html;
-      //       const pageDiv = document.createElement("div");
-      //       pageDiv.className = "template-page";
-      //       pageDiv.style.width = "794px"; // match container width
-      //       pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
-      //       pageDiv.style.boxSizing = "border-box";
-      //       pageDiv.innerHTML = html;
-      //       tempContainer.appendChild(pageDiv);
-
-      //       // const headlines = document.querySelectorAll(".headline");
-      //       const headlines = pageDiv.querySelectorAll(".headline");
-
-      //       headlines.forEach((h) => {
-      //         h.style.position = "static";
-      //       });
-
-      //       await convertImagesInContainer(pageDiv);
-
-      //       // Render to canvas and add to PDF
-      //       const canvas = await html2canvas(pageDiv, {
-      //         scale: 2,
-      //         useCORS: true,
-      //         allowTaint: true,
-      //       });
-      //       const imgData = canvas.toDataURL("image/png");
-
-      //       // Add image stretched to full A4 page size
-      //       if (i > 0) pdf.addPage();
-      //       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-      //       tempContainer.removeChild(pageDiv);
-      //     }
-
-      //     document.body.removeChild(tempContainer);
-
-      //     pdf.save("template.pdf");
-      //   });
-      // }
-
-      // async function initPdfDownloader() {
-      //   const { PDFDocument } = PDFLib;
-      //   const oldButton = document.getElementById("generatePdfButton");
-      //   if (!oldButton) return;
-
-      //   const newButton = oldButton.cloneNode(true);
-      //   oldButton.replaceWith(newButton);
-
-      //   newButton.addEventListener("click", async () => {
-      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
-      //       alert("No pages loaded");
-      //       return;
-      //     }
-
-      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
-
-      //     // Create a temporary hidden container to hold pages for rendering
-      //     const tempContainer = document.createElement("div");
-      //     tempContainer.style.position = "fixed";
-      //     tempContainer.style.top = "-9999px";
-      //     tempContainer.style.width = "794px"; // A4 width in px at 96dpi
-      //     document.body.appendChild(tempContainer);
-
-      //     // Create a new PDF document
-      //     const pdfDoc = await PDFDocument.create();
-
-      //     for (let i = 0; i < loadedPages.length; i++) {
-      //       const html = loadedPages[i].html;
-      //       const pageDiv = document.createElement("div");
-      //       pageDiv.className = "template-page";
-      //       pageDiv.style.width = "794px";
-      //       pageDiv.style.height = "1123px"; // A4 height in px at 96 dpi
-      //       pageDiv.style.boxSizing = "border-box";
-      //       pageDiv.innerHTML = html;
-      //       tempContainer.appendChild(pageDiv);
-
-      //       const headlines = pageDiv.querySelectorAll(".headline");
-      //       headlines.forEach((h) => {
-      //         h.style.position = "static";
-      //       });
-
-      //       await convertImagesInContainer(pageDiv);
-
-      //       // Render pageDiv to canvas
-      //       const canvas = await html2canvas(pageDiv, {
-      //         scale: 2,
-      //         useCORS: true,
-      //         allowTaint: true,
-      //       });
-
-      //       // Convert canvas to PNG bytes
-      //       const imgDataUrl = canvas.toDataURL("image/png");
-      //       const imgBytes = await fetch(imgDataUrl).then((res) =>
-      //         res.arrayBuffer()
-      //       );
-
-      //       // Embed PNG image in PDF
-      //       const pngImage = await pdfDoc.embedPng(imgBytes);
-
-      //       // Create a new page with A4 size in points (595 x 842)
-      //       const pdfPage = pdfDoc.addPage([595, 842]);
-
-      //       // Calculate image dimensions to fit the page
-      //       const { width, height } = pngImage.scale(595 / pngImage.width);
-
-      //       // Draw the image on the PDF page
-      //       pdfPage.drawImage(pngImage, {
-      //         x: 0,
-      //         y: pdfPage.getHeight() - height,
-      //         width: 595,
-      //         height: height,
-      //       });
-
-      //       tempContainer.removeChild(pageDiv);
-      //     }
-
-      //     document.body.removeChild(tempContainer);
-
-      //     // Serialize the PDFDocument to bytes (a Uint8Array)
-      //     const pdfBytes = await pdfDoc.save();
-
-      //     // Trigger file download in browser
-      //     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      //     const url = URL.createObjectURL(blob);
-      //     const a = document.createElement("a");
-      //     a.href = url;
-      //     a.download = "template.pdf";
-      //     document.body.appendChild(a);
-      //     a.click();
-      //     a.remove();
-      //     URL.revokeObjectURL(url);
-      //   });
-      // }
-
-      // this one is good
-
-      // function initPdfDownloader() {
-      //   const oldButton = document.getElementById("generatePdfButton");
-      //   if (!oldButton) return;
-
-      //   const newButton = oldButton.cloneNode(true);
-      //   oldButton.replaceWith(newButton);
-
-      //   newButton.addEventListener("click", async () => {
-      //     if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
-      //       alert("No pages loaded");
-      //       return;
-      //     }
-
-      //     saveCurrentPageHtml(); // Your existing function to update loadedPages
-
-      //     const { jsPDF } = window.jspdf;
-      //     const pdf = new jsPDF({
-      //       unit: "pt", // points
-      //       format: "a4", // A4 size
-      //       orientation: "portrait",
-      //     });
-
-      //     // A4 size in points: 595.28 x 841.89
-      //     const pdfWidth = pdf.internal.pageSize.getWidth();
-      //     const pdfHeight = pdf.internal.pageSize.getHeight();
-
-      //     // Temporary container for rendering pages
-      //     const tempContainer = document.createElement("div");
-      //     tempContainer.style.position = "fixed";
-      //     tempContainer.style.top = "-9999px";
-      //     tempContainer.style.left = "-9999px";
-      //     tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
-      //     document.body.appendChild(tempContainer);
-
-      //     for (let i = 0; i < loadedPages.length; i++) {
-      //       const html = loadedPages[i].html;
-      //       const pageDiv = document.createElement("div");
-      //       pageDiv.className = "template-page";
-      //       pageDiv.style.width = "794px";
-      //       pageDiv.style.height = "1123px"; // approx A4 height in px at 96dpi
-      //       pageDiv.style.boxSizing = "border-box";
-      //       pageDiv.innerHTML = html;
-      //       tempContainer.appendChild(pageDiv);
-
-      //       //debugging
-      //       console.log(html);
-      //       // Fix headline positions if needed
-
-      //       // inlineHeadlineStyles(pageDiv);
-
-      //       await convertImagesInContainer(pageDiv); // your existing image conversion
-
-      //       // Render to canvas with scale 2 for better quality
-      //       const canvas = await html2canvas(pageDiv, {
-      //         scale: 1,
-      //         useCORS: true,
-      //         allowTaint: true,
-      //         backgroundColor: "#ffffff", // ensure white background
-      //       });
-
-      //       const imgData = canvas.toDataURL("image/png");
-
-      //       if (i > 0) {
-      //         pdf.addPage();
-      //       }
-
-      //       // Add image to PDF page, fit exactly to A4 size
-      //       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-      //       tempContainer.removeChild(pageDiv);
-      //     }
-
-      //     document.body.removeChild(tempContainer);
-
-      //     // Save the PDF to a file (un comment to save directly)
-      //     // pdf.save("template.pdf");
-
-      //     // Open the PDF in a new tab (debugging)
-      //     const pdfBlob = pdf.output("blob");
-      //     const pdfUrl = URL.createObjectURL(pdfBlob);
-      //     window.open(pdfUrl, "_blank");
-
-      //     // Optionally, revoke the URL after some time to free memory
-      //     setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
-      //   });
-      // }
-
       function prefixCssSelectors(cssText, prefix) {
         // This regex attempts to prefix all selectors except @-rules (e.g. @media, @font-face)
         return cssText.replace(
@@ -1534,6 +1283,21 @@
 
       // ------ page counter ---------
 
+      // Add Save Button Listener
+      const saveButton = document.getElementById("save-button");
+      if (saveButton) {
+        saveButton.addEventListener("click", function () {
+          const templateId = document.getElementById("template-id").value; // Assuming you have a hidden input with the template ID
+          const editedParts = {};
+          // Collect the edited HTML for each loaded page
+          loadedPages.forEach((page) => {
+            editedParts[page.id] = page.html;
+          });
+
+          saveEdits(templateId, editedParts);
+        });
+      }
+
       // Call once on page load
       initPdfDownloader();
       makeElementsEditable();
@@ -1542,6 +1306,17 @@
       initTextToolbar();
       initColorPicker();
       updatePageIndicator(); // Initialize the page indicator
+
+      // Load edits when the page loads
+      const templateId = document.getElementById("template-id").value;
+      loadEdits(templateId).then((editedParts) => {
+        // Iterate through all loaded pages and, if there is user data
+        loadedPages.forEach((page) => {
+          if (editedParts[page.id]) {
+            page.html = editedParts[page.id]; // Use user-saved data instead of initial data
+          }
+        });
+      });
     });
   </script>
   <!-- Modal popup and pdf downloader end -->

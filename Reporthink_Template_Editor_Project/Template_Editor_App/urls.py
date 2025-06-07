@@ -23,4 +23,10 @@ urlpatterns = [
     path('create-template/', views.create_template, name='create_template'),
     path('add-template-part/<int:template_id>/', views.add_template_part, name='add_template_part'),
     path('set-cover-part/<int:template_id>/', views.set_cover_part, name='set_cover_part'),
+
+    # User template edits
+    path('save-user-edit/<int:template_id>/', views.save_user_template_edit, name='save_user_template_edit'),
+    path('load-user-edit/<int:template_id>/', views.load_user_template_edit, name='load_user_template_edit'),
+    path('profile/', views.user_profile, name='user_profile'),
+
 ]

@@ -1,0 +1,451 @@
+<!-- Modal popup and pdf downloader  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const openBtn = document.getElementById("open-popup");
+    const closeBtn = document.getElementById("close-popup");
+    const popup = document.getElementById("popup-window");
+    const previewBar = openBtn.parentElement;
+    const editableArea = document.getElementById("editable-area");
+
+    const deleteBtn = document.getElementById("delete-page-btn");
+
+    let currentSelectedThumbnail = null;
+    let currentSelectedId = null;
+    const loadedPages = [];
+    //delete page
+    if (deleteBtn) {
+      deleteBtn.addEventListener("click", function () {
+        if (!currentSelectedId) return;
+
+        // Remove from loadedPages
+        const index = loadedPages.findIndex((p) => p.id === currentSelectedId);
+        if (index !== -1) loadedPages.splice(index, 1);
+
+        // Remove the thumbnail from the preview bar
+        const thumb = Array.from(previewBar.children).find(
+          (el) =>
+            el.getAttribute &&
+            el.getAttribute("data-text") === currentSelectedId
+        );
+        if (thumb) thumb.remove();
+
+        // Select another page or clear the editor
+        if (loadedPages.length > 0) {
+          const newIndex = index > 0 ? index - 1 : 0;
+          const newPageId = loadedPages[newIndex].id;
+          const newThumb = Array.from(previewBar.children).find(
+            (el) =>
+              el.getAttribute && el.getAttribute("data-text") === newPageId
+          );
+          if (newThumb) newThumb.click();
+        } else {
+          editableArea.innerHTML = `<div id="templateContent" class="text-gray-500 italic text-center p-8 template-page">Please select a template part to begin editing.</div>`;
+          currentSelectedId = null;
+        }
+        updatePageIndicator();
+      });
+    }
+
+    // Save only the inner HTML of the page
+    function saveCurrentPageHtml() {
+      const currentPageEl = editableArea.querySelector(".template-page");
+      if (!currentPageEl || !currentSelectedId) return;
+      const html = currentPageEl.innerHTML;
+      const index = loadedPages.findIndex(
+        (page) => page.id === currentSelectedId
+      );
+      if (index !== -1) {
+        loadedPages[index].html = html;
+      }
+    }
+
+    // Add a new page only if it doesn't already exist
+    function addPageToLoadedPages(id, html) {
+      const index = loadedPages.findIndex((page) => page.id === id);
+      if (index === -1) {
+        loadedPages.push({ id, html });
+      }
+      // If it exists, do NOT add or overwrite here! Edits are only saved via saveCurrentPageHtml()
+    }
+
+    function generateUniqueId(base) {
+      // Only count pages that start with the base and are not already in loadedPages
+      let count = 0;
+      let id;
+      do {
+        count++;
+        id = `${base}-${count}`;
+      } while (loadedPages.some((p) => p.id === id));
+      return id;
+    }
+
+    function selectThumbnail(thumbnailElement) {
+      if (currentSelectedThumbnail) {
+        currentSelectedThumbnail.classList.remove("ring", "ring-red-500");
+      }
+      thumbnailElement.classList.add("ring", "ring-red-500");
+      currentSelectedThumbnail = thumbnailElement;
+    }
+
+    function attachThumbnailClickListener(thumbnail) {
+      thumbnail.addEventListener("click", function () {
+        const partId = thumbnail.getAttribute("data-text");
+        const htmlUrl = thumbnail.getAttribute("data-html-url");
+
+        saveCurrentPageHtml();
+        currentSelectedId = partId;
+
+        const found = loadedPages.find((p) => p.id === partId);
+
+        if (found) {
+          editableArea.innerHTML = `
+          <div class="template-page">
+            ${found.html}
+          </div>
+          
+        `;
+          initBackgroundColorPicker();
+          // initImageUploader();
+          initImageChangers();
+          initPdfDownloader();
+          makeElementsEditable();
+          addClickableFillClass();
+          injectCompanyLogoInputs();
+          initTextToolbar();
+          initColorPicker();
+        } else {
+          // This should never happen, but for safety:
+          fetch(htmlUrl)
+            .then((res) => res.text())
+            .then((html) => {
+              // addPageToLoadedPages(partId, html);
+              editableArea.innerHTML = `
+              <div class="template-page">
+                ${html}
+              </div>
+            `;
+              initBackgroundColorPicker();
+              // initImageUploader();
+              initImageChangers();
+              initPdfDownloader();
+              makeElementsEditable();
+              addClickableFillClass();
+              injectCompanyLogoInputs();
+              initTextToolbar();
+              initColorPicker();
+            })
+            .catch((err) => {
+              editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
+              console.error("Error loading HTML file:", err);
+            });
+        }
+        selectThumbnail(thumbnail);
+        updatePageIndicator();
+      });
+    }
+
+    function attachThumbnailDragListeners(thumbnail) {
+      thumbnail.addEventListener("dragstart", function (e) {
+        e.dataTransfer.setData(
+          "text/plain",
+          thumbnail.getAttribute("data-text")
+        );
+        thumbnail.classList.add("opacity-50");
+      });
+
+      thumbnail.addEventListener("dragend", function (e) {
+        thumbnail.classList.remove("opacity-50");
+      });
+
+      thumbnail.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        thumbnail.classList.add("ring", "ring-blue-400");
+      });
+
+      thumbnail.addEventListener("dragleave", function (e) {
+        thumbnail.classList.remove("ring", "ring-blue-400");
+      });
+
+      thumbnail.addEventListener("drop", function (e) {
+        e.preventDefault();
+        thumbnail.classList.remove("ring", "ring-blue-400");
+        const draggedId = e.dataTransfer.getData("text/plain");
+        if (draggedId === thumbnail.getAttribute("data-text")) return; // Dropped on itself
+
+        // Find elements
+        const dragged = Array.from(previewBar.children).find(
+          (el) => el.getAttribute && el.getAttribute("data-text") === draggedId
+        );
+        if (!dragged) return;
+
+        // Move DOM node
+        previewBar.insertBefore(dragged, thumbnail);
+
+        // Update loadedPages order
+        reorderLoadedPages();
+
+        // Update indicators and selection if needed
+        updatePageIndicator();
+      });
+    }
+
+    // ==== reorder loadedPages based on the new order of thumbnails======
+    function reorderLoadedPages() {
+      // Get all thumbnail buttons in order, excluding the open-popup button
+      const orderedIds = Array.from(previewBar.children)
+        .filter((el) => el.classList && el.classList.contains("option-btn"))
+        .map((el) => el.getAttribute("data-text"));
+
+      // Reorder loadedPages to match the new order
+      const newLoadedPages = [];
+      orderedIds.forEach((id) => {
+        const page = loadedPages.find((p) => p.id === id);
+        if (page) newLoadedPages.push(page);
+      });
+
+      // Preserve reference
+      loadedPages.length = 0;
+      loadedPages.push(...newLoadedPages);
+    }
+
+    function createThumbnail(selectedText, selectedImageSrc, htmlFileUrl) {
+      const newThumbnail = document.createElement("button");
+      newThumbnail.className = "flex flex-col items-center option-btn";
+      newThumbnail.setAttribute("data-text", selectedText);
+      newThumbnail.setAttribute("data-html-url", htmlFileUrl);
+      newThumbnail.setAttribute("draggable", "true");
+      newThumbnail.innerHTML = `
+      <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
+    `;
+      attachThumbnailClickListener(newThumbnail);
+      attachThumbnailDragListeners(newThumbnail);
+
+      return newThumbnail;
+    }
+
+    // Attach click listeners to any existing thumbnails in preview bar on page load
+    const previewThumbnails = previewBar.querySelectorAll(".option-btn");
+    previewThumbnails.forEach((thumbnail) => {
+      attachThumbnailClickListener(thumbnail); // click listener
+      attachThumbnailDragListeners(thumbnail); // drag listeners
+    });
+
+    // OPEN POPUP
+    openBtn.addEventListener("click", () => {
+      popup.classList.remove("hidden");
+    });
+
+    // CLOSE POPUP
+    closeBtn.addEventListener("click", () => {
+      popup.classList.add("hidden");
+    });
+
+    // On click of popup option (template part), add it to preview and editable area
+    document.querySelectorAll("#popup-window .option-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const baseText = this.getAttribute("data-text");
+        const selectedText = generateUniqueId(baseText);
+
+        const selectedImageSrc = this.querySelector("img").getAttribute("src");
+        const htmlFileUrl = this.getAttribute("data-html-url");
+
+        const newThumbnail = createThumbnail(
+          selectedText,
+          selectedImageSrc,
+          htmlFileUrl
+        );
+        previewBar.insertBefore(newThumbnail, openBtn);
+
+        fetch(htmlFileUrl)
+          .then((res) => res.text())
+          .then((html) => {
+            addPageToLoadedPages(selectedText, html);
+            editableArea.innerHTML = `
+            <div class="template-page">
+              ${html}
+            </div>
+          `;
+            currentSelectedId = selectedText;
+            initBackgroundColorPicker();
+            // initImageUploader();
+            initImageChangers();
+            initPdfDownloader();
+            makeElementsEditable();
+            addClickableFillClass();
+            injectCompanyLogoInputs();
+            initTextToolbar();
+            initColorPicker();
+            updatePageIndicator(); // Initialize the page indicator
+          })
+          .catch((err) => {
+            editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
+            console.error("Error loading HTML file:", err);
+          });
+
+        popup.classList.add("hidden");
+        selectThumbnail(newThumbnail);
+      });
+    });
+
+    // Convert a single image element to Base64 and replace its src
+    async function convertImageToBase64(imgElement) {
+      try {
+        const response = await fetch(imgElement.src, { mode: "cors" });
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            imgElement.src = reader.result;
+            resolve();
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      } catch (error) {
+        console.error("Failed to convert image to base64:", error);
+      }
+    }
+
+    async function convertImagesInContainer(container) {
+      const images = container.querySelectorAll(".static-image-design");
+      const promises = Array.from(images).map((img) =>
+        convertImageToBase64(img)
+      );
+      await Promise.all(promises);
+    }
+
+    function prefixCssSelectors(cssText, prefix) {
+      // This regex attempts to prefix all selectors except @-rules (e.g. @media, @font-face)
+      return cssText.replace(
+        /(^|})\s*([^{@}][^{]*)\s*{/g,
+        (match, brace, selector) => {
+          // Split selectors by comma and prefix each
+          const prefixed = selector
+            .split(",")
+            .map((sel) => `${prefix} ${sel.trim()}`)
+            .join(", ");
+          return `${brace} ${prefixed} {`;
+        }
+      );
+    }
+
+    function extractAndPrefixStyles(html, prefix) {
+      // Extract <style> blocks and prefix their content
+      const styleRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+      let styles = [];
+      let htmlWithoutStyles = html;
+      let match;
+      while ((match = styleRegex.exec(html)) !== null) {
+        styles.push(match[1]);
+        htmlWithoutStyles = htmlWithoutStyles.replace(match[0], "");
+      }
+      const scopedStyles = styles
+        .map((css) => prefixCssSelectors(css, prefix))
+        .join("\n");
+      return {
+        htmlWithoutStyles,
+        scopedStyles,
+      };
+    }
+
+    function initPdfDownloader() {
+      const oldButton = document.getElementById("generatePdfButton");
+      if (!oldButton) return;
+
+      const newButton = oldButton.cloneNode(true);
+      oldButton.replaceWith(newButton);
+
+      newButton.addEventListener("click", async () => {
+        if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+          alert("No pages loaded");
+          return;
+        }
+
+        saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          unit: "pt",
+          format: "a4",
+          orientation: "portrait",
+        });
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        // Temporary container for rendering pages
+        const tempContainer = document.createElement("div");
+        tempContainer.style.position = "fixed";
+        tempContainer.style.top = "-9999px";
+        tempContainer.style.left = "-9999px";
+        tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
+        document.body.appendChild(tempContainer);
+
+        for (let i = 0; i < loadedPages.length; i++) {
+          const html = loadedPages[i].html;
+          const pageClass = `page${i + 1}`;
+          const { htmlWithoutStyles, scopedStyles } = extractAndPrefixStyles(
+            html,
+            `.${pageClass}`
+          );
+
+          // Create wrapper div with unique class
+          const pageDiv = document.createElement("div");
+          pageDiv.className = `template-page ${pageClass}`;
+          pageDiv.style.width = "794px";
+          pageDiv.style.height = "1123px";
+          pageDiv.style.boxSizing = "border-box";
+          pageDiv.innerHTML = `<style>${scopedStyles}</style>${htmlWithoutStyles}`;
+          tempContainer.appendChild(pageDiv);
+
+          await convertImagesInContainer(pageDiv);
+
+          // Render to canvas with scale 1 for better quality
+          const canvas = await html2canvas(pageDiv, {
+            scale: 1,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff",
+          });
+
+          const imgData = canvas.toDataURL("image/png");
+
+          if (i > 0) {
+            pdf.addPage();
+          }
+
+          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+          tempContainer.removeChild(pageDiv);
+        }
+
+        document.body.removeChild(tempContainer);
+
+        // Save the PDF to a file
+        // pdf.save("template.pdf");
+
+        // Open the PDF in a new tab (debugging)
+        const pdfBlob = pdf.output("blob");
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl, "_blank");
+        setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
+      });
+    }
+
+    // ---- END PDF DOWNLOADER ----
+
+   
+
+    // Call once on page load
+    initPdfDownloader();
+    makeElementsEditable();
+    addClickableFillClass();
+    injectCompanyLogoInputs();
+    initTextToolbar();
+    initColorPicker();
+    updatePageIndicator(); // Initialize the page indicator
+  });
+</script>

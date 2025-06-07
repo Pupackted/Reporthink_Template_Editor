@@ -1,6 +1,6 @@
 from django.db import models
 import os
-
+from django.contrib.auth.models import User
 
 class Template(models.Model):
     name = models.CharField(max_length=255)
@@ -35,3 +35,17 @@ class TemplatePart(models.Model):
 
     def __str__(self):
         return f"{self.template.name} - {self.name}"
+
+
+
+# save edits made by users to templates
+
+class UserTemplateEdit(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='template_edits')
+    template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='user_edits')
+    # Store all edited parts as JSON: {part_id: html_content, ...}
+    edited_parts = models.JSONField(default=dict)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.template.name} edit"

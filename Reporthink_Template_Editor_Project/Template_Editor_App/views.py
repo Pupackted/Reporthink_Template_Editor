@@ -11,6 +11,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
+from .models import UserTemplateEdit
+
 
 
 
@@ -56,6 +62,34 @@ def template_to_be_edited(request):
 
 
 
+# @login_required
+# def edit_template_view(request, template_id):
+#     template = get_object_or_404(Template, id=template_id)
+#     cover_part = template.cover_part
+
+#     if not cover_part:
+#         return HttpResponse("No cover page selected for this template.", status=404)
+
+#     file_path = cover_part.html_file.path
+
+#     try:
+#         with open(file_path, 'r', encoding='utf-8') as f:
+#             html_content = f.read()
+#     except FileNotFoundError:
+#         return HttpResponse("HTML file not found.", status=404)
+
+#     parts = template.parts.all()  # Get all parts related to this template
+
+#     context = {
+#         'template': template,
+#         'cover_part': cover_part,
+#         'html_content': html_content,
+#         'parts': parts,  # Pass the parts
+#     }
+
+#     return render(request, 'edit-template.html', context)
+
+
 @login_required
 def edit_template_view(request, template_id):
     template = get_object_or_404(Template, id=template_id)
@@ -74,14 +108,25 @@ def edit_template_view(request, template_id):
 
     parts = template.parts.all()  # Get all parts related to this template
 
+    # --- Load user edits if they exist ---
+    user_edits = None
+    if request.user.is_authenticated:
+        try:
+            user_edits = UserTemplateEdit.objects.get(user=request.user, template=template)
+        except UserTemplateEdit.DoesNotExist:
+            user_edits = None
+
     context = {
         'template': template,
         'cover_part': cover_part,
         'html_content': html_content,
-        'parts': parts,  # Pass the parts
+        'parts': parts,
+        'user_edits': user_edits.edited_parts if user_edits else {},
     }
 
     return render(request, 'edit-template.html', context)
+
+
 
 @login_required
 def edit_template_part(request, part_id):
@@ -191,3 +236,50 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+
+
+## Save user edits to templates
+@login_required
+@csrf_exempt
+def save_user_template_edit(request, template_id):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            edited_parts = data.get('edited_parts', {})
+            user = request.user
+            template = get_object_or_404(Template, id=template_id)
+
+            obj, created = UserTemplateEdit.objects.get_or_create(
+                user=user, template=template,
+                defaults={'edited_parts': edited_parts}
+            )
+            if not created:
+                obj.edited_parts = edited_parts
+                obj.save()
+            return JsonResponse({'status': 'ok'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'error': str(e)}, status=400)
+    return JsonResponse({'status': 'error', 'error': 'Invalid method'}, status=400)
+
+
+@login_required
+def load_user_template_edit(request, template_id):
+    user = request.user
+    template = get_object_or_404(Template, id=template_id)
+    try:
+        obj = UserTemplateEdit.objects.get(user=user, template=template)
+        return JsonResponse({'status': 'ok', 'edited_parts': obj.edited_parts})
+    except UserTemplateEdit.DoesNotExist:
+        return JsonResponse({'status': 'not_found', 'edited_parts': {}})
+
+
+
+
+@login_required
+def user_profile(request):
+    # Get all saved template edits for this user
+    saved_edits = request.user.template_edits.select_related('template').all()
+
+    return render(request, 'user_profile.html', {
+        'saved_edits': saved_edits,
+    })

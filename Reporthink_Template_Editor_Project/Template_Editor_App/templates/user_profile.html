@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<h1>Your Saved Templates</h1>
+
+{% if saved_edits %}
+<ul>
+  {% for edit in saved_edits %}
+  <li>
+    <strong>{{ edit.template.name }}</strong> — Last saved: {{
+    edit.last_modified|date:"SHORT_DATETIME_FORMAT" }}
+    <br />
+    <a href="{% url 'edit_template' edit.template.id %}">Continue Editing</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>You have no saved templates yet.</p>
+{% endif %} {% endblock %}
