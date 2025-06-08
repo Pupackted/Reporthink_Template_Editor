@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg-color: #4c3f3b;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 22pt;
+        color: #95de38;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12pt;
+        color: #ffce62; /* Color */
+        z-index: 200;
+
+        line-height: 1.4;
+
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      /* ========================================== */
+      .company-logo {
+        width: 60pt;
+        height: 60pt;
+        background-color: #d9d9d9;
+        background-image: url(); /* enter company logo here */
+        background-size: cover; /* makes the image cover the whole area */
+        background-position: center; /* centers the image */
+        background-repeat: no-repeat; /* prevents tiling if image is small */
+        border-radius: 100%;
+        overflow: hidden;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 19pt;
+        color: #ffffff; /* Color */
+        line-height: 1;
+
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 17.1pt;
+        color: #ffffff; /* Color */
+        line-height: 1;
+        /* margin-top: 50px;  */
+        /* width: 60%; */
+        /* text-align: justify;
+        line-height: 16pt; */
+      }
+
+      .static-design1 {
+        position: absolute;
+        top: 10px;
+        left: 0px;
+        background-color: rgba(137, 43, 226, 0);
+        width: 200px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 44%;
+        left: 40px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 450px;
+        height: 400px;
+      }
+
+      .static-design3 {
+        position: absolute;
+        left: 620px;
+        top: 490px;
+        z-index: 200;
+
+        background-color: rgba(155, 84, 120, 0);
+      }
+      .static-design4 {
+        height: 90px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 12478912471849817491748918941794189472198;
+        position: absolute;
+        top: 88.2%;
+        left: 100px;
+      }
+
+      .year {
+        font-family: "Montserrat", sans-serif;
+
+        font-weight: 800;
+        font-size: 40pt;
+        color: #95de38;
+        z-index: 200;
+        line-height: 1;
+
+        /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  */
+      }
+      .line {
+        display: block;
+        background-color: #f2b705;
+        width: 65%;
+        height: 8px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        z-index: 1;
+        content: "";
+      }
+
+      /* [contenteditable="true"] {
+        border: 1px dashed #ccc;
+        padding: 4px;
+        min-height: 20px;
+      }
+      [contenteditable="true"]:focus {
+        outline: 2px solid #007bff;
+      } */
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+
+      <!-- company logo -->
+      <div class="static-design1">
+        <label class="company-logo"> </label>
+
+        <div class="Company-name1" contenteditable="true">Logo</div>
+        <div class="Company-name2" contenteditable="true">Company</div>
+      </div>
+
+      <!-- Headline -->
+
+      <div class="static-design2">
+        <div class="sub-headline" contenteditable="true">
+          Sustainability Report
+        </div>
+        <div
+          class="headline"
+          contenteditable="true"
+          style="
+            font-weight: bold;
+            font-size: 35pt;
+            color: #ffce62;
+            margin-bottom: 30px;
+            line-height: 1;
+
+            z-index: 300;
+
+            text-align: start;
+          "
+        >
+          LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET
+        </div>
+
+        <div class="content" contenteditable="true">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+          egestas tortor.
+        </div>
+      </div>
+
+      <!-- year -->
+      <div class="static-design3" contenteditable="true">
+        <div class="year" contenteditable="true">2024<br />2025</div>
+      </div>
+
+      <!-- main text -->
+
+      <!-- ==================== designs ====================== -->
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/cover%20dots.png"
+      />
+
+      <svg
+        style="
+          position: absolute;
+          bottom: 0;
+          height: 100%;
+          width: 100%;
+          z-index: 1;
+        "
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g clip-path="url(#clip0_2001_2)">
+          <mask
+            id="mask0_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="261"
+            y="486"
+            width="334"
+            height="356"
+          >
+            <path
+              d="M261.195 486.168H594.446V841.246H261.195V486.168Z"
+              fill="white"
+              class="clickable-fill"
+            />
+          </mask>
+          <g mask="url(#mask0_2001_2)">
+            <path
+              d="M438.253 663.709V486.168C536.257 486.168 615.698 565.656 615.698 663.709C615.698 761.762 536.257 841.246 438.253 841.246C340.257 841.246 260.812 761.762 260.812 663.709H438.253Z"
+              fill="#F4BC33"
+              class="clickable-fill"
+            />
+          </g>
+          <mask
+            id="mask1_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="190"
+            y="0"
+            width="405"
+            height="341"
+          >
+            <path
+              d="M190.11 0H594.446V340.899H190.11V0Z"
+              fill="white 
+            
+            "
+            />
+          </mask>
+
+          <g class="ImageChangerClass" mask="url(#mask1_2001_2)">
+            <rect
+              x="136.753"
+              width="511.368"
+              height="341.097"
+              fill="url(#pattern0_2001_2)"
+            />
+          </g>
+
+          <mask
+            id="mask2_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="171"
+            height="171"
+          >
+            <path d="M0.515625 0H170.962V170.539H0.515625V0Z" fill="white" />
+          </mask>
+          <g mask="url(#mask2_2001_2)">
+            <path
+              d="M0.515625 170.539C94.6475 170.539 170.962 94.1869 170.962 0H0.515625V170.539Z"
+              fill="#F25922"
+              class="clickable-fill"
+            />
+          </g>
+          <mask
+            id="mask3_2001_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="170"
+            width="171"
+            height="172"
+          >
+            <path
+              d="M0.515625 170.547H170.962V341.344H0.515625V170.547Z"
+              fill="white"
+              class="clickable-fill"
+            />
+          </mask>
+          <g mask="url(#mask3_2001_2)">
+            <path
+              d="M0.515625 170.547C94.6475 170.547 170.962 246.899 170.962 341.086H0.515625V170.547Z"
+              fill="#F25922"
+              class="clickable-fill"
+            />
+          </g>
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2001_2"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2001_2"
+              transform="scale(0.000267094 0.000400641)"
+            />
+          </pattern>
+          <clipPath id="clip0_2001_2">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+          <image
+            id="image0_2001_2"
+            width="3744"
+            height="2496"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2071%20-%20Brown%20Green%20Yellow%20Geometric%20Shapes%20Natural/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

@@ -1105,6 +1105,51 @@
           popup.classList.add("hidden");
           selectThumbnail(newThumbnail);
         });
+        // Restore saved edits and loaded pages
+        if (window.USER_EDITS && Object.keys(window.USER_EDITS).length > 0) {
+          Object.keys(window.USER_EDITS).forEach((partId, idx) => {
+            // You need a way to get the thumbnail src and htmlFileUrl for each partId
+            // For example, if you have a lookup object:
+            const partInfo = window.ALL_PARTS ? window.ALL_PARTS[partId] : null;
+            if (!partInfo) return; // Skip if info missing
+
+            // Add the thumbnail to the preview bar if not already present
+            if (
+              !Array.from(previewBar.children).find(
+                (el) =>
+                  el.getAttribute && el.getAttribute("data-text") === partId
+              )
+            ) {
+              const thumb = createThumbnail(
+                partId,
+                partInfo.thumbnailSrc,
+                partInfo.htmlFileUrl
+              );
+              previewBar.insertBefore(thumb, openBtn);
+            }
+            // Add to loadedPages
+            addPageToLoadedPages(partId, window.USER_EDITS[partId]);
+
+            // Optionally select the first one
+            if (idx === 0) {
+              currentSelectedId = partId;
+              editableArea.innerHTML = `<div class="template-page">${window.USER_EDITS[partId]}</div>`;
+              selectThumbnail(
+                previewBar.querySelector(`[data-text="${partId}"]`)
+              );
+              // Initialize your editor features here
+              initBackgroundColorPicker();
+              initImageChangers();
+              initPdfDownloader();
+              makeElementsEditable();
+              addClickableFillClass();
+              injectCompanyLogoInputs();
+              initTextToolbar();
+              initColorPicker();
+            }
+          });
+          updatePageIndicator();
+        }
       });
 
       // Convert a single image element to Base64 and replace its src
