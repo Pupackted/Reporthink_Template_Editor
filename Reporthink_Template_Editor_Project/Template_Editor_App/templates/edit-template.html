@@ -735,7 +735,7 @@
   <!-- Modal popup and pdf downloader  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  {% load static %} ... {{ user_edits|json_script:"user-edits-data" }}
+  {% load static %} {{ user_edits|json_script:"user-edits-data" }}
   <script>
     // This makes window.USER_EDITS available in your JS
     window.USER_EDITS = JSON.parse(

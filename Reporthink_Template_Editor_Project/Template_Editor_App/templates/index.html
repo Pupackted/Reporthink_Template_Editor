@@ -179,13 +179,15 @@
       </div>
       <!-- top part end -->
       <!-- grid start -->
+
       <div
-        class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 max-h-[80vh] overflow-y-auto pr-2"
+        id="template-grid"
+        class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"
       >
         {% for template in templates %} {% if template.cover_part %}
         <!-- item -->
         <div
-          class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] transition-transform duration-200 ease-in-out hover:scale-[98%]"
+          class="template-item flex flex-col w-full md:max-w-[341px] aspect-[341/529] transition-transform duration-200 ease-in-out hover:scale-[98%]"
           data-template-name="{{ template.name }}"
         >
           <a href="{% url 'choose_template' %}?selected_id={{ template.id }}">
@@ -228,108 +230,76 @@
 
       <!-- number selector -->
       <div class="flex items-center space-x-2 md:mt-8 mt-10">
-        <!-- Previous Button -->
-        <button
-          class="px-4 py-2 rounded-[8px] text-black hover:bg-gray-400 flex justify-center items-center"
-        >
-          <svg
-            class="mr-2"
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10.6663 5.99967H1.33301M1.33301 5.99967L5.99967 10.6663M1.33301 5.99967L5.99967 1.33301"
-              stroke="#1E1E1E"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Previous
-        </button>
+       
 
         <!-- Page Numbers -->
-        <div class="flex items-center space-x-2">
+        <div id="pagination" class="flex items-center space-x-2">
           <!-- Page 1 (Selected by default) -->
-          <button class="px-3 py-1 rounded-[8px] bg-black text-white page-btn">
-            1
-          </button>
-
-          <!-- Page 2 -->
-          <button
-            class="px-3 py-1 rounded-[8px] text-black hover:bg-gray-400 page-btn"
-          >
-            2
-          </button>
-
-          <!-- Page 3 -->
-          <button
-            class="px-3 py-1 rounded-[8px] text-black hover:bg-gray-400 page-btn"
-          >
-            3
-          </button>
-
-          <span class="text-black hidden md:flex">...</span>
-
-          <!-- Page 10 -->
-          <button
-            class="px-3 py-1 rounded-[8px] text-black hover:bg-gray-400 page-btn hidden md:flex"
-          >
-            10
-          </button>
-
-          <!-- Page 11 -->
-          <button
-            class="px-3 py-1 rounded-[8px] text-black hover:bg-gray-400 page-btn hidden md:flex"
-          >
-            11
-          </button>
         </div>
 
-        <!-- Next Button -->
-        <button
-          class="px-4 py-2 rounded-[8px] text-black hover:bg-gray-400 flex justify-center items-center"
-        >
-          Next
-          <svg
-            class="ml-2"
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.33301 5.99967H10.6663M10.6663 5.99967L5.99967 1.33301M10.6663 5.99967L5.99967 10.6663"
-              stroke="#1E1E1E"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+       
       </div>
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-          const pageButtons = document.querySelectorAll(".page-btn");
+          const itemsPerPage = 8;
+          const grid = document.getElementById("template-grid");
+          const items = Array.from(grid.querySelectorAll(".template-item"));
+          const pagination = document.getElementById("pagination");
 
-          pageButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-              // Reset all buttons
-              pageButtons.forEach((btn) => {
-                btn.classList.remove("bg-black", "text-white");
-                btn.classList.add("text-black");
-              });
+          let currentPage = 1;
+          const totalPages = Math.ceil(items.length / itemsPerPage);
 
-              // Add selected class to the clicked button
-              button.classList.remove("text-black");
-              button.classList.add("bg-black", "text-white");
+          function showPage(page) {
+            currentPage = page;
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            // Show only items for current page
+            items.forEach((item, index) => {
+              item.style.display = index >= start && index < end ? "" : "none";
             });
-          });
+
+            renderPagination();
+          }
+
+          function renderPagination() {
+            pagination.innerHTML = "";
+
+            // Previous button
+            const prevBtn = document.createElement("button");
+            prevBtn.textContent = "Previous";
+            prevBtn.className =
+              "px-3 py-1 rounded-[8px] text-black hover:bg-gray-400";
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.addEventListener("click", () => showPage(currentPage - 1));
+            pagination.appendChild(prevBtn);
+
+            // Page buttons
+            for (let i = 1; i <= totalPages; i++) {
+              const btn = document.createElement("button");
+              btn.textContent = i;
+              btn.className =
+                "px-3 py-1 rounded-[8px] page-btn " +
+                (i === currentPage
+                  ? "bg-black text-white"
+                  : "text-black hover:bg-gray-400");
+              btn.addEventListener("click", () => showPage(i));
+              pagination.appendChild(btn);
+            }
+
+            // Next button
+            const nextBtn = document.createElement("button");
+            nextBtn.textContent = "Next";
+            nextBtn.className =
+              "px-3 py-1 rounded-[8px] text-black hover:bg-gray-400";
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.addEventListener("click", () => showPage(currentPage + 1));
+            pagination.appendChild(nextBtn);
+          }
+
+          // Initialize
+          showPage(1);
         });
       </script>
 
