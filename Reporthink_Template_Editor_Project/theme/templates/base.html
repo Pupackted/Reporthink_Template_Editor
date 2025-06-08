@@ -18,6 +18,25 @@
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
     {% tailwind_css %}
+
+    <style>
+      input[type="search"]::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        appearance: none;
+        display: none;
+      }
+      input[type="search"]::-moz-search-clear {
+        display: none;
+      }
+      input[type="search"]::-ms-clear {
+        display: none;
+      }
+
+      input[type="search"]:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->

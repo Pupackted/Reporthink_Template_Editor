@@ -18,78 +18,41 @@
       <!-- top part -->
       <div class="w-full flex md:flex-row flex-col">
         <!-- search -->
-        <div
+        <form
+          method="get"
+          action="{% url 'index' %}"
           class="md:w-[30%] w-[100%] h-10 bg-[#EDE7F0] rounded-[28px] flex items-center"
         >
-          <!-- hamburg icon -->
-          <button>
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_1341_601)">
-                <path
-                  d="M15 30V28H33V30H15ZM15 25V23H33V25H15ZM15 20V18H33V20H15Z"
-                  fill="#49454F"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1341_601">
-                  <rect
-                    x="4"
-                    y="4"
-                    width="40"
-                    height="40"
-                    rx="20"
-                    fill="white"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </button>
-          <!-- hamburg icon -->
-
-          <!-- text area -->
-          <textarea
-            class="w-full focus:outline-none border-none bg-transparent resize-none"
+          <input
+            id="search-input"
+            type="search"
             placeholder="Search Template"
-            rows="1"
-          ></textarea>
-          <!-- text area end -->
-          <!-- search button -->
-          <button>
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_1341_608)">
-                <path
-                  d="M31.6 33L25.3 26.7C24.8 27.1 24.225 27.4167 23.575 27.65C22.925 27.8833 22.2333 28 21.5 28C19.6833 28 18.1458 27.3708 16.8875 26.1125C15.6292 24.8542 15 23.3167 15 21.5C15 19.6833 15.6292 18.1458 16.8875 16.8875C18.1458 15.6292 19.6833 15 21.5 15C23.3167 15 24.8542 15.6292 26.1125 16.8875C27.3708 18.1458 28 19.6833 28 21.5C28 22.2333 27.8833 22.925 27.65 23.575C27.4167 24.225 27.1 24.8 26.7 25.3L33 31.6L31.6 33ZM21.5 26C22.75 26 23.8125 25.5625 24.6875 24.6875C25.5625 23.8125 26 22.75 26 21.5C26 20.25 25.5625 19.1875 24.6875 18.3125C23.8125 17.4375 22.75 17 21.5 17C20.25 17 19.1875 17.4375 18.3125 18.3125C17.4375 19.1875 17 20.25 17 21.5C17 22.75 17.4375 23.8125 18.3125 24.6875C19.1875 25.5625 20.25 26 21.5 26Z"
-                  fill="#49454F"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1341_608">
-                  <rect
-                    x="4"
-                    y="4"
-                    width="40"
-                    height="40"
-                    rx="20"
-                    fill="white"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </button>
-          <!-- search button end -->
-        </div>
+            class="w-full focus:outline-none border-none bg-transparent ml-2"
+            autocomplete="off"
+          />
+
+          <!-- Your SVG icon here -->
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_1341_608)">
+              <path
+                d="M31.6 33L25.3 26.7C24.8 27.1 24.225 27.4167 23.575 27.65C22.925 27.8833 22.2333 28 21.5 28C19.6833 28 18.1458 27.3708 16.8875 26.1125C15.6292 24.8542 15 23.3167 15 21.5C15 19.6833 15.6292 18.1458 16.8875 16.8875C18.1458 15.6292 19.6833 15 21.5 15C23.3167 15 24.8542 15.6292 26.1125 16.8875C27.3708 18.1458 28 19.6833 28 21.5C28 22.2333 27.8833 22.925 27.65 23.575C27.4167 24.225 27.1 24.8 26.7 25.3L33 31.6L31.6 33ZM21.5 26C22.75 26 23.8125 25.5625 24.6875 24.6875C25.5625 23.8125 26 22.75 26 21.5C26 20.25 25.5625 19.1875 24.6875 18.3125C23.8125 17.4375 22.75 17 21.5 17C20.25 17 19.1875 17.4375 18.3125 18.3125C17.4375 19.1875 17 20.25 17 21.5C17 22.75 17.4375 23.8125 18.3125 24.6875C19.1875 25.5625 20.25 26 21.5 26Z"
+                fill="#49454F"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_1341_608">
+                <rect x="4" y="4" width="40" height="40" rx="20" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </form>
+
         <!-- search end -->
         <!-- Selector -->
         <div class="md:hidden relative w-[50%] mt-5">
@@ -223,6 +186,7 @@
         <!-- item -->
         <div
           class="flex flex-col w-full md:max-w-[341px] aspect-[341/529] transition-transform duration-200 ease-in-out hover:scale-[98%]"
+          data-template-name="{{ template.name }}"
         >
           <a href="{% url 'choose_template' %}?selected_id={{ template.id }}">
             <div class="font-bold w-full h-full">
@@ -369,6 +333,53 @@
         });
       </script>
 
+      <!-- for search -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const searchInput = document.getElementById("search-input");
+          const templateGrid = document.querySelector(".grid.grid-cols-2"); // Adjust selector if needed
+          const templates = Array.from(
+            templateGrid.querySelectorAll("div[data-template-name]")
+          );
+
+          // Debounce helper
+          function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+              clearTimeout(timeout);
+              timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+          }
+
+          function filterTemplates() {
+            const query = searchInput.value.trim().toLowerCase();
+            templates.forEach((templateDiv) => {
+              const name = templateDiv
+                .getAttribute("data-template-name")
+                .toLowerCase();
+              if (name.includes(query)) {
+                templateDiv.style.display = "";
+              } else {
+                templateDiv.style.display = "none";
+              }
+            });
+          }
+
+          const debouncedFilter = debounce(filterTemplates, 300);
+
+          // Live filter on input
+          searchInput.addEventListener("input", debouncedFilter);
+
+          // Pressing Enter triggers filter immediately (optional)
+          searchInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevent form submission or newline
+              filterTemplates();
+            }
+          });
+        });
+      </script>
+
       <!-- number se=lector end -->
     </div>
 
@@ -394,7 +405,5 @@
   {% comment %} {% for template in templates %}
   <p>{{ template.name }} — cover_part: {{ template.cover_part }}</p>
   {% endfor %} {% endcomment %}
-
-  
 </body>
 {% endblock %}

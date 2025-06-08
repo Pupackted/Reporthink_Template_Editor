@@ -28,5 +28,6 @@ urlpatterns = [
     path('save-user-edit/<int:template_id>/', views.save_user_template_edit, name='save_user_template_edit'),
     path('load-user-edit/<int:template_id>/', views.load_user_template_edit, name='load_user_template_edit'),
     path('profile/', views.user_profile, name='user_profile'),
+    path('delete-user-edit/<int:edit_id>/', views.delete_user_template_edit, name='delete_user_template_edit'),
 
 ]

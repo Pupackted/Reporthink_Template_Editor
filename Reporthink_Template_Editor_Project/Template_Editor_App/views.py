@@ -16,6 +16,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from .models import UserTemplateEdit
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from .models import UserTemplateEdit
+from django.db.models import Q
 
 
 
@@ -24,17 +29,35 @@ def is_admin(user):
     return user.is_staff  # or user.is_superuser depending on your admin setup
 
 
+# def index(request):
+#     templates = Template.objects.all()
+#     # Kirim template_id default, misal template pertama atau None
+#     first_template_id = templates.first().id if templates.exists() else None
+#     return render(request, 'index.html', {
+#         'templates': templates,
+#         'template_form': TemplateForm(),
+#         'template_part_form': TemplatePartForm(),
+#         'some_template_id': first_template_id,  # Kirim ke template
+#     })
+
 def index(request):
-    templates = Template.objects.all()
-    # Kirim template_id default, misal template pertama atau None
+    search_query = request.GET.get('q', '')  # get search query from URL parameter 'q'
+    if search_query:
+        templates = Template.objects.filter(
+            Q(name__icontains=search_query),
+            cover_part__isnull=False
+        )
+    else:
+        templates = Template.objects.filter(cover_part__isnull=False)
+
     first_template_id = templates.first().id if templates.exists() else None
     return render(request, 'index.html', {
         'templates': templates,
         'template_form': TemplateForm(),
         'template_part_form': TemplatePartForm(),
-        'some_template_id': first_template_id,  # Kirim ke template
+        'some_template_id': first_template_id,
+        'search_query': search_query,
     })
-
 
 
 @login_required
@@ -274,7 +297,7 @@ def load_user_template_edit(request, template_id):
 
 
 
-
+# User profile view to show saved template edits
 @login_required
 def user_profile(request):
     # Get all saved template edits for this user
@@ -283,3 +306,15 @@ def user_profile(request):
     return render(request, 'user_profile.html', {
         'saved_edits': saved_edits,
     })
+
+
+# delete user template edit
+@login_required
+def delete_user_template_edit(request, edit_id):
+    edit = get_object_or_404(UserTemplateEdit, id=edit_id, user=request.user)
+    if request.method == "POST":
+        edit.delete()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'ok'})
+        return redirect('user_profile')
+    return JsonResponse({'status': 'error', 'error': 'Invalid request'}, status=400)
