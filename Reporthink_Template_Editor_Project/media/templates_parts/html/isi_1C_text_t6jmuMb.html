@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>isi 1C text</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #00569e;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000;
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000;
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        height: 860px;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 860px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 465px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-styling1 {
+        position: absolute;
+        top: 90px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div class="static-styling1">
+        <div class="headline">Headline<br />Headline</div>
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="headline-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+              auctor ut est sed gravida. Ut dictum libero sed arcu aliquet, vel
+              ultrices sem placerat.Lorem ipsum dolor sit amet, consectetur
+              adipiscing elit. Morbi auctor ut est sed gravida. Ut dictum libero
+              sed arcu aliquet, vel ultrices sem placerat.
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam, ornare eu bibendum ac, luctus id
+                arcu. Donec in gravida nunc.
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Nullam mollis convallis urna. Nam augue diam, ornare eu bibendum
+                ac, luctus id arcu. Donec in gravida nunc. Vivamus vel tristique
+                mauris, at cursus massa. Nunc eget nunc nec lacus auctor
+                tristique. Maecenas ac dolor fringilla arcu efficitur iaculis a
+                nec tortor. Pellentesque habitant morbi tristique senectus et
+                netus et malesuada fames ac turpis egestas. Nullam nunc purus,
+                rhoncus vel nisi in, dignissim aliquam odio.Nullam mollis
+                convallis urna. Nam augue diam,
+              </p>
+            </div>
+            <div class="sub-headline">Headline</div>
+            <div class="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                vel ultrices sem placerat. Praesent rhoncus neque in est
+                lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                ante eget pretium. Vestibulum non odio interdum, commodo mi non,
+                iaculis nisi. Phasellus fringilla elit erat, vel consequat metus
+                maximus bibendum. Fusce imperdiet tempor ante, eu mattis eros
+                viverra in. Ut quis arcu vel sem vulputate aliquam a in massa.
+                In et neque imperdiet, scelerisque quam vel, laoreet mi.
+                Phasellus et ante porttitor, congue augue a, pulvinar nisl.
+                Integer vel nibh aliquet, pulvinar augue et, eleifend lorem.
+                Fusce ut quam in tellus scelerisque vehicula. Ut aliquet
+                dignissim auctor.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_2006_8106)">
+          <mask
+            id="mask0_2006_8106"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="746"
+            width="92"
+            height="76"
+          >
+            <path
+              d="M0.515686 746.552H91.8569V821.756H0.515686V746.552Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_2006_8106)">
+            <path
+              d="M56.9253 746.618L0.515686 803.258L17.9737 820.788L91.8452 746.618H56.9253Z"
+              fill="#47C5FB"
+            />
+          </g>
+          <mask
+            id="mask1_2006_8106"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="26"
+            y="798"
+            width="66"
+            height="44"
+          >
+            <path
+              d="M26.248 798.763H91.8569V841.25H26.248V798.763Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2006_8106)">
+            <path
+              d="M56.5311 798.849L26.326 829.176L43.8543 847.034L61.281 829.535L91.8452 798.849H56.5311Z"
+              fill="#47C5FB"
+            />
+          </g>
+          <mask
+            id="mask2_2006_8106"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="43"
+            y="828"
+            width="49"
+            height="14"
+          >
+            <path
+              d="M43.2337 828.754H91.8569V841.25H43.2337V828.754Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask2_2006_8106)">
+            <path
+              d="M43.8542 847.033L57.1204 860.354H91.8452L61.281 829.535L43.8542 847.033Z"
+              fill="#00569E"
+            />
+          </g>
+          <mask
+            id="mask3_2006_8106"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="25"
+            y="811"
+            width="38"
+            height="31"
+          >
+            <path
+              d="M25.2488 811.759H62.2177V841.25H25.2488V811.759Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2006_8106)">
+            <path
+              d="M26.1309 829.371L43.5928 811.841L61.281 829.535L43.8543 847.033L26.1309 829.371Z"
+              fill="#00B5F8"
+            />
+          </g>
+          <mask
+            id="mask4_2006_8106"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="486"
+            y="0"
+            width="109"
+            height="107"
+          >
+            <path
+              d="M486.744 0.316406H594.446V106.375H486.744V0.316406Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask4_2006_8106)">
+            <path
+              d="M486.744 0.105469L594.743 106.57V0.105469H486.744Z"
+              fill="#022873"
+            />
+          </g>
+        </g>
+        <defs>
+          <clipPath id="clip0_2006_8106">
+            <rect width="595" height="842" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

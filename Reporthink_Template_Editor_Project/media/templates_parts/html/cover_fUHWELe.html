@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>cover</title>
+    <style>
+      :root {
+        --color-design-bg: #352f42;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      @font-face {
+        font-family: "Aloja-Light";
+        src: url("https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2030%20-%20Blue%20orange%20brown%20doodle%20geometri/font/Aloja-Light.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        background-image: url("");
+        background-color: var(--color-design-bg);
+        background-size: cover;
+        background-position: center;
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 20.9pt;
+        color: #ffffff;
+        line-height: 1.4;
+        margin-bottom: 5px;
+        z-index: 4;
+        text-align: start;
+      }
+
+      .headline {
+        font-family: "Open Sans", sans-serif;
+        /* font-family: "Open Sans", sans-serif; */
+        font-weight: bold;
+        font-size: 28pt;
+        color: #ffde59;
+        line-height: 1.3;
+        text-align: start;
+        z-index: 300;
+        /* margin-left: 80px; */
+      }
+
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 12.6pt;
+        color: #ffffff; /* Color */
+        z-index: 200;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        position: absolute;
+        top: 545px;
+        height: 520px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+      .company-logo {
+        width: 35pt;
+        height: 35pt;
+        background-color: #162029;
+        background-image: url(); /* enter company logo here */
+        border-radius: 100%;
+      }
+
+      .Company-name1 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: lighter;
+        font-size: 18pt;
+        color: #ffffff; /* Color */
+      }
+
+      .Company-name2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: lighter;
+        font-size: 18pt;
+        color: #ffffff; /* Color */
+        line-height: 1;
+      }
+      .static-design1 {
+        position: absolute;
+        top: 0px;
+
+        background-color: rgba(137, 43, 226, 0);
+
+        height: 150px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+      .static-design2 {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 15.5%;
+        left: 80px;
+        height: 340px;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 20;
+        width: 460px;
+      }
+
+      .year {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 50.2pt;
+        color: #ffffff;
+        z-index: 200;
+        line-height: 1.2;
+        position: absolute;
+        right: 80px;
+        top: 120px;
+      }
+      .year-2nd-color {
+        color: #e0a04b; /* Yellow color for 2024 */
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- company logo -->
+      <div class="static-design1">
+        <div style="display: flex; flex-direction: column; margin-left: 80px">
+          <div class="Company-name1">Logo</div>
+          <div class="Company-name2">Company</div>
+        </div>
+      </div>
+
+      <!-- year -->
+      <div class="year">2<br />0<br />2<br />4</div>
+      <!-- Headline -->
+      <div class="static-design2">
+        <div>
+          <div class="sub-headline">Sustainability Report</div>
+          <div style="margin-bottom: 25px" class="headline">
+            LOREM IPSUM DOLOR SIT AMET LOREM IPSUM DOLOR SIT AMET
+          </div>
+          <div
+            style="
+              background-color: white;
+              width: 100%;
+              height: 5px;
+              margin-bottom: 15px;
+            "
+          ></div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            vulputate enim felis, ac semper leo mollis quis. Integer vestibulum
+            egestas tortor.
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+
+      <img
+        class="static-image-design"
+        src="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2074%20-%20Light%20Gray%20Blue%20Minimalist%20Company%20Profile%20Booklet/cover%20design.png"
+      />
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2010_2"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="84"
+          y="389"
+          width="511"
+          height="453"
+        >
+          <path
+            d="M84.9951 389.268H594.446V841.251H84.9951V389.268Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask0_2010_2)">
+          <mask
+            id="mask1_2010_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="84"
+            y="389"
+            width="1040"
+            height="495"
+          >
+            <path
+              d="M876.849 389.268C1013.22 389.268 1123.76 499.875 1123.76 636.315C1123.76 772.755 1013.22 883.359 876.849 883.359H331.909C195.543 883.359 84.9951 772.755 84.9951 636.315C84.9951 499.875 195.543 389.268 331.909 389.268H876.849Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask1_2010_2)">
+            <path
+              d="M84.9951 389.268H1122.8V883.359H84.9951V389.268Z"
+              fill="#FFDE59"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask2_2010_2"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="111"
+          y="414"
+          width="445"
+          height="428"
+        >
+          <path
+            d="M111.372 414.877H555.522V841.25H111.372V414.877Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask2_2010_2)">
+          <mask
+            id="mask3_2010_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="111"
+            y="414"
+            width="444"
+            height="445"
+          >
+            <path
+              d="M333.221 414.822C325.965 414.818 318.721 415.174 311.501 415.881C304.277 416.591 297.103 417.653 289.984 419.067C282.865 420.485 275.832 422.242 268.888 424.351C261.941 426.456 255.115 428.896 248.409 431.677C241.7 434.453 235.147 437.554 228.746 440.975C222.341 444.396 216.124 448.125 210.086 452.159C204.052 456.189 198.229 460.512 192.616 465.116C187.004 469.724 181.634 474.594 176.497 479.725C171.365 484.86 166.498 490.234 161.892 495.849C157.287 501.461 152.966 507.287 148.931 513.324C144.899 519.362 141.171 525.582 137.749 531.987C134.326 538.391 131.227 544.948 128.448 551.657C125.669 558.366 123.226 565.196 121.122 572.147C119.014 579.094 117.25 586.131 115.833 593.254C114.417 600.377 113.355 607.55 112.641 614.779C111.93 622.007 111.575 629.251 111.575 636.514C111.575 643.774 111.93 651.022 112.641 658.246C113.355 665.474 114.417 672.648 115.833 679.771C117.25 686.894 119.014 693.931 121.122 700.882C123.226 707.829 125.669 714.659 128.448 721.368C131.227 728.077 134.326 734.634 137.749 741.038C141.171 747.442 144.899 753.663 148.931 759.7C152.966 765.742 157.287 771.564 161.892 777.18C166.498 782.791 171.365 788.165 176.497 793.3C181.634 798.435 187.004 803.305 192.616 807.909C198.229 812.517 204.052 816.836 210.086 820.87C216.124 824.904 222.341 828.629 228.746 832.054C235.147 835.475 241.7 838.575 248.409 841.352C255.115 844.128 261.941 846.569 268.888 848.678C275.832 850.783 282.865 852.544 289.984 853.958C297.103 855.371 304.277 856.433 311.501 857.144C318.721 857.855 325.965 858.206 333.221 858.206C340.481 858.206 347.721 857.855 354.945 857.144C362.169 856.433 369.339 855.371 376.458 853.958C383.581 852.544 390.61 850.783 397.558 848.678C404.505 846.569 411.331 844.128 418.036 841.352C424.746 838.575 431.299 835.475 437.7 832.054C444.104 828.629 450.322 824.904 456.356 820.87C462.394 816.836 468.217 812.517 473.829 807.909C479.442 803.305 484.812 798.435 489.945 793.3C495.081 788.165 499.948 782.791 504.554 777.18C509.159 771.564 513.48 765.742 517.511 759.7C521.547 753.663 525.274 747.442 528.697 741.038C532.12 734.634 535.219 728.077 537.998 721.368C540.773 714.659 543.216 707.829 545.324 700.882C547.432 693.931 549.196 686.894 550.613 679.771C552.025 672.648 553.091 665.474 553.801 658.246C554.515 651.022 554.871 643.774 554.871 636.514C554.871 629.251 554.515 622.007 553.801 614.779C553.091 607.55 552.025 600.377 550.613 593.254C549.196 586.131 547.432 579.094 545.324 572.147C543.216 565.196 540.773 558.366 537.998 551.657C535.219 544.948 532.12 538.391 528.697 531.987C525.274 525.582 521.547 519.362 517.511 513.324C513.48 507.287 509.159 501.461 504.554 495.849C499.948 490.234 495.081 484.86 489.945 479.725C484.812 474.594 479.442 469.724 473.829 465.116C468.217 460.512 462.394 456.189 456.356 452.159C450.322 448.125 444.104 444.396 437.7 440.975C431.299 437.554 424.746 434.453 418.036 431.677C411.331 428.896 404.505 426.456 397.558 424.351C390.61 422.242 383.581 420.485 376.458 419.067C369.339 417.653 362.169 416.591 354.945 415.881C347.721 415.174 340.481 414.818 333.221 414.822Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask3_2010_2)">
+            <rect
+              x="-9.85547"
+              y="414.821"
+              width="686.083"
+              height="443.485"
+              fill="url(#pattern0_2010_2)"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask4_2010_2"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="107"
+          y="410"
+          width="453"
+          height="432"
+        >
+          <path
+            d="M107.18 410.507H559.132V841.25H107.18V410.507Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2010_2)">
+          <mask
+            id="mask5_2010_2"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="107"
+            y="410"
+            width="452"
+            height="453"
+          >
+            <path
+              d="M333.221 862.318C208.778 862.318 107.539 761.024 107.539 636.514C107.539 512 208.778 410.702 333.221 410.702C457.667 410.702 558.906 512 558.906 636.514C558.906 761.024 457.667 862.318 333.221 862.318ZM333.221 418.934C213.317 418.934 115.767 516.542 115.767 636.514C115.767 756.486 213.317 854.086 333.221 854.086C453.128 854.086 550.678 756.482 550.678 636.514C550.678 516.542 453.128 418.934 333.221 418.934Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask5_2010_2)">
+            <path
+              d="M102.344 405.988H564.549V866.637H102.344V405.988Z"
+              fill="#352F42"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask6_2010_2"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="148"
+          y="451"
+          width="371"
+          height="371"
+        >
+          <path
+            d="M148.411 451.175H518.268V821.237H148.411V451.175Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask6_2010_2)">
+          <path
+            d="M333.447 821.448C231.42 821.448 148.411 738.394 148.411 636.311C148.411 534.228 231.42 451.175 333.447 451.175C435.475 451.175 518.479 534.228 518.479 636.311C518.479 738.394 435.475 821.448 333.447 821.448ZM333.447 457.435C234.874 457.435 154.668 537.673 154.668 636.311C154.668 734.954 234.858 815.188 333.447 815.188C432.032 815.188 512.223 734.954 512.223 636.311C512.223 537.688 432.017 457.435 333.447 457.435Z"
+            fill="#352F42"
+          />
+        </g>
+        <defs>
+          <pattern
+            id="pattern0_2010_2"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2010_2"
+              transform="scale(0.000275786 0.000426985)"
+            />
+          </pattern>
+          <image
+            id="image0_2010_2"
+            width="3626"
+            height="2342"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2074%20-%20Light%20Gray%20Blue%20Minimalist%20Company%20Profile%20Booklet/cover%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>

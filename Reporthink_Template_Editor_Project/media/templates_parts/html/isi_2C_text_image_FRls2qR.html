@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>isi 2C text image</title>
+    <style>
+      :root {
+        --color-design-bg-color: #ffffff;
+      }
+
+      @page {
+        margin: 0;
+        padding: 0px;
+      }
+
+      @media print {
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .background {
+        width: 210mm;
+        height: 297mm;
+        /* background: radial-gradient(circle at top left, #5de0e6, #004aad); */
+
+        background-color: var(--color-design-bg-color);
+        -webkit-print-color-adjust: exact;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sub-sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 14pt;
+        color: #000000;
+        line-height: 1.4;
+        text-align: start;
+        z-index: 4;
+        margin-bottom: 15px;
+      }
+
+      .sub-headline {
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 13pt;
+        color: #000000;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        z-index: 4;
+        text-align: start;
+      }
+      .headline {
+        /* font-family: "Montserrat", sans-serif; */
+        font-family: "Open Sans", sans-serif;
+        font-weight: bold;
+        font-size: 20pt;
+        color: #00569e;
+        line-height: 1;
+        text-align: start;
+        z-index: 300;
+        margin-left: 80px;
+        margin-bottom: 20px;
+      }
+      .headline-content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 11pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 20px;
+        /* line-height: 1.4; */
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content {
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 9pt;
+        color: #000000; /* Color */
+        z-index: 200;
+        margin-bottom: 27px;
+
+        line-height: 1.4;
+        text-align: justify;
+        break-inside: auto; /* Prevents breaking headlines between columns */
+      }
+
+      .content p {
+        margin-bottom: 10pt;
+        margin-top: 0px;
+      }
+
+      .column-layout {
+        columns: 2; /* Number of columns */
+        column-gap: 40px; /* Space between the columns */
+        margin-top: 10px;
+        /* height: 220mm; */
+        height: 132mm;
+        background-color: rgba(0, 128, 0, 0);
+        column-fill: auto; /* Fill columns sequentially */
+      }
+
+      .main-column {
+        height: 510px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+        z-index: 200;
+      }
+
+      .static-image-design {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* ========================================== */
+
+      .static-styling1 {
+        position: absolute;
+        top: 450px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 105, 180, 0);
+      }
+      .static-design1 {
+        position: absolute;
+        top: 370px;
+        width: full;
+        background-color: rgba(137, 43, 226, 0);
+        margin-left: 130px;
+        /* margin-right: 130px; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        z-index: 2;
+      }
+
+      /* .warna-design {
+               background-color: #2b46bd;
+             } */
+      @media print {
+        @page {
+          size: 210mm 297mm;
+          /* padding: 0; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <!-- ==================== main content====================== -->
+      <!-- main texts -->
+
+      <div class="static-styling1">
+        <div class="headline">Headline<br />Headline</div>
+        <div class="main-column">
+          <div style="margin-left: 80px; margin-right: 80px">
+            <div class="column-layout">
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                  auctor ut est sed gravida. Ut dictum libero sed arcu aliquet,
+                  vel ultrices sem placerat. Praesent rhoncus neque in est
+                  lobortis rhoncus. Nam aliquet ligula a mauris bibendum
+                  pellentesque. Pellentesque vitae lorem mi. Maecenas dictum eu
+                  ante eget pretium. Vestibulum non odio interdum, commodo mi
+                  non, iaculis nisi. Phasellus fringilla elit erat, vel
+                  consequat metus maximus bibendum. Fusce imperdiet tempor ante,
+                  eu mattis eros viverra in. Ut quis arcu vel sem vulputate
+                  aliquam a in massa. In et neque imperdiet, scelerisque quam
+                  vel, laoreet mi. Phasellus et ante porttitor, congue augue a,
+                  pulvinar nisl. Integer vel nibh aliquet, pulvinar augue et,
+                  eleifend lorem. Fusce ut quam in tellus scelerisque vehicula.
+                  Ut aliquet dignissim auctor.
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Nullam mollis convallis urna. Nam augue diam, ornare eu
+                  bibendum ac, luctus id arcu. Donec in gravida nunc. Vivamus
+                  vel tristique mauris, at cursus massa. Nunc eget nunc nec
+                  lacus auctor tristique. Maecenas ac dolor fringilla arcu
+                  efficitur iaculis a nec tortor. Pellentesque habitant morbi
+                  tristique senectus et netus et malesuada fames ac turpis
+                  egestas. Nullam nunc purus, rhoncus vel nisi in, dignissim
+                  aliquam odio.Nullam mollis convallis urna. Nam augue diam,
+                  ornare eu bibendum ac, luctus id arcu. Donec in gravida nunc.
+                </p>
+              </div>
+              <div class="sub-headline">Headline</div>
+              <div class="content">
+                <p>
+                  Nullam mollis convallis urna. Nam augue diam, ornare eu
+                  bibendum ac, luctus id arcu. Donec in gravida nunc. Vivamus
+                  vel tristique mauris, at cursus massa. Nunc eget nunc nec
+                  lacus auctor tristique. Maecenas ac dolor fringilla arcu
+                  efficitur iaculis a nec tortor. Pellentesque habitant morbi
+                  tristique senectus et netus et malesuada fames ac turpis
+                  egestas. Nullam nunc purus, rhoncus vel nisi in, dignissim
+                  aliquam odio.Nullam mollis convallis urna. Nam augue diam,
+                </p>
+              </div>
+              <div class="content">
+                <p>
+                  Nullam mollis convallis urna. Nam augue diam, ornare eu
+                  bibendum ac, luctus id arcu. Donec in gravida nunc. Vivamus
+                  vel tristique mauris, at cursus massa. Nunc eget nunc nec
+                  lacus auctor tristique. Maecenas ac dolor fringilla arcu
+                  efficitur iaculis a nec tortor. Pellentesque habitant morbi
+                  tristique senectus et netus et malesuada fames ac turpis
+                  egestas. Nullam nunc purus, rhoncus vel nisi in, dignissim
+                  aliquam odio.Nullam mollis convallis urna. Nam augue diam,
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ==================== designs ====================== -->
+      <!-- <img class="static-image-design" src="" /> -->
+      <svg
+        style="position: absolute; bottom: 0; height: 100%; width: 100%"
+        viewBox="0 0 595 842"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <mask
+          id="mask0_2006_18366"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="595"
+          height="257"
+        >
+          <path d="M0.515625 0H594.446V256.686H0.515625V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask0_2006_18366)">
+          <path d="M0.515625 0H594.778V256.686H0.515625V0Z" fill="#022873" />
+        </g>
+        <mask
+          id="mask1_2006_18366"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="174"
+          y="0"
+          width="421"
+          height="421"
+        >
+          <path d="M174.545 0H594.446V420.438H174.545V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask1_2006_18366)" class="ImageChangerClass">
+          <mask
+            id="mask2_2006_18366"
+            style="mask-type: luminance"
+            maskUnits="userSpaceOnUse"
+            x="168"
+            y="-7"
+            width="434"
+            height="434"
+          >
+            <path
+              d="M168.23 -6.32227L601.074 426.752V-6.32227H168.23Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask2_2006_18366)">
+            <rect
+              x="60.0217"
+              y="-6.32227"
+              width="649.657"
+              height="433.059"
+              fill="url(#pattern0_2006_18366)"
+            />
+          </g>
+        </g>
+        <mask
+          id="mask3_2006_18366"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="59"
+          y="0"
+          width="237"
+          height="192"
+        >
+          <path d="M59.9385 0H295.58V191.943H59.9385V0Z" fill="white" />
+        </mask>
+        <g mask="url(#mask3_2006_18366)">
+          <path
+            d="M149.929 0.167969L295.58 145.871L250.501 190.963L59.7668 0.167969H149.929Z"
+            fill="#47C5FB"
+          />
+        </g>
+        <mask
+          id="mask4_2006_18366"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="59"
+          y="133"
+          width="171"
+          height="126"
+        >
+          <path
+            d="M59.9385 133.96H229.078V258.923H59.9385V133.96Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask4_2006_18366)">
+          <path
+            d="M150.944 134.531L228.933 212.543L183.682 258.478L138.685 213.468L59.7668 134.531H150.944Z"
+            fill="#47C5FB"
+          />
+        </g>
+        <mask
+          id="mask5_2006_18366"
+          style="mask-type: luminance"
+          maskUnits="userSpaceOnUse"
+          x="59"
+          y="212"
+          width="126"
+          height="81"
+        >
+          <path
+            d="M59.9385 212.937H184.115V292.902H59.9385V212.937Z"
+            fill="white"
+          />
+        </mask>
+        <g mask="url(#mask5_2006_18366)">
+          <path
+            d="M183.682 258.478L149.43 292.746H59.7668L138.685 213.468L183.682 258.478Z"
+            fill="#00569E"
+          />
+        </g>
+        <path
+          d="M229.441 213.042L184.357 167.946L138.685 213.468L183.682 258.478L229.441 213.042Z"
+          fill="#00B5F8"
+        />
+        <defs>
+          <pattern
+            id="pattern0_2006_18366"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use
+              xlink:href="#image0_2006_18366"
+              transform="scale(0.000282566 0.000423908)"
+            />
+          </pattern>
+          <image
+            id="image0_2006_18366"
+            width="3539"
+            height="2359"
+            xlink:href="https://s3-id-jkt-1.kilatstorage.id/reporthink/template%2073%20-%20Blue%20Grey%20Triangle%20Stripes%20Modern%20Simple/isi%202c%20text%20image%20-%20image.png"
+          />
+        </defs>
+      </svg>
+    </div>
+  </body>
+</html>
