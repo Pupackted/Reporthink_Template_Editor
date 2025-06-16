@@ -1,4 +1,4 @@
-# Template editor projject for my Thesis
+# Template editor project for my Thesis
 
 > ⚠️ **Heads up!**  
 > This project is still a **WIP (Work In Progress)** — so expect some rough edges and random bugs creeping around 👀🐛
