@@ -1,4 +1,4 @@
-# 👋 Yo! It's ya boi Adrian back at it again with another cool ahh repo 💻✨
+# Template editor projject for my Thesis
 
 > ⚠️ **Heads up!**  
 > This project is still a **WIP (Work In Progress)** — so expect some rough edges and random bugs creeping around 👀🐛
