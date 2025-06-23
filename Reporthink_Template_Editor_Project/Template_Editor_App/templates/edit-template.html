@@ -733,42 +733,49 @@
   <!-- ColorPicker end -->
 
   <!-- Modal popup and pdf downloader  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  {% load static %} {{ user_edits|json_script:"user-edits-data" }}
+  
+  {% load static %}
+  
+  {{ user_edits|json_script:"user-edits-data" }}
+  
+  {{ all_parts_info|json_script:"all-parts-info-data" }}
+
   <script>
-    // This makes window.USER_EDITS available in your JS
-    window.USER_EDITS = JSON.parse(
-      document.getElementById("user-edits-data").textContent
-    );
-  </script>
-  <script>
+    // This makes the data available in your JS
+    window.USER_EDITS = JSON.parse(document.getElementById("user-edits-data").textContent);
+    window.ALL_PARTS_INFO = JSON.parse(document.getElementById("all-parts-info-data").textContent);
+
     document.addEventListener("DOMContentLoaded", function () {
+      // --- Element Selectors (defined once at the top) ---
       const openBtn = document.getElementById("open-popup");
       const closeBtn = document.getElementById("close-popup");
       const popup = document.getElementById("popup-window");
       const previewBar = openBtn.parentElement;
       const editableArea = document.getElementById("editable-area");
       const deleteBtn = document.getElementById("delete-page-btn");
+      const saveButton = document.getElementById("save-button");
+      
+      // FIX 2: Define templateId at the top level to make it accessible to all functions.
+      const templateId = document.getElementById("template-id").value;
 
       let currentSelectedThumbnail = null;
       let currentSelectedId = null;
-      const loadedPages = [];
+      const loadedPages = []; // This will be our single source of truth for page data
 
-      // ===== Helper functions for interacting with the server =====
+      // =======================================================
+      // ===== HELPER FUNCTIONS ================================
+      // =======================================================
 
-      // CSRF token helper (Django)
       function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {
           const cookies = document.cookie.split(";");
           for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
               break;
             }
           }
@@ -776,95 +783,40 @@
         return cookieValue;
       }
 
-      async function saveEdits(templateId, editedParts) {
-        const response = await fetch(`/save-user-edit/${templateId}/`, {
+      async function saveEdits(templateId, dataToSave) {
+        const response = await fetch(`/save-user-template-edit/${templateId}/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrftoken"), // Use your CSRF helper
+            "X-CSRFToken": getCookie("csrftoken"),
           },
-          body: JSON.stringify({ edited_parts: editedParts }),
+          body: JSON.stringify({ edited_parts: dataToSave }),
         });
         const data = await response.json();
         if (data.status === "ok") {
-          alert("Edits saved!");
+          alert("Template saved!");
         } else {
-          alert("Error saving edits: " + (data.error || "Unknown error"));
+          alert("Error saving template: " + (data.error || "Unknown error"));
         }
       }
 
-      async function loadEdits(templateId) {
-        const response = await fetch(`/load-user-edit/${templateId}/`);
-        const data = await response.json();
-        if (data.status === "ok" || data.status === "not_found") {
-          // data.edited_parts is a dict: {part_id: html_content}
-          return data.edited_parts;
-        } else {
-          alert("Error loading edits: " + (data.error || "Unknown error"));
-          return {};
-        }
-      }
-
-      //delete page
-      if (deleteBtn) {
-        deleteBtn.addEventListener("click", function () {
-          if (!currentSelectedId) return;
-
-          // Remove from loadedPages
-          const index = loadedPages.findIndex(
-            (p) => p.id === currentSelectedId
-          );
-          if (index !== -1) loadedPages.splice(index, 1);
-
-          // Remove the thumbnail from the preview bar
-          const thumb = Array.from(previewBar.children).find(
-            (el) =>
-              el.getAttribute &&
-              el.getAttribute("data-text") === currentSelectedId
-          );
-          if (thumb) thumb.remove();
-
-          // Select another page or clear the editor
-          if (loadedPages.length > 0) {
-            const newIndex = index > 0 ? index - 1 : 0;
-            const newPageId = loadedPages[newIndex].id;
-            const newThumb = Array.from(previewBar.children).find(
-              (el) =>
-                el.getAttribute && el.getAttribute("data-text") === newPageId
-            );
-            if (newThumb) newThumb.click();
-          } else {
-            editableArea.innerHTML = `<div id="templateContent" class="text-gray-500 italic text-center p-8 template-page">Please select a template part to begin editing.</div>`;
-            currentSelectedId = null;
-          }
-          updatePageIndicator();
-        });
-      }
-
-      // Save only the inner HTML of the page
       function saveCurrentPageHtml() {
         const currentPageEl = editableArea.querySelector(".template-page");
         if (!currentPageEl || !currentSelectedId) return;
         const html = currentPageEl.innerHTML;
-        const index = loadedPages.findIndex(
-          (page) => page.id === currentSelectedId
-        );
+        const index = loadedPages.findIndex((page) => page.id === currentSelectedId);
         if (index !== -1) {
           loadedPages[index].html = html;
         }
       }
-
-      // Add a new page only if it doesn't already exist
+      
       function addPageToLoadedPages(id, html) {
-        const index = loadedPages.findIndex((page) => page.id === id);
-        if (index === -1) {
+        if (!loadedPages.some((page) => page.id === id)) {
           loadedPages.push({ id, html });
         }
-        // If it exists, do NOT add or overwrite here! Edits are only saved via saveCurrentPageHtml()
       }
 
       function generateUniqueId(base) {
-        // Only count pages that start with the base and are not already in loadedPages
         let count = 0;
         let id;
         do {
@@ -882,276 +834,239 @@
         currentSelectedThumbnail = thumbnailElement;
       }
 
-      function attachThumbnailClickListener(thumbnail) {
-        thumbnail.addEventListener("click", function () {
-          const partId = thumbnail.getAttribute("data-text");
-          const htmlUrl = thumbnail.getAttribute("data-html-url");
+      function updatePageIndicator() {
+        const indicatorTop = document.getElementById("page-indicator-top");
+        const indicatorCenter = document.getElementById("page-indicator-center");
+        if (!indicatorTop || !indicatorCenter) return;
 
-          saveCurrentPageHtml();
-          currentSelectedId = partId;
+        const currentIndex = loadedPages.findIndex((p) => p.id === currentSelectedId);
+        const totalPages = loadedPages.length;
+        const page = loadedPages.find((p) => p.id === currentSelectedId);
+        const displayName = page?.id || "Page";
 
-          const found = loadedPages.find((p) => p.id === partId);
-
-          // if (found) {
-          //   editableArea.innerHTML = `
-          // <div class="template-page">
-          //   ${found.html}
-          // </div>
-          if (found) {
-            // Use user edits if available
-            let html = found.html;
-            if (window.USER_EDITS && window.USER_EDITS[partId]) {
-              html = window.USER_EDITS[partId];
-            }
-            editableArea.innerHTML = `
-    <div class="template-page">
-      ${html}
-    </div>
-        `;
-            initBackgroundColorPicker();
-            // initImageUploader();
-            initImageChangers();
-            initPdfDownloader();
-            makeElementsEditable();
-            addClickableFillClass();
-            injectCompanyLogoInputs();
-            initTextToolbar();
-            initColorPicker();
-          } else {
-            // This should never happen, but for safety:
-            fetch(htmlUrl)
-              .then((res) => res.text())
-              .then((html) => {
-                // Use user edits if available
-                if (window.USER_EDITS && window.USER_EDITS[selectedText]) {
-                  html = window.USER_EDITS[selectedText];
-                }
-                addPageToLoadedPages(selectedText, html);
-                // addPageToLoadedPages(partId, html);
-                editableArea.innerHTML = `
-              <div class="template-page">
-                ${html}
-              </div>
-            `;
-                initBackgroundColorPicker();
-                // initImageUploader();
-                initImageChangers();
-                initPdfDownloader();
-                makeElementsEditable();
-                addClickableFillClass();
-                injectCompanyLogoInputs();
-                initTextToolbar();
-                initColorPicker();
-              })
-              .catch((err) => {
-                editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
-                console.error("Error loading HTML file:", err);
-              });
-          }
-          selectThumbnail(thumbnail);
-          updatePageIndicator();
-
-          // Load user edits when a thumbnail is clicked
-          loadEdits(templateId).then((editedParts) => {
-            if (editedParts[partId]) {
-              // If the user has saved edits for this part, load them
-              editableArea.querySelector(".template-page").innerHTML =
-                editedParts[partId];
-            }
-          });
-        });
+        if (totalPages > 0) {
+            indicatorTop.textContent = `${currentIndex + 1} / ${totalPages} | ${displayName}`;
+            indicatorCenter.textContent = `Page ${currentIndex + 1} / ${totalPages}`;
+        } else {
+            indicatorTop.textContent = `0 / 0`;
+            indicatorCenter.textContent = `Page 0 / 0`;
+        }
       }
-
-      function attachThumbnailDragListeners(thumbnail) {
-        thumbnail.addEventListener("dragstart", function (e) {
-          e.dataTransfer.setData(
-            "text/plain",
-            thumbnail.getAttribute("data-text")
-          );
-          thumbnail.classList.add("opacity-50");
-        });
-
-        thumbnail.addEventListener("dragend", function (e) {
-          thumbnail.classList.remove("opacity-50");
-        });
-
-        thumbnail.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          thumbnail.classList.add("ring", "ring-blue-400");
-        });
-
-        thumbnail.addEventListener("dragleave", function (e) {
-          thumbnail.classList.remove("ring", "ring-blue-400");
-        });
-
-        thumbnail.addEventListener("drop", function (e) {
-          e.preventDefault();
-          thumbnail.classList.remove("ring", "ring-blue-400");
-          const draggedId = e.dataTransfer.getData("text/plain");
-          if (draggedId === thumbnail.getAttribute("data-text")) return; // Dropped on itself
-
-          // Find elements
-          const dragged = Array.from(previewBar.children).find(
-            (el) =>
-              el.getAttribute && el.getAttribute("data-text") === draggedId
-          );
-          if (!dragged) return;
-
-          // Move DOM node
-          previewBar.insertBefore(dragged, thumbnail);
-
-          // Update loadedPages order
-          reorderLoadedPages();
-
-          // Update indicators and selection if needed
-          updatePageIndicator();
-        });
-      }
-
-      // ==== reorder loadedPages based on the new order of thumbnails======
+      
       function reorderLoadedPages() {
-        // Get all thumbnail buttons in order, excluding the open-popup button
         const orderedIds = Array.from(previewBar.children)
           .filter((el) => el.classList && el.classList.contains("option-btn"))
           .map((el) => el.getAttribute("data-text"));
-
-        // Reorder loadedPages to match the new order
         const newLoadedPages = [];
         orderedIds.forEach((id) => {
           const page = loadedPages.find((p) => p.id === id);
           if (page) newLoadedPages.push(page);
         });
-
-        // Preserve reference
         loadedPages.length = 0;
         loadedPages.push(...newLoadedPages);
       }
 
-      function createThumbnail(selectedText, selectedImageSrc, htmlFileUrl) {
+      function createThumbnail(id, imgSrc, htmlUrl) {
         const newThumbnail = document.createElement("button");
         newThumbnail.className = "flex flex-col items-center option-btn";
-        newThumbnail.setAttribute("data-text", selectedText);
-        newThumbnail.setAttribute("data-html-url", htmlFileUrl);
+        newThumbnail.setAttribute("data-text", id);
+        newThumbnail.setAttribute("data-html-url", htmlUrl);
         newThumbnail.setAttribute("draggable", "true");
-        newThumbnail.innerHTML = `
-      <img src="${selectedImageSrc}" alt="${selectedText}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
-    `;
+        newThumbnail.innerHTML = `<img src="${imgSrc}" alt="${id}" class="border-2 border-gray-300 rounded-[10px] w-auto h-24 object-cover hover:scale-105" />`;
+        
         attachThumbnailClickListener(newThumbnail);
         attachThumbnailDragListeners(newThumbnail);
-
         return newThumbnail;
       }
 
-      // Attach click listeners to any existing thumbnails in preview bar on page load
-      const previewThumbnails = previewBar.querySelectorAll(".option-btn");
-      previewThumbnails.forEach((thumbnail) => {
-        attachThumbnailClickListener(thumbnail); // click listener
-        attachThumbnailDragListeners(thumbnail); // drag listeners
-      });
+      // =======================================================
+      // ===== EVENT LISTENERS & DYNAMIC BEHAVIOR ==============
+      // =======================================================
 
-      // OPEN POPUP
-      openBtn.addEventListener("click", () => {
-        popup.classList.remove("hidden");
-      });
+      function attachThumbnailClickListener(thumbnail) {
+        thumbnail.addEventListener("click", function () {
+          const partId = this.getAttribute("data-text");
 
-      // CLOSE POPUP
-      closeBtn.addEventListener("click", () => {
-        popup.classList.add("hidden");
-      });
+          saveCurrentPageHtml();
+          currentSelectedId = partId;
 
-      // On click of popup option (template part), add it to preview and editable area
+          const pageData = loadedPages.find((p) => p.id === partId);
+
+          if (pageData) {
+            editableArea.innerHTML = `<div class="template-page">${pageData.html}</div>`;
+            // Re-initialize all dynamic scripts for the new content
+            initAllDynamicScripts();
+          } else {
+            console.error("Could not find page data for ID:", partId);
+            editableArea.innerHTML = `<p class="text-red-500">Error: Could not load page content.</p>`;
+          }
+          
+          selectThumbnail(thumbnail);
+          updatePageIndicator();
+        });
+      }
+
+      function attachThumbnailDragListeners(thumbnail) {
+        thumbnail.addEventListener("dragstart", function (e) {
+          e.dataTransfer.setData("text/plain", thumbnail.getAttribute("data-text"));
+          thumbnail.classList.add("opacity-50");
+        });
+        thumbnail.addEventListener("dragend", function (e) {
+          thumbnail.classList.remove("opacity-50");
+        });
+        thumbnail.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          thumbnail.classList.add("ring", "ring-blue-400");
+        });
+        thumbnail.addEventListener("dragleave", function (e) {
+          thumbnail.classList.remove("ring", "ring-blue-400");
+        });
+        thumbnail.addEventListener("drop", function (e) {
+          e.preventDefault();
+          thumbnail.classList.remove("ring", "ring-blue-400");
+          const draggedId = e.dataTransfer.getData("text/plain");
+          if (draggedId === thumbnail.getAttribute("data-text")) return;
+          const dragged = Array.from(previewBar.children).find((el) => el.getAttribute && el.getAttribute("data-text") === draggedId);
+          if (dragged) {
+            previewBar.insertBefore(dragged, thumbnail);
+            reorderLoadedPages();
+            updatePageIndicator();
+          }
+        });
+      }
+      
+      function initAllDynamicScripts() {
+        initBackgroundColorPicker();
+        initImageChangers();
+        initPdfDownloader();
+        makeElementsEditable();
+        addClickableFillClass();
+        injectCompanyLogoInputs();
+        initTextToolbar();
+        initColorPicker();
+      }
+
+      // Listener for the main '+' button to open the popup
+      openBtn.addEventListener("click", () => popup.classList.remove("hidden"));
+      closeBtn.addEventListener("click", () => popup.classList.add("hidden"));
+
+      // Listener for deleting a page
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", function () {
+          if (!currentSelectedId) return;
+          const index = loadedPages.findIndex((p) => p.id === currentSelectedId);
+          if (index !== -1) {
+            loadedPages.splice(index, 1);
+            const thumb = previewBar.querySelector(`[data-text="${currentSelectedId}"]`);
+            if (thumb) thumb.remove();
+            
+            if (loadedPages.length > 0) {
+              const newIndex = index > 0 ? index - 1 : 0;
+              const newPageId = loadedPages[newIndex].id;
+              const newThumb = previewBar.querySelector(`[data-text="${newPageId}"]`);
+              if (newThumb) newThumb.click();
+            } else {
+              editableArea.innerHTML = `<div id="templateContent" class="text-gray-500 italic text-center p-8">Select a part to begin.</div>`;
+              currentSelectedId = null;
+            }
+            updatePageIndicator();
+          }
+        });
+      }
+      
+      // Listener for the save button
+      if (saveButton) {
+        saveButton.addEventListener("click", function () {
+          saveCurrentPageHtml();
+          const orderedIds = loadedPages.map((p) => p.id);
+          const pagesContent = {};
+          loadedPages.forEach((page) => {
+            pagesContent[page.id] = page.html;
+          });
+          const dataToSave = { order: orderedIds, pages: pagesContent };
+          saveEdits(templateId, dataToSave);
+        });
+      }
+
+      // Listeners for adding a new page from the popup
       document.querySelectorAll("#popup-window .option-btn").forEach((btn) => {
         btn.addEventListener("click", function () {
           const baseText = this.getAttribute("data-text");
-          const selectedText = generateUniqueId(baseText);
+          const uniqueId = generateUniqueId(baseText);
+          const imgSrc = this.querySelector("img").getAttribute("src");
+          const htmlUrl = this.getAttribute("data-html-url");
 
-          const selectedImageSrc =
-            this.querySelector("img").getAttribute("src");
-          const htmlFileUrl = this.getAttribute("data-html-url");
-
-          const newThumbnail = createThumbnail(
-            selectedText,
-            selectedImageSrc,
-            htmlFileUrl
-          );
-          previewBar.insertBefore(newThumbnail, openBtn);
-
-          fetch(htmlFileUrl)
+          fetch(htmlUrl)
             .then((res) => res.text())
             .then((html) => {
-              addPageToLoadedPages(selectedText, html);
-              editableArea.innerHTML = `
-            <div class="template-page">
-              ${html}
-            </div>
-          `;
-              currentSelectedId = selectedText;
-              initBackgroundColorPicker();
-              // initImageUploader();
-              initImageChangers();
-              initPdfDownloader();
-              makeElementsEditable();
-              addClickableFillClass();
-              injectCompanyLogoInputs();
-              initTextToolbar();
-              initColorPicker();
-              updatePageIndicator(); // Initialize the page indicator
+              addPageToLoadedPages(uniqueId, html);
+              const newThumbnail = createThumbnail(uniqueId, imgSrc, htmlUrl);
+              previewBar.insertBefore(newThumbnail, openBtn);
+              newThumbnail.click();
+              popup.classList.add("hidden");
             })
             .catch((err) => {
-              editableArea.innerHTML = `<p class="text-red-500">Failed to load template part.</p>`;
               console.error("Error loading HTML file:", err);
+              alert("Failed to load template part.");
             });
-
-          popup.classList.add("hidden");
-          selectThumbnail(newThumbnail);
         });
-        // Restore saved edits and loaded pages
-        if (window.USER_EDITS && Object.keys(window.USER_EDITS).length > 0) {
-          Object.keys(window.USER_EDITS).forEach((partId, idx) => {
-            // You need a way to get the thumbnail src and htmlFileUrl for each partId
-            // For example, if you have a lookup object:
-            const partInfo = window.ALL_PARTS ? window.ALL_PARTS[partId] : null;
-            if (!partInfo) return; // Skip if info missing
-
-            // Add the thumbnail to the preview bar if not already present
-            if (
-              !Array.from(previewBar.children).find(
-                (el) =>
-                  el.getAttribute && el.getAttribute("data-text") === partId
-              )
-            ) {
-              const thumb = createThumbnail(
-                partId,
-                partInfo.thumbnailSrc,
-                partInfo.htmlFileUrl
-              );
-              previewBar.insertBefore(thumb, openBtn);
-            }
-            // Add to loadedPages
-            addPageToLoadedPages(partId, window.USER_EDITS[partId]);
-
-            // Optionally select the first one
-            if (idx === 0) {
-              currentSelectedId = partId;
-              editableArea.innerHTML = `<div class="template-page">${window.USER_EDITS[partId]}</div>`;
-              selectThumbnail(
-                previewBar.querySelector(`[data-text="${partId}"]`)
-              );
-              // Initialize your editor features here
-              initBackgroundColorPicker();
-              initImageChangers();
-              initPdfDownloader();
-              makeElementsEditable();
-              addClickableFillClass();
-              injectCompanyLogoInputs();
-              initTextToolbar();
-              initColorPicker();
-            }
-          });
-          updatePageIndicator();
-        }
       });
 
+      // =======================================================
+      // ===== INITIALIZATION & STATE RESTORATION ==============
+      // =======================================================
+
+      // FIX 3: This logic is now outside of any loops and runs only once on page load.
+      function restoreSavedState() {
+          if (!window.USER_EDITS || !window.USER_EDITS.order || window.USER_EDITS.order.length === 0) {
+              // If no saved state, initialize with the cover part if it exists
+              const coverPartInfo = window.ALL_PARTS_INFO['{{ template.cover_part.name|escapejs }}'];
+              if (coverPartInfo) {
+                  // This part is a placeholder. You might want to automatically load the cover page.
+              }
+              return; // No saved state to restore
+          }
+
+          const orderedIds = window.USER_EDITS.order;
+          const pagesContent = window.USER_EDITS.pages;
+
+          orderedIds.forEach((partId) => {
+              const baseName = partId.substring(0, partId.lastIndexOf("-"));
+              const partInfo = window.ALL_PARTS_INFO[baseName];
+
+              if (!partInfo) {
+                  console.error(`Could not find part info for base name: ${baseName}`);
+                  return; 
+              }
+
+              // Add the saved HTML content to our loadedPages array
+              const savedHtml = pagesContent[partId];
+              addPageToLoadedPages(partId, savedHtml);
+
+              // Create and add the thumbnail to the preview bar
+              const thumb = createThumbnail(partId, partInfo.thumbnailSrc, partInfo.htmlFileUrl);
+              previewBar.insertBefore(thumb, openBtn);
+          });
+
+          // After loading all pages, select the first one to display it
+          if (loadedPages.length > 0) {
+              const firstPageId = loadedPages[0].id;
+              const firstThumbnail = previewBar.querySelector(`[data-text="${firstPageId}"]`);
+              if (firstThumbnail) {
+                  firstThumbnail.click();
+              }
+          }
+      }
+
+      // --- SCRIPT EXECUTION START ---
+      restoreSavedState();
+      updatePageIndicator();
+      initAllDynamicScripts(); // Run once for elements that might be present initially
+
+    });
+  </script>
+
+  <script>
       // Convert a single image element to Base64 and replace its src
       async function convertImageToBase64(imgElement) {
         try {
@@ -1332,17 +1247,32 @@
       const saveButton = document.getElementById("save-button");
       if (saveButton) {
         saveButton.addEventListener("click", function () {
-          const templateId = document.getElementById("template-id").value; // Assuming you have a hidden input with the template ID
-          const editedParts = {};
-          // Collect the edited HTML for each loaded page
+          // First, ensure the content of the currently active page is saved to the 'loadedPages' array
+          saveCurrentPageHtml();
+
+          const templateId = document.getElementById("template-id").value;
+
+          // Get the ordered list of page IDs from the thumbnail bar
+          const orderedIds = loadedPages.map((p) => p.id);
+
+          // Create the dictionary of page HTML content
+          const pagesContent = {};
           loadedPages.forEach((page) => {
-            editedParts[page.id] = page.html;
+            pagesContent[page.id] = page.html;
           });
 
-          saveEdits(templateId, editedParts);
+          // Assemble the final data structure to be saved
+          const dataToSave = {
+            order: orderedIds,
+            pages: pagesContent,
+          };
+
+          // Use the existing saveEdits function, but pass the new structure
+          // Note: The backend `save_user_template_edit` view already accepts any valid JSON,
+          // so no changes are needed there.
+          saveEdits(templateId, dataToSave);
         });
       }
-
       // Call once on page load
       initPdfDownloader();
       makeElementsEditable();
@@ -1362,7 +1292,7 @@
           }
         });
       });
-    });
+   
   </script>
   <!-- Modal popup and pdf downloader end -->
   <!-- zoom slider script (working)-->

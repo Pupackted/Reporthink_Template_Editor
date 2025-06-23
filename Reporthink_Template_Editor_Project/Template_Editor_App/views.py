@@ -85,66 +85,42 @@ def template_to_be_edited(request):
 
 
 
-# @login_required
-# def edit_template_view(request, template_id):
-#     template = get_object_or_404(Template, id=template_id)
-#     cover_part = template.cover_part
 
-#     if not cover_part:
-#         return HttpResponse("No cover page selected for this template.", status=404)
 
-#     file_path = cover_part.html_file.path
-
-#     try:
-#         with open(file_path, 'r', encoding='utf-8') as f:
-#             html_content = f.read()
-#     except FileNotFoundError:
-#         return HttpResponse("HTML file not found.", status=404)
-
-#     parts = template.parts.all()  # Get all parts related to this template
-
-#     context = {
-#         'template': template,
-#         'cover_part': cover_part,
-#         'html_content': html_content,
-#         'parts': parts,  # Pass the parts
-#     }
-
-#     return render(request, 'edit-template.html', context)
-
+# views.py
 
 @login_required
 def edit_template_view(request, template_id):
     template = get_object_or_404(Template, id=template_id)
-    cover_part = template.cover_part
+    
+    # Get all possible parts for this template
+    parts = template.parts.all()
 
-    if not cover_part:
-        return HttpResponse("No cover page selected for this template.", status=404)
+    # Create a dictionary with info for all parts, keyed by the part's base name
+    # This is the crucial information the frontend was missing.
+    all_parts_info = {
+        part.name: {
+            'thumbnailSrc': part.thumbnail.url,
+            'htmlFileUrl': part.html_file.url
+        } for part in parts
+    }
 
-    file_path = cover_part.html_file.path
-
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            html_content = f.read()
-    except FileNotFoundError:
-        return HttpResponse("HTML file not found.", status=404)
-
-    parts = template.parts.all()  # Get all parts related to this template
-
-    # --- Load user edits if they exist ---
+    # Load user edits if they exist
     user_edits = None
     if request.user.is_authenticated:
         try:
+            # We fetch the entire saved object, which will contain our new structure
             user_edits = UserTemplateEdit.objects.get(user=request.user, template=template)
         except UserTemplateEdit.DoesNotExist:
             user_edits = None
 
     context = {
         'template': template,
-        'cover_part': cover_part,
-        'html_content': html_content,
         'parts': parts,
+        # Pass the raw saved data (or an empty dict)
         'user_edits': user_edits.edited_parts if user_edits else {},
+        # Pass the new all_parts_info dictionary
+        'all_parts_info': all_parts_info,
     }
 
     return render(request, 'edit-template.html', context)
