@@ -296,6 +296,7 @@ def signup(request):
 #     return JsonResponse({'status': 'error', 'error': 'Invalid method'}, status=400)
 
 # --- 4. REPLACED View: Save a Document ---
+
 @login_required
 @csrf_exempt
 def save_user_document(request, document_id):
@@ -304,15 +305,18 @@ def save_user_document(request, document_id):
             document = get_object_or_404(UserDocument, id=document_id, user=request.user)
             data = json.loads(request.body)
 
-            # Save the page content
-            document.edited_parts = data.get('edited_parts', {})
+            # FIX: Reconstruct the 'edited_parts' dictionary from the received data
+            order = data.get('order', [])
+            pages = data.get('pages', {})
+            document.edited_parts = {'order': order, 'pages': pages}
 
-            # Also check for and save the name
+            # This part for saving the name is already correct
             new_name = data.get('name')
             if new_name:
                 document.name = new_name
 
-            document.save() # Saves both edited_parts and the name
+            # Save everything at once
+            document.save()
             return JsonResponse({'status': 'ok'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'error': str(e)}, status=400)
