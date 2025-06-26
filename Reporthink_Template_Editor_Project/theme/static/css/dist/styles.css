@@ -1198,6 +1198,22 @@ select {
   width: 8rem;
 }
 
+.w-\[\] {
+  width: ;
+}
+
+.w-\[500px\] {
+  width: 500px;
+}
+
+.w-\[9900px\] {
+  width: 9900px;
+}
+
+.w-\[999900px\] {
+  width: 999900px;
+}
+
 .min-w-20 {
   min-width: 5rem;
 }

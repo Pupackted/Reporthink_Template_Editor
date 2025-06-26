@@ -303,8 +303,16 @@ def save_user_document(request, document_id):
         try:
             document = get_object_or_404(UserDocument, id=document_id, user=request.user)
             data = json.loads(request.body)
+
+            # Save the page content
             document.edited_parts = data.get('edited_parts', {})
-            document.save() # Just save the changes
+
+            # Also check for and save the name
+            new_name = data.get('name')
+            if new_name:
+                document.name = new_name
+
+            document.save() # Saves both edited_parts and the name
             return JsonResponse({'status': 'ok'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'error': str(e)}, status=400)

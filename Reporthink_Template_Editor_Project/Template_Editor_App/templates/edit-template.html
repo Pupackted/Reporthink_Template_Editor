@@ -84,15 +84,15 @@
         }"
           class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
         >
-          <div
-            x-show="!editing"
-            class="font-bold text-gray-700 text-2xl"
-            @click="editing = true"
-          >
-            {{ document.name }}
-          </div>
-
+        <div
+  x-show="!editing"
+  class="font-bold text-gray-700 text-2xl w-full"
+  @click="editing = true"
+  x-text="name"
+>
+</div>
           <input
+            id="document-name-input"
             x-show="editing"
             x-model="name"
             @blur="
@@ -788,16 +788,19 @@
         return cookieValue;
       }
 
-      async function saveEdits(documentId, dataToSave) {
-        // Note the new URL structure
-        const response = await fetch(`/document/${documentId}/save/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: JSON.stringify({ edited_parts: dataToSave }),
-        });
+   async function saveEdits(documentId, dataToSave) {
+  // Add the current name to the data being saved
+  dataToSave.name = document.getElementById("document-name-input").value;
+
+  // Note the new URL structure
+  const response = await fetch(`/document/${documentId}/save/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    body: JSON.stringify(dataToSave), // Now sends the whole object {order, pages, name}
+  });
         const data = await response.json();
         if (data.status === "ok") {
           alert("Document saved!");
