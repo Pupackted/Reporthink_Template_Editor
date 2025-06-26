@@ -40,12 +40,29 @@ class TemplatePart(models.Model):
 
 # save edits made by users to templates
 
-class UserTemplateEdit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='template_edits')
-    template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='user_edits')
-    # Store all edited parts as JSON: {part_id: html_content, ...}
-    edited_parts = models.JSONField(default=dict)
+# class UserTemplateEdit(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='template_edits')
+#     template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='user_edits')
+#     # Store all edited parts as JSON: {part_id: html_content, ...}
+#     edited_parts = models.JSONField(default=dict)
+#     last_modified = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return f"{self.user.username} - {self.template.name} edit"
+
+
+class UserDocument(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='documents')
+    template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='user_documents')
+    
+    # This is the key field: a name for the user's specific version.
+    name = models.CharField(max_length=255) 
+    
+    # This field moves from the old model to here.
+    edited_parts = models.JSONField(default=dict) 
+    
+    created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.template.name} edit"
+        return f"'{self.name}' by {self.user.username} (from: {self.template.name})"

@@ -1,26 +1,18 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Template
-from django.http import HttpResponse
-from django.conf import settings
 import os
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.shortcuts import redirect
-from .forms import TemplateForm, TemplatePartForm
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import SignUpForm
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 import json
-from .models import UserTemplateEdit
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
-from django.http import JsonResponse
-from .models import UserTemplateEdit
+
+from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
+
+from .forms import TemplateForm, TemplatePartForm, SignUpForm
+from .models import Template
+# from .models import UserTemplateEdit  # Uncomment if needed
+from .models import Template, UserDocument
 
 
 
@@ -87,17 +79,53 @@ def template_to_be_edited(request):
 
 
 
-# views.py
+# --- 1. OLD View: The Editor Was Loading a Template Directly ---
 
-@login_required
-def edit_template_view(request, template_id):
-    template = get_object_or_404(Template, id=template_id)
+# @login_required
+# def edit_template_view(request, template_id):
+#     template = get_object_or_404(Template, id=template_id)
     
-    # Get all possible parts for this template
-    parts = template.parts.all()
+#     # Get all possible parts for this template
+#     parts = template.parts.all()
 
-    # Create a dictionary with info for all parts, keyed by the part's base name
-    # This is the crucial information the frontend was missing.
+#     # Create a dictionary with info for all parts, keyed by the part's base name
+#     # This is the crucial information the frontend was missing.
+#     all_parts_info = {
+#         part.name: {
+#             'thumbnailSrc': part.thumbnail.url,
+#             'htmlFileUrl': part.html_file.url
+#         } for part in parts
+#     }
+
+#     # Load user edits if they exist
+#     user_edits = None
+#     if request.user.is_authenticated:
+#         try:
+#             # We fetch the entire saved object, which will contain our new structure
+#             user_edits = UserTemplateEdit.objects.get(user=request.user, template=template)
+#         except UserTemplateEdit.DoesNotExist:
+#             user_edits = None
+
+#     context = {
+#         'template': template,
+#         'parts': parts,
+#         # Pass the raw saved data (or an empty dict)
+#         'user_edits': user_edits.edited_parts if user_edits else {},
+#         # Pass the new all_parts_info dictionary
+#         'all_parts_info': all_parts_info,
+#     }
+
+#     return render(request, 'edit-template.html', context)
+
+
+# --- 3. REPLACED View: The Editor Now Loads a Document ---
+@login_required
+def edit_document_view(request, document_id):
+    # Fetch the specific document, ensuring it belongs to the current user for security
+    document = get_object_or_404(UserDocument, id=document_id, user=request.user)
+    template = document.template # Get the base template from the document
+    
+    parts = template.parts.all()
     all_parts_info = {
         part.name: {
             'thumbnailSrc': part.thumbnail.url,
@@ -105,25 +133,15 @@ def edit_template_view(request, template_id):
         } for part in parts
     }
 
-    # Load user edits if they exist
-    user_edits = None
-    if request.user.is_authenticated:
-        try:
-            # We fetch the entire saved object, which will contain our new structure
-            user_edits = UserTemplateEdit.objects.get(user=request.user, template=template)
-        except UserTemplateEdit.DoesNotExist:
-            user_edits = None
-
     context = {
-        'template': template,
+        'document': document, # Pass the document object
+        'template': template, # Still pass the base template info
         'parts': parts,
-        # Pass the raw saved data (or an empty dict)
-        'user_edits': user_edits.edited_parts if user_edits else {},
-        # Pass the new all_parts_info dictionary
+        'user_edits': document.edited_parts, # The saved data is on the document itself
         'all_parts_info': all_parts_info,
     }
-
     return render(request, 'edit-template.html', context)
+
 
 
 
@@ -149,17 +167,32 @@ def edit_template_part(request, part_id):
 
     return render(request, 'edit-template-part.html', context)
 
+# --- REPLACED View: update template name ---
+# @csrf_exempt
+# def update_template_name(request, template_id):
+#     if request.method == "POST":
+#         new_name = request.POST.get('name')
+#         print("Received name:", new_name)  # Debugging
+#         if new_name:
+#             template = get_object_or_404(Template, id=template_id)
+#             template.name = new_name
+#             template.save()
+#             return JsonResponse({'status': 'ok'})
+#     return JsonResponse({'status': 'error'}, status=400)
+
+# --- 5. REPLACED View: Update the Document Name ---
 @csrf_exempt
-def update_template_name(request, template_id):
+@login_required
+def update_document_name(request, document_id):
     if request.method == "POST":
         new_name = request.POST.get('name')
-        print("Received name:", new_name)  # Debugging
         if new_name:
-            template = get_object_or_404(Template, id=template_id)
-            template.name = new_name
-            template.save()
+            document = get_object_or_404(UserDocument, id=document_id, user=request.user)
+            document.name = new_name
+            document.save()
             return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)
+
 
 
 
@@ -238,27 +271,45 @@ def signup(request):
 
 
 ## Save user edits to templates
+
+# --- REPLACED View: Save User Edits to a Template ---
+# @login_required
+# @csrf_exempt
+# def save_user_template_edit(request, template_id):
+#     if request.method == "POST":
+#         try:
+#             data = json.loads(request.body)
+#             edited_parts = data.get('edited_parts', {})
+#             user = request.user
+#             template = get_object_or_404(Template, id=template_id)
+
+#             obj, created = UserTemplateEdit.objects.get_or_create(
+#                 user=user, template=template,
+#                 defaults={'edited_parts': edited_parts}
+#             )
+#             if not created:
+#                 obj.edited_parts = edited_parts
+#                 obj.save()
+#             return JsonResponse({'status': 'ok'})
+#         except Exception as e:
+#             return JsonResponse({'status': 'error', 'error': str(e)}, status=400)
+#     return JsonResponse({'status': 'error', 'error': 'Invalid method'}, status=400)
+
+# --- 4. REPLACED View: Save a Document ---
 @login_required
 @csrf_exempt
-def save_user_template_edit(request, template_id):
+def save_user_document(request, document_id):
     if request.method == "POST":
         try:
+            document = get_object_or_404(UserDocument, id=document_id, user=request.user)
             data = json.loads(request.body)
-            edited_parts = data.get('edited_parts', {})
-            user = request.user
-            template = get_object_or_404(Template, id=template_id)
-
-            obj, created = UserTemplateEdit.objects.get_or_create(
-                user=user, template=template,
-                defaults={'edited_parts': edited_parts}
-            )
-            if not created:
-                obj.edited_parts = edited_parts
-                obj.save()
+            document.edited_parts = data.get('edited_parts', {})
+            document.save() # Just save the changes
             return JsonResponse({'status': 'ok'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'error': str(e)}, status=400)
     return JsonResponse({'status': 'error', 'error': 'Invalid method'}, status=400)
+
 
 
 @login_required
@@ -274,23 +325,68 @@ def load_user_template_edit(request, template_id):
 
 
 # User profile view to show saved template edits
+# --- OLD View: User Profile ---
+# @login_required
+# def user_profile(request):
+#     # Get all saved template edits for this user
+#     saved_edits = request.user.template_edits.select_related('template').all()
+
+#     return render(request, 'user_profile.html', {
+#         'saved_edits': saved_edits,
+#     })
+
+# --- 6. UPDATED View: User Profile ---
 @login_required
 def user_profile(request):
-    # Get all saved template edits for this user
-    saved_edits = request.user.template_edits.select_related('template').all()
-
+    # Fetch all documents owned by this user
+    saved_documents = request.user.documents.select_related('template').order_by('-last_modified').all()
     return render(request, 'user_profile.html', {
-        'saved_edits': saved_edits,
+        'saved_documents': saved_documents,
     })
 
 
+
 # delete user template edit
+# --- OLD View: Delete a User Template Edit ---
+# @login_required
+# def delete_user_template_edit(request, edit_id):
+#     edit = get_object_or_404(UserTemplateEdit, id=edit_id, user=request.user)
+#     if request.method == "POST":
+#         edit.delete()
+#         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#             return JsonResponse({'status': 'ok'})
+#         return redirect('user_profile')
+#     return JsonResponse({'status': 'error', 'error': 'Invalid request'}, status=400)
+
+# --- 7. UPDATED View: Delete a Document ---
 @login_required
-def delete_user_template_edit(request, edit_id):
-    edit = get_object_or_404(UserTemplateEdit, id=edit_id, user=request.user)
+def delete_user_document(request, document_id):
+    document = get_object_or_404(UserDocument, id=document_id, user=request.user)
     if request.method == "POST":
-        edit.delete()
+        document.delete()
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'ok'})
         return redirect('user_profile')
     return JsonResponse({'status': 'error', 'error': 'Invalid request'}, status=400)
+
+
+
+# --- 2. NEW View: Create a Document and Redirect to Editor ---
+@login_required
+def create_user_document_from_template(request, template_id):
+    template = get_object_or_404(Template, id=template_id)
+    
+    # Create a default name, like "Template Name - 1", "Template Name - 2", etc.
+    existing_count = UserDocument.objects.filter(user=request.user, template=template).count()
+    doc_name = f"{template.name} - {existing_count + 1}"
+
+    # Create the new document instance
+    document = UserDocument.objects.create(
+        user=request.user,
+        template=template,
+        name=doc_name,
+        edited_parts={} # Start with empty edits
+    )
+    
+    # Redirect to the editor for this new document
+    return redirect('edit_document_view', document_id=document.id)

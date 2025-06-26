@@ -1194,6 +1194,10 @@ select {
   width: 100%;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .min-w-20 {
   min-width: 5rem;
 }
@@ -1570,6 +1574,11 @@ select {
 
 .bg-white\/75 {
   background-color: rgb(255 255 255 / 0.75);
+}
+
+.bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-50 {
@@ -2091,6 +2100,11 @@ select {
 
 .hover\:bg-white\/80:hover {
   background-color: rgb(255 255 255 / 0.8);
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:text-blue-600:hover {

@@ -297,7 +297,7 @@
 
             <a
             id="use-template-btn"
-            href="{% if selected_id %}/edit/{{ selected_id }}/{% else %}#{% endif %}"
+            href="{% if selected_id %}{% url 'create_user_document' template_id=selected_id %}{% else %}#{% endif %}"
             class="mt-4 flex justify-center items-center bg-orange-400 text-white font-bold px-5 py-3 rounded-[5px] hover:bg-orange-600 transition-all duration-400 ease-in-out {% if not selected_id %}hidden{% endif %}"
           >
             Use template
@@ -409,7 +409,9 @@ document.addEventListener("DOMContentLoaded", function () {
         selected.querySelector("div").classList.add("selected");
 
         nameField.textContent = selected.dataset.name;
-        useBtn.href = `/edit/${selected.dataset.id}/`;
+        // useBtn.href = `/edit/${selected.dataset.id}/`;
+        // This one is for when the page loads with a selection
+        useBtn.href = `/template/${selected.dataset.id}/create/`;
         useBtn.classList.remove("hidden");
         
 
@@ -437,7 +439,9 @@ document.addEventListener("DOMContentLoaded", function () {
           const thumbnail = button.dataset.thumbnail;
 
           nameField.textContent = name;
-          useBtn.href = `/edit/${id}/`;
+          // useBtn.href = `/edit/${id}/`;
+          // ... and this one is inside the click listener for other templates
+          useBtn.href = `/template/${id}/create/`;
           useBtn.classList.remove("hidden");
           
 
