@@ -84,13 +84,12 @@
         }"
           class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
         >
-        <div
-  x-show="!editing"
-  class="font-bold text-gray-700 text-2xl w-full"
-  @click="editing = true"
-  x-text="name"
->
-</div>
+          <div
+            x-show="!editing"
+            class="font-bold text-gray-700 text-2xl w-full"
+            @click="editing = true"
+            x-text="name"
+          ></div>
           <input
             id="document-name-input"
             x-show="editing"
@@ -197,11 +196,20 @@
 
         <!-- Change BG color end-->
         <button id="delete-page-btn">
-          <img
-            class="w-5 h-5"
-            src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/trash-512.png"
-            alt="Delete"
-          />
+          <svg
+            class="w-7 h-7 hover:text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            ></path>
+          </svg>
         </button>
       </div>
     </div>
@@ -736,10 +744,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-{% load static %}
-
-{{ user_edits|json_script:"user-edits-data" }}
-{{ all_parts_info|json_script:"all-parts-info-data" }}
+  {% load static %} {{ user_edits|json_script:"user-edits-data" }}
+  {{all_parts_info|json_script:"all-parts-info-data" }}
 
   <script>
     // This makes the data available in your JS
@@ -788,19 +794,19 @@
         return cookieValue;
       }
 
-   async function saveEdits(documentId, dataToSave) {
-  // Add the current name to the data being saved
-  dataToSave.name = document.getElementById("document-name-input").value;
+      async function saveEdits(documentId, dataToSave) {
+        // Add the current name to the data being saved
+        dataToSave.name = document.getElementById("document-name-input").value;
 
-  // Note the new URL structure
-  const response = await fetch(`/document/${documentId}/save/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken"),
-    },
-    body: JSON.stringify(dataToSave), // Now sends the whole object {order, pages, name}
-  });
+        // Note the new URL structure
+        const response = await fetch(`/document/${documentId}/save/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify(dataToSave), // Now sends the whole object {order, pages, name}
+        });
         const data = await response.json();
         if (data.status === "ok") {
           alert("Document saved!");
@@ -897,7 +903,152 @@
         attachThumbnailDragListeners(newThumbnail);
         return newThumbnail;
       }
+      // Convert a single image element to Base64 and replace its src
+      async function convertImageToBase64(imgElement) {
+        try {
+          const response = await fetch(imgElement.src, { mode: "cors" });
+          const blob = await response.blob();
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              imgElement.src = reader.result;
+              resolve();
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        } catch (error) {
+          console.error("Failed to convert image to base64:", error);
+        }
+      }
 
+      async function convertImagesInContainer(container) {
+        const images = container.querySelectorAll(".static-image-design");
+        const promises = Array.from(images).map((img) =>
+          convertImageToBase64(img)
+        );
+        await Promise.all(promises);
+      }
+
+      function prefixCssSelectors(cssText, prefix) {
+        // This regex attempts to prefix all selectors except @-rules (e.g. @media, @font-face)
+        return cssText.replace(
+          /(^|})\s*([^{@}][^{]*)\s*{/g,
+          (match, brace, selector) => {
+            // Split selectors by comma and prefix each
+            const prefixed = selector
+              .split(",")
+              .map((sel) => `${prefix} ${sel.trim()}`)
+              .join(", ");
+            return `${brace} ${prefixed} {`;
+          }
+        );
+      }
+
+      function extractAndPrefixStyles(html, prefix) {
+        // Extract <style> blocks and prefix their content
+        const styleRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+        let styles = [];
+        let htmlWithoutStyles = html;
+        let match;
+        while ((match = styleRegex.exec(html)) !== null) {
+          styles.push(match[1]);
+          htmlWithoutStyles = htmlWithoutStyles.replace(match[0], "");
+        }
+        const scopedStyles = styles
+          .map((css) => prefixCssSelectors(css, prefix))
+          .join("\n");
+        return {
+          htmlWithoutStyles,
+          scopedStyles,
+        };
+      }
+
+      function initPdfDownloader() {
+        const oldButton = document.getElementById("generatePdfButton");
+        if (!oldButton) return;
+
+        const newButton = oldButton.cloneNode(true);
+        oldButton.replaceWith(newButton);
+
+        newButton.addEventListener("click", async () => {
+          if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
+            alert("No pages loaded");
+            return;
+          }
+
+          saveCurrentPageHtml(); // Your existing function to update loadedPages
+
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            unit: "pt",
+            format: "a4",
+            orientation: "portrait",
+          });
+
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+
+          // Temporary container for rendering pages
+          const tempContainer = document.createElement("div");
+          tempContainer.style.position = "fixed";
+          tempContainer.style.top = "-9999px";
+          tempContainer.style.left = "-9999px";
+          tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
+          document.body.appendChild(tempContainer);
+
+          for (let i = 0; i < loadedPages.length; i++) {
+            const html = loadedPages[i].html;
+            const pageClass = `page${i + 1}`;
+            const { htmlWithoutStyles, scopedStyles } = extractAndPrefixStyles(
+              html,
+              `.${pageClass}`
+            );
+
+            // Create wrapper div with unique class
+            const pageDiv = document.createElement("div");
+            pageDiv.className = `template-page ${pageClass}`;
+            pageDiv.style.width = "794px";
+            pageDiv.style.height = "1123px";
+            pageDiv.style.boxSizing = "border-box";
+            pageDiv.innerHTML = `<style>${scopedStyles}</style>${htmlWithoutStyles}`;
+            tempContainer.appendChild(pageDiv);
+
+            await convertImagesInContainer(pageDiv);
+
+            // Render to canvas with scale 1 for better quality
+            const canvas = await html2canvas(pageDiv, {
+              scale: 1,
+              useCORS: true,
+              allowTaint: true,
+              backgroundColor: "#ffffff",
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            if (i > 0) {
+              pdf.addPage();
+            }
+
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+            tempContainer.removeChild(pageDiv);
+          }
+
+          document.body.removeChild(tempContainer);
+
+          // Save the PDF to a file
+          // pdf.save("template.pdf");
+
+          // Open the PDF in a new tab (debugging)
+          const pdfBlob = pdf.output("blob");
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl, "_blank");
+          setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
+        });
+      }
+
+      // ---- END PDF DOWNLOADER ----
       // =======================================================
       // ===== EVENT LISTENERS & DYNAMIC BEHAVIOR ==============
       // =======================================================
@@ -1107,153 +1258,6 @@
   </script>
 
   <script>
-    // Convert a single image element to Base64 and replace its src
-    async function convertImageToBase64(imgElement) {
-      try {
-        const response = await fetch(imgElement.src, { mode: "cors" });
-        const blob = await response.blob();
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = function () {
-            imgElement.src = reader.result;
-            resolve();
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      } catch (error) {
-        console.error("Failed to convert image to base64:", error);
-      }
-    }
-
-    async function convertImagesInContainer(container) {
-      const images = container.querySelectorAll(".static-image-design");
-      const promises = Array.from(images).map((img) =>
-        convertImageToBase64(img)
-      );
-      await Promise.all(promises);
-    }
-
-    function prefixCssSelectors(cssText, prefix) {
-      // This regex attempts to prefix all selectors except @-rules (e.g. @media, @font-face)
-      return cssText.replace(
-        /(^|})\s*([^{@}][^{]*)\s*{/g,
-        (match, brace, selector) => {
-          // Split selectors by comma and prefix each
-          const prefixed = selector
-            .split(",")
-            .map((sel) => `${prefix} ${sel.trim()}`)
-            .join(", ");
-          return `${brace} ${prefixed} {`;
-        }
-      );
-    }
-
-    function extractAndPrefixStyles(html, prefix) {
-      // Extract <style> blocks and prefix their content
-      const styleRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
-      let styles = [];
-      let htmlWithoutStyles = html;
-      let match;
-      while ((match = styleRegex.exec(html)) !== null) {
-        styles.push(match[1]);
-        htmlWithoutStyles = htmlWithoutStyles.replace(match[0], "");
-      }
-      const scopedStyles = styles
-        .map((css) => prefixCssSelectors(css, prefix))
-        .join("\n");
-      return {
-        htmlWithoutStyles,
-        scopedStyles,
-      };
-    }
-
-    function initPdfDownloader() {
-      const oldButton = document.getElementById("generatePdfButton");
-      if (!oldButton) return;
-
-      const newButton = oldButton.cloneNode(true);
-      oldButton.replaceWith(newButton);
-
-      newButton.addEventListener("click", async () => {
-        if (typeof loadedPages === "undefined" || loadedPages.length === 0) {
-          alert("No pages loaded");
-          return;
-        }
-
-        saveCurrentPageHtml(); // Your existing function to update loadedPages
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-          unit: "pt",
-          format: "a4",
-          orientation: "portrait",
-        });
-
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        // Temporary container for rendering pages
-        const tempContainer = document.createElement("div");
-        tempContainer.style.position = "fixed";
-        tempContainer.style.top = "-9999px";
-        tempContainer.style.left = "-9999px";
-        tempContainer.style.width = "794px"; // approx A4 width in px at 96dpi
-        document.body.appendChild(tempContainer);
-
-        for (let i = 0; i < loadedPages.length; i++) {
-          const html = loadedPages[i].html;
-          const pageClass = `page${i + 1}`;
-          const { htmlWithoutStyles, scopedStyles } = extractAndPrefixStyles(
-            html,
-            `.${pageClass}`
-          );
-
-          // Create wrapper div with unique class
-          const pageDiv = document.createElement("div");
-          pageDiv.className = `template-page ${pageClass}`;
-          pageDiv.style.width = "794px";
-          pageDiv.style.height = "1123px";
-          pageDiv.style.boxSizing = "border-box";
-          pageDiv.innerHTML = `<style>${scopedStyles}</style>${htmlWithoutStyles}`;
-          tempContainer.appendChild(pageDiv);
-
-          await convertImagesInContainer(pageDiv);
-
-          // Render to canvas with scale 1 for better quality
-          const canvas = await html2canvas(pageDiv, {
-            scale: 1,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: "#ffffff",
-          });
-
-          const imgData = canvas.toDataURL("image/png");
-
-          if (i > 0) {
-            pdf.addPage();
-          }
-
-          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-          tempContainer.removeChild(pageDiv);
-        }
-
-        document.body.removeChild(tempContainer);
-
-        // Save the PDF to a file
-        // pdf.save("template.pdf");
-
-        // Open the PDF in a new tab (debugging)
-        const pdfBlob = pdf.output("blob");
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl, "_blank");
-        setTimeout(() => URL.revokeObjectURL(pdfUrl), 10000);
-      });
-    }
-
-    // ---- END PDF DOWNLOADER ----
-
     // ------ page counter ---------
     function updatePageIndicator() {
       const indicatorTop = document.getElementById("page-indicator-top");
@@ -1309,14 +1313,6 @@
         saveEdits(templateId, dataToSave);
       });
     }
-    // Call once on page load
-    initPdfDownloader();
-    makeElementsEditable();
-    addClickableFillClass();
-    injectCompanyLogoInputs();
-    initTextToolbar();
-    initColorPicker();
-    updatePageIndicator(); // Initialize the page indicator
   </script>
   <!-- Modal popup and pdf downloader end -->
   <!-- zoom slider script (working)-->
