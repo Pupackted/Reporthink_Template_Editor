@@ -455,48 +455,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   </script>
 
-  <!-- testing -->
-
-  {% comment %} <h1>Template: {{ template.name }}</h1>
-  <pre>{{ template|safe }}</pre>
-
-  {% if template %}
-  <p>{{ template.name }}</p>
-  <a href="{% url 'edit_template' template.id %}">Edit</a>
-  {% else %}
-  <p>No template found.</p>
-  {% endif %}
-
-
-  <h1>{{ template.name }}</h1>
-
-  {% for part in template.parts.all %}
-  <div>
-    <p>{{ part.name }}</p>
-    <img src="{{ part.thumbnail.url }}" width="200" />
-    <a href="{% url 'edit_template_part' part.id %}"></a>
-  </div>
-  {% endfor %}
-<p>balls balls balls balls</p>
-  <p>{{ template }}</p>
-<p>{{ template.parts.all }}</p>
-
-
-  {% for template in templates %}
-  <div>
-    <h3>{{ template.name }}</h3>
-    <a href="{% url 'edit_template' template.id %}">
-      <img
-        src="{{ template.thumbnail.url }}"
-        alt="Thumbnail for {{ template.name }}"
-        width="200"
-      />
-    </a>
-  </div>
-  {% endfor %} {% endcomment %}
-
-
-  <!-- TESTING -->
 
 </body>
 

@@ -24,6 +24,7 @@ urlpatterns = [
     path('template/<int:template_id>/create/', views.create_user_document_from_template, name='create_user_document'),
     
     # Step 2: Edit, save, rename, and delete the user's document
+    # path('edit-template-part/<int:part_id>/', views.edit_template_part, name='edit_template_part'),
     path('document/<int:document_id>/edit/', views.edit_document_view, name='edit_document_view'),
     path('document/<int:document_id>/save/', views.save_user_document, name='save_user_document'),
     path('document/<int:document_id>/delete/', views.delete_user_document, name='delete_user_document'),
@@ -35,8 +36,7 @@ urlpatterns = [
     path('add-template-part/<int:template_id>/', views.add_template_part, name='add_template_part'),
     path('set-cover-part/<int:template_id>/', views.set_cover_part, name='set_cover_part'),
     
-    # This URL seems to be for editing a raw template part, which feels like an admin task.
-    path('edit-template-part/<int:part_id>/', views.edit_template_part, name='edit_template_part'),
+
 
 ]
 

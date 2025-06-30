@@ -134,27 +134,27 @@ def edit_document_view(request, document_id):
 
 
 
-@login_required
-def edit_template_part(request, part_id):
-    part = get_object_or_404(TemplatePart, id=part_id)
-    print("Editing part:", part)
+# @login_required
+# def edit_template_part(request, part_id):
+#     part = get_object_or_404(TemplatePart, id=part_id)
+#     print("Editing part:", part)
 
-    # Load the actual HTML content of the part
-    html_content = ''
-    if part.html_file:
-        try:
-            file_path = os.path.join(settings.MEDIA_ROOT, part.html_file.name)
-            with open(file_path, 'r', encoding='utf-8') as f:
-                html_content = f.read()
-        except FileNotFoundError:
-            return HttpResponse("HTML file for this part not found.", status=404)
+#     # Load the actual HTML content of the part
+#     html_content = ''
+#     if part.html_file:
+#         try:
+#             file_path = os.path.join(settings.MEDIA_ROOT, part.html_file.name)
+#             with open(file_path, 'r', encoding='utf-8') as f:
+#                 html_content = f.read()
+#         except FileNotFoundError:
+#             return HttpResponse("HTML file for this part not found.", status=404)
 
-    context = {
-        'part': part,
-        'html_content': html_content,
-    }
+#     context = {
+#         'part': part,
+#         'html_content': html_content,
+#     }
 
-    return render(request, 'edit-template-part.html', context)
+#     return render(request, 'edit-template-part.html', context)
 
 # --- REPLACED View: update template name ---
 # @csrf_exempt
