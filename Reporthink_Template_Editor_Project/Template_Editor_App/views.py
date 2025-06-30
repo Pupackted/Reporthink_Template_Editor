@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import TemplateForm, TemplatePartForm, SignUpForm
 from .models import Template
-# from .models import UserTemplateEdit  # Uncomment if needed
+# from .models import UserTemplateEdit 
 from .models import Template, UserDocument
 
 
@@ -20,17 +20,6 @@ from .models import Template, UserDocument
 def is_admin(user):
     return user.is_staff  # or user.is_superuser depending on your admin setup
 
-
-# def index(request):
-#     templates = Template.objects.all()
-#     # Kirim template_id default, misal template pertama atau None
-#     first_template_id = templates.first().id if templates.exists() else None
-#     return render(request, 'index.html', {
-#         'templates': templates,
-#         'template_form': TemplateForm(),
-#         'template_part_form': TemplatePartForm(),
-#         'some_template_id': first_template_id,  # Kirim ke template
-#     })
 
 def index(request):
     search_query = request.GET.get('q', '')  # get search query from URL parameter 'q'

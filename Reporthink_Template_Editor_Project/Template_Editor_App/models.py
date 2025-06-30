@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class Template(models.Model):
     name = models.CharField(max_length=255)
-    # html_file = models.CharField(max_length=255, null=True, blank=True)
     cover_part = models.ForeignKey(
         'TemplatePart',
         on_delete=models.SET_NULL,
