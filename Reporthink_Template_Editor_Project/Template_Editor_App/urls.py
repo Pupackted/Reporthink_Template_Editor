@@ -17,7 +17,7 @@ urlpatterns = [
 
     # --- Core Application Flow (For Logged-In Users) ---
     # The main journey for a user creating and managing their documents.
-    path('profile/', views.user_profile, name='user_profile'),
+    path('my-works/', views.user_profile, name='user_profile'),
     path('choose-template/', views.choose_template, name='choose_template'),
     
     # Step 1: Create a new document from a template
