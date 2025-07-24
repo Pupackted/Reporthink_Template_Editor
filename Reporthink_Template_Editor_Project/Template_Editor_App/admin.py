@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Template, TemplatePart
+from .models import Template, TemplatePart, UserDocument
 
 class TemplatePartInline(admin.TabularInline):
     model = TemplatePart
@@ -20,3 +20,13 @@ class TemplateAdmin(admin.ModelAdmin):
 
 # you can still register TemplatePart standalone if you like:
 admin.site.register(TemplatePart)
+@admin.register(UserDocument)
+class UserDocumentAdmin(admin.ModelAdmin):
+    # This will show these fields as columns on the admin page
+    list_display = ('name', 'user', 'template', 'last_modified')
+    # This adds a search bar to search by these fields
+    search_fields = ('name', 'user__username', 'template__name')
+    # This adds filters to the right sidebar
+    list_filter = ('user', 'template', 'last_modified')
+    # Makes the JSON field easier to read
+    readonly_fields = ('created_at', 'last_modified')

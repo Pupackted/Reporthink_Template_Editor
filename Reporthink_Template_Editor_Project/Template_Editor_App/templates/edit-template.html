@@ -1,467 +1,214 @@
 {% extends 'base.html' %} {% block content %}
 <body>
-  <div class="bg-cover bg-no-repeat bg-top min-h-[50vh]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Editor</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
-      .banner-top {
-        background-repeat: no-repeat;
+        /* General styling for the top banner */
+        .banner-top {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+            background-attachment: local;
+        }
 
-        background-size: cover;
+        /* Styling for the selection ring on thumbnails */
+        .ring {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 1);
+            border-radius: 0.5rem; /* Matches image border-radius */
+        }
 
-        background-position: top center;
+        /* Custom styles for the zoom slider */
+        #zoom-slider {
+            width: 120px;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #d3d3d3; /* Grey track */
+            border-radius: 5px;
+            outline: none;
+        }
 
-        background-attachment: local;
-      }
-      .ring {
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 1);
-        border-radius: 0.5rem; /* same as your image */
-      }
+        /* Styles for Chrome, Edge, Safari slider thumb */
+        #zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #000000; /* Black thumb */
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-      #zoom-slider {
-        width: 120px;
-        height: 5px;
-        -webkit-appearance: none;
-        appearance: none;
-        background: #d3d3d3; /* grey track */
-        border-radius: 5px;
-        outline: none;
-      }
+        /* Styles for Firefox slider thumb */
+        #zoom-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: #000000;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
 
-      /* Chrome, Edge, Safari */
-      #zoom-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 15px;
-        height: 15px;
-        background: #000000; /* black thumb */
-        border-radius: 50%;
-        cursor: pointer;
-      }
+        #zoom-slider::-moz-range-track {
+            background: #d3d3d3;
+            border-radius: 5px;
+        }
 
-      /* Firefox */
-      #zoom-slider::-moz-range-thumb {
-        width: 15px;
-        height: 15px;
-        background: #000000;
-        border-radius: 50%;
-        border: none;
-        cursor: pointer;
-      }
-
-      #zoom-slider::-moz-range-track {
-        background: #d3d3d3;
-        border-radius: 5px;
-      }
-      .static-image-design {
-        z-index: 0 !important;
-      }
-      .static-styling1 {
-        z-index: 1;
-      }
+        /* Z-index helpers for stacking elements */
+        .static-image-design {
+            z-index: 0 !important;
+        }
+        .static-styling1 {
+            z-index: 1;
+        }
     </style>
+</head>
+<body>
+    <div class="bg-cover bg-no-repeat bg-top min-h-[50vh]">
 
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!-- main stuff -->
-
-    <!-- Zoom Controls -->
-    <div class="flex items-center w-full h-28">
-      <div class="flex-col ml-24">
-        <!-- file name  -->
-
-        <div
-          x-data="{
-          editing: false,
-          name: '{{ document.name }}',
-          originalName: '{{ document.name }}',
-          updateName() {
-            this.editing = false;
-            this.$dispatch('update-name', { name: this.name });
-          }
-        }"
-          class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900"
-        >
-          <div
-            x-show="!editing"
-            class="font-bold text-gray-700 text-2xl w-full"
-            @click="editing = true"
-            x-text="name"
-          ></div>
-          <input
-            id="document-name-input"
-            x-show="editing"
-            x-model="name"
-            @blur="
-            editing = false;
-            $dispatch('update-name', { name: name });
-          "
-            @keydown.enter="
-            editing = false;
-            $dispatch('update-name', { name: name });
-          "
-            hx-post="/update-document-name/{{ document.id }}/"
-            hx-trigger="update-name from:closest div"
-            hx-vals="js:{ name: name }"
-            hx-swap="none"
-            class="font-bold text-gray-700 text-2xl p-0 border-none focus:outline-none"
-            style="width: 100%"
-          />
-        </div>
-
-        <!-- file name end  -->
-
-        <div
-          class="flex justify-center items-center py-1 border-[#006837] border-2 rounded-[10px] w-12 font-bold text-[#006837] text-[14px]"
-        >
-          SR
-        </div>
-      </div>
-
-      <div class="flex ml-auto">
-        <!-- download as pdf -->
-        <button id="generatePdfButton">
-          <div
-            class="flex justify-center items-center space-x-2 bg-white hover:bg-green-500 px-4 py-2 border-[#808080] border-2 hover:border-green-500 rounded-[20px] h-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 3v12m0 0l3.75-3.75M12 15.75L8.25 12m11.25 8.25H4.5c-.621 0-1.125-.504-1.125-1.125V4.5c0-.621.504-1.125 1.125-1.125h6.75m6 0h6.75c.621 0 1.125.504 1.125 1.125v14.25c0 .621-.504 1.125-1.125 1.125z"
-              />
-            </svg>
-            <span>Download as PDF</span>
-          </div>
-        </button>
-
-        <!-- download as pdf end -->
-      </div>
-      <!-- save button -->
-      <input type="hidden" id="template-id" value="{{ document.id }}" />
-      <button id="save-button">
-        <div
-          class="flex justify-center items-center bg-white hover:bg-green-500 mr-24 ml-2 border-[#808080] border-2 hover:border-green-500 rounded-[15px] h-10 w-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer"
-        >
-          <svg
-            style="width: 30px; height: 30px"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 7.828a2 2 0 0 0-.586-1.414l-1.828-1.828A2 2 0 0 0 16.172 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.828z"
-            ></path>
-            <path d="M14 4v4H8V4m0 16v-8h8v8"></path>
-          </svg>
-        </div>
-      </button>
-      <!-- save button end -->
-    </div>
-
-    <div class="flex justify-center mb-1">
-      <div class="flex justify-start items-center w-[210mm] text-xl gap-auto">
-        <span id="page-indicator-top" class="mr-auto font-bold"></span>
-
-        <!-- Change BG color-->
-
-        <label for="bgColorPicker" class="flex items-center gap-2">
-          <div
-            class="relative w-6 h-6 mr-4 rounded-full overflow-hidden shadow ring-1 ring-gray-300 hover:ring-blue-400 transition"
-          >
-            <input
-              type="color"
-              id="bgColorPicker"
-              class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-            />
-            <div
-              class="pointer-events-none w-full h-full rounded-full"
-              id="colorDisplay"
-            ></div>
-          </div>
-        </label>
-
-        <!-- Change BG color end-->
-        <button id="delete-page-btn">
-          <svg
-            class="w-7 h-7 hover:text-red-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="flex justify-center mx-4 p-0 overflow-scroll no-scrollbar">
-      <div id="editable-area">
-        <div
-          id="templateContent"
-          class="text-gray-500 italic text-center p-8 template-page"
-        >
-          Please select a template part to begin editing.
-        </div>
-      </div>
-
-      <!-- Image upload-->
-      <input
-        type="file"
-        id="imageUploader"
-        accept="image/*"
-        style="display: none"
-      />
-      <!-- Image upload end-->
-    </div>
-
-    <!-- main stuff end-->
-
-    <!-- page viewer -->
-    <div class="px-4 overflow-x-auto">
-      <div
-        class="flex justify-center items-center space-x-3 min-w-max h-32 pt-5"
-      >
-        <!-- plus button -->
-        <!-- The Button -->
-        <button
-          id="open-popup"
-          class="flex justify-center items-center bg-slate-300 p-2 rounded-lg font-extralight text-4xl hover:scale-105"
-          data-text="Cover"
-        >
-          +
-        </button>
-
-        <!-- Popup Modal (initially hidden) -->
-        <div
-          id="popup-window"
-          style="margin: 0px"
-          class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999999999999999999999999999999999999] hidden"
-        >
-          <div class="inline-block bg-white shadow-lg p-6 rounded-xl">
-            <h2 class="font-semibold text-lg">Select Template Parts</h2>
-
-            <!-- Option -->
-            <div id="popup-options" class="gap-4 grid grid-cols-4 my-4">
-              {% for part in parts %}
-              <button
-                class="flex flex-col items-center option-btn"
-                data-text="{{ part.name }}"
-                data-html-url="{{ part.html_file.url }}"
-              >
-                <img
-                  src="{{ part.thumbnail.url }}"
-                  alt="{{ part.name }}"
-                  class="border-2 border-gray-300 rounded-[10px] w-auto h-44 object-cover hover:scale-105 transition-all duration-75 ease-in-out"
-                />
-              </button>
-              {% endfor %}
+        <div class="flex items-center w-full h-28">
+            <div class="flex-col ml-24">
+                <div x-data="{
+                        editing: false,
+                        name: '{{ document.name }}',
+                        originalName: '{{ document.name }}',
+                        updateName() {
+                            this.editing = false;
+                            this.$dispatch('update-name', { name: this.name });
+                        }
+                    }"
+                    class="flex gap-3 items-center cursor-pointer hover:underline hover:text-gray-900">
+                    <div x-show="!editing" class="font-bold text-gray-700 text-2xl w-full" @click="editing = true" x-text="name"></div>
+                    <input id="document-name-input" x-show="editing" x-model="name"
+                           @blur="updateName()"
+                           @keydown.enter="updateName()"
+                           hx-post="/update-document-name/{{ document.id }}/"
+                           hx-trigger="update-name from:closest div"
+                           hx-vals="js:{ name: name }"
+                           hx-swap="none"
+                           class="font-bold text-gray-700 text-2xl p-0 border-none focus:outline-none"
+                           style="width: 100%" />
+                </div>
+                <div class="flex justify-center items-center py-1 border-[#006837] border-2 rounded-[10px] w-12 font-bold text-[#006837] text-[14px]">
+                    SR
+                </div>
             </div>
-            <!-- Option end -->
 
-            <!-- Close Modal -->
-            <button
-              id="close-popup"
-              class="bg-red-500 hover:bg-red-700 px-4 py-2 rounded w-full text-white"
-            >
-              Close
-            </button>
-          </div>
+            <div class="flex ml-auto items-center">
+                <button id="generatePdfButton" class="flex items-center space-x-2 bg-white hover:bg-green-500 px-4 py-2 border-[#808080] border-2 hover:border-green-500 rounded-[20px] h-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l3.75-3.75M12 15.75L8.25 12m11.25 8.25H4.5c-.621 0-1.125-.504-1.125-1.125V4.5c0-.621.504-1.125 1.125-1.125h6.75m6 0h6.75c.621 0 1.125.504 1.125 1.125v14.25c0 .621-.504 1.125-1.125-1.125z" />
+                    </svg>
+                    <span>Download as PDF</span>
+                </button>
+
+                <input type="hidden" id="template-id" value="{{ document.id }}" />
+                <button id="save-button" class="flex justify-center items-center bg-white hover:bg-green-500 mr-24 ml-2 border-[#808080] border-2 hover:border-green-500 rounded-[15px] h-10 w-10 overflow-hidden font-bold text-[14px] text-black hover:text-white text-center active:scale-95 transition-all duration-200 ease-in-out cursor-pointer">
+                    <svg style="width: 30px; height: 30px" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24">
+                        <path d="M20 7.828a2 2 0 0 0-.586-1.414l-1.828-1.828A2 2 0 0 0 16.172 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.828z"></path>
+                        <path d="M14 4v4H8V4m0 16v-8h8v8"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <!-- pop up modal end -->
 
-        <!-- plus button end -->
-      </div>
+        <div class="flex justify-center mb-1">
+            <div class="flex justify-start items-center w-[210mm] text-xl gap-auto">
+                <span id="page-indicator-top" class="mr-auto font-bold"></span>
+
+                <label for="bgColorPicker" class="flex items-center gap-2">
+                    <div class="relative w-6 h-6 mr-4 rounded-full overflow-hidden shadow ring-1 ring-gray-300 hover:ring-blue-400 transition">
+                        <input type="color" id="bgColorPicker" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
+                        <div class="pointer-events-none w-full h-full rounded-full" id="colorDisplay"></div>
+                    </div>
+                </label>
+
+                <button id="delete-page-btn">
+                    <svg class="w-7 h-7 hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex justify-center mx-4 p-0 overflow-scroll no-scrollbar">
+            <div id="editable-area">
+                <div id="templateContent" class="text-gray-500 italic text-center p-8 template-page">
+                    Please select a template part to begin editing.
+                </div>
+            </div>
+            <input type="file" id="imageUploader" accept="image/*" style="display: none" />
+        </div>
+
+        <div class="px-4 overflow-x-auto">
+            <div class="flex justify-center items-center space-x-3 min-w-max h-32 pt-5">
+                <button id="open-popup" class="flex justify-center items-center bg-slate-300 p-2 rounded-lg font-extralight text-4xl hover:scale-105" data-text="Cover">+</button>
+
+                <div id="popup-window" style="margin: 0px" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[99999999999] hidden">
+                    <div class="inline-block bg-white shadow-lg p-6 rounded-xl">
+                        <h2 class="font-semibold text-lg">Select Template Parts</h2>
+                        <div id="popup-options" class="gap-4 grid grid-cols-4 my-4">
+                            {% for part in parts %}
+                            <button class="flex flex-col items-center option-btn" data-text="{{ part.name }}" data-html-url="{{ part.html_file.url }}">
+                                <img src="{{ part.thumbnail.url }}" alt="{{ part.name }}" class="border-2 border-gray-300 rounded-[10px] w-auto h-44 object-cover hover:scale-105 transition-all duration-75 ease-in-out" />
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <button id="close-popup" class="bg-red-500 hover:bg-red-700 px-4 py-2 rounded w-full text-white">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex w-full h-10">
+            <div id="page-indicator-center" class="ml-24 font-bold text-gray-700 text-2xl text-center"></div>
+            <div class="flex items-center mr-24 ml-auto">
+                <button id="zoom-in"></button>
+                <input id="zoom-slider" type="range" min="0.1" max="2" step="0.1" value="1" />
+                <button id="zoom-out"></button>
+            </div>
+        </div>
+
+        <div id="text-toolbar" class="absolute bg-white/75 backdrop-blur-md border border-gray-300 rounded-xl px-3 py-1 shadow-lg z-[999999] flex gap-2 items-center justify-center min-h-[4rem]">
+            <select onchange="applyFont(this.value)" class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500">
+                <option value="Open Sans">Open Sans</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Arial">Arial</option>
+            </select>
+            <select onchange="applyFontSize(this.value)" class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500">
+                <option value="3">Normal</option>
+                <option value="1">Small</option>
+                <option value="5">Large</option>
+                <option value="7">Huge</option>
+            </select>
+            <button onclick="execCmd('bold')" class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">B</button>
+            <button onclick="execCmd('italic')" class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">I</button>
+            <button onclick="execCmd('underline')" class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">U</button>
+            <button onclick="execCmd('strikeThrough')" class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">S</button>
+            <button onclick="execCmd('justifyLeft')" class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">Left</button>
+            <button onclick="execCmd('justifyCenter')" class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">Center</button>
+            <button onclick="execCmd('justifyRight')" class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">Right</button>
+            <div class="relative inline-block top-2">
+                <input type="color" id="textColorPicker" title="Text Color" class="opacity-0 w-8 h-8 absolute" oninput="execCmd('foreColor', this.value)" />
+                <div id="textColorSwatch" class="w-8 h-8 rounded-full border-2 cursor-pointer" title="Pick Text Color"></div>
+            </div>
+            <div class="relative inline-block top-2">
+                <input type="color" id="txtbgColorPicker" title="Background Color" class="opacity-0 w-8 h-8 absolute" oninput="execCmd('hiliteColor', this.value)" />
+                <div id="bgColorSwatch" class="w-8 h-8 rounded-full border-2 cursor-pointer" title="Pick Background Color"></div>
+            </div>
+            <button onclick="execCmd('removeFormat')" class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80">Clear Styling</button>
+        </div>
+
+        <input type="color" id="colorPicker" style="display: none;" />
+        <div id="colorSwatch" class="w-12 h-12 rounded-full border-4 border-white shadow-md cursor-pointer z-[999999]" title="Pick a color" style="display: none;"></div>
+
     </div>
-    <!-- page viewer end -->
-
-    <!-- page number and zoom part -->
-    <div class="flex w-full h-10">
-      <div
-        id="page-indicator-center"
-        class="ml-24 font-bold text-gray-700 text-2xl text-center"
-      ></div>
-      <!-- zoom slider  -->
-      <div class="flex items-center mr-24 ml-auto">
-        <button id="zoom-in"></button>
-        <input
-          id="zoom-slider"
-          type="range"
-          min="0.1"
-          max="2"
-          step="0.1"
-          value="1"
-        />
-
-        <button id="zoom-out"></button>
-      </div>
-
-      <!-- zoom slider end -->
-    </div>
-    <!-- page number and zoom part end -->
-    <!-- TOOLBAR -->
-    <div
-      id="text-toolbar"
-      class="absolute bg-white/75 backdrop-blur-md border border-gray-300 rounded-xl px-3 py-1 shadow-lg z-[999999999999999] flex gap-2 items-center justify-center min-h-[4rem]"
-    >
-      <select
-        onchange="applyFont(this.value)"
-        class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
-      >
-        <option value="Open Sans">Open Sans</option>
-        <option value="Montserrat">Montserrat</option>
-        <option value="Arial">Arial</option>
-      </select>
-
-      <select
-        onchange="applyFontSize(this.value)"
-        class="bg-white/60 border border-gray-300 rounded-md py-1 text-sm cursor-pointer hover:bg-white/80 hover:border-gray-500"
-      >
-        <option value="3">Normal</option>
-        <option value="1">Small</option>
-        <option value="5">Large</option>
-        <option value="7">Huge</option>
-      </select>
-
-      <button
-        onclick="execCmd('bold')"
-        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        B
-      </button>
-      <button
-        onclick="execCmd('italic')"
-        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        I
-      </button>
-      <button
-        onclick="execCmd('underline')"
-        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        U
-      </button>
-      <button
-        onclick="execCmd('strikeThrough')"
-        class="font-medium px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        S
-      </button>
-
-      <button
-        onclick="execCmd('justifyLeft')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        Left
-      </button>
-      <button
-        onclick="execCmd('justifyCenter')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        Center
-      </button>
-      <button
-        onclick="execCmd('justifyRight')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        Right
-      </button>
-
-      <!-- <button
-        onclick="execCmd('insertUnorderedList')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        • List
-      </button>
-      <button
-        onclick="execCmd('insertOrderedList')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        1. List
-      </button> -->
-
-      <!-- Text Color Picker -->
-      <div class="relative inline-block top-2">
-        <input
-          type="color"
-          id="textColorPicker"
-          title="Text Color"
-          class="opacity-0 w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out absolute"
-          style="z-index: 10"
-          oninput="execCmd('foreColor', this.value)"
-        />
-        <div
-          id="textColorSwatch"
-          class="w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out"
-          title="Pick Text Color"
-        ></div>
-      </div>
-
-      <!-- Background Color Picker -->
-      <div class="relative inline-block top-2">
-        <input
-          type="color"
-          id="txtbgColorPicker"
-          title="Background Color"
-          class="opacity-0 w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out absolute"
-          style="z-index: 10"
-          oninput="execCmd('hiliteColor', this.value)"
-        />
-        <div
-          id="bgColorSwatch"
-          class="w-8 h-8 rounded-full border-2 border-gray-300 shadow-md cursor-pointer transition-shadow duration-300 ease-in-out"
-          title="Pick Background Color"
-        ></div>
-      </div>
-
-      <button
-        onclick="execCmd('removeFormat')"
-        class="px-2 py-1 rounded-md border border-gray-300 bg-white/60 hover:bg-white/80"
-      >
-        Clear Styling
-      </button>
-    </div>
-    <!-- TOOLBAR END -->
-    <!-- Color Picker -->
-
-    <!-- Hidden native color input -->
-    <input type="color" id="colorPicker" />
-
-    <!-- Custom color swatch -->
-    <div
-      id="colorSwatch"
-      class="w-12 h-12 rounded-full border-4 border-white shadow-md cursor-pointer transition-shadow duration-300 ease-in-out hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500 z-[999999]"
-      title="Pick a color"
-    ></div>
-
-    <!-- Color Picker end -->
-
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-  </div>
-
   <!-- inject to svg (working) kinda  -->
   <script>
     function addClickableFillClass() {
